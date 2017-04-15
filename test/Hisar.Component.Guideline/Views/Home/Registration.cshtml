@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Registration Page";
+}
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+@model GuidelineViewModel
+
+    <div class="container">
+        <form asp-action="Registration" asp-controller="Home">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Name</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(x => x.Name, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Age</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" asp-for="Age">
+                        </div>
+                    </div>
+                </div>                
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <input type="submit" value="Submit" />
+                    <button id="ajaxSubmit" type="button">Ajax Submit</button>
+                </div>
+            </div>
+        </form>
+        <br />
+
+        @await Component.InvokeAsync("Guideline")
+        @await Component.InvokeAsync("Guideline2")
+    </div>
+
+    @section scripts {
+
+        <script asp-src-include="~/js/**/*.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $("#ajaxSubmit").click(function (e) {
+                    var name = $("#Name").val();
+                    var data = JSON.stringify({ name: name, age: 1 });
+
+                    return $.ajax({
+                        type: "POST",
+                        contentType: 'application/json',
+                        url: "@Url.Action("registrationjson", "home")",
+                        data: data,
+                        success: function (response) {
+                            console.log("Ajax Response:", response);
+                        }
+                    });
+                });
+            });
+        </script>
+    }
