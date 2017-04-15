@@ -1,12 +1,12 @@
-### Cross-Platform Modular Component Development Infrastructure
+### Hisar: Cross-Platform Modular Component Development Infrastructure
 
-There are tons of plugin, extension and component base application development frameworks.
-They are provide modular - plugin base extensibility, have great features and communities.
-Especially on .NET Core stack we are trying to do something little different and have more fun!
+There are tons of plugin, extension and component base application development framework.
+They provide modular - plugin base extensibility, have great features and communities.
+We are trying to do something little different to make .NET Core stack more fun!
 
-This framework allows able to develop component (module) without main application dependency and can run, test and deploy it as a standalone web application or part of the main hosting site.
+This framework allows us to develop component (module) without main application dependency and can run, test and deploy it as a standalone web application or part of the main hosting site.
 
-Unlike the others you don't need to reference any component to main application but if you want the component to act as part of the main application you can copy the output .dll to ExternalComponents folder of main application so the Hisar platform engine resolves all dependencies, controllers, views and then registers the component with convention name. 
+Dispite the other framework you don't need to reference any component to main application but if you want the component to act as part of the main application you can copy the output .dll to ExternalComponents folder of main application so the Hisar platform engine resolves all dependencies, controllers, views and then registers the component with convention name. 
 
 For example; you got a component which is name Hisar.Component.Guideline. For convention Hisar engine resolves that namaspace as a **Guideline** component when act as a part of the main application. In this component controllers will work as an **Area** with http://mainsitedomain/guideline URL prefix.
 
