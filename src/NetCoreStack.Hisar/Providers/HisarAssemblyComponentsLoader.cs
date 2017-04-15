@@ -108,6 +108,14 @@ namespace NetCoreStack.Hisar
                         var controllers = components.Where(c => IsController(c.GetTypeInfo())).ToList();
                         builder.PartManager.ApplicationParts.Add(new TypesPart(components));
                     }
+                    else
+                    {
+                        if (!file.Contains("NetCoreStack.Hisar"))
+                        {
+                            var fullPath = Path.GetFullPath(file);
+                            AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                        }
+                    }
                 }
 
                 services.AddSingleton<ICacheItemResolver>(new DefaultCacheItemResolver(cacheItems));

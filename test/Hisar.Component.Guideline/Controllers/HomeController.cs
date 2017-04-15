@@ -1,6 +1,7 @@
 ﻿using Hisar.Component.Guideline.Models;
 using NetCoreStack.Hisar;
 using Microsoft.AspNetCore.Mvc;
+using Hisar.CommonLibrary;
 
 namespace Hisar.Component.Guideline.Controllers
 {
@@ -9,6 +10,8 @@ namespace Hisar.Component.Guideline.Controllers
     {
         public IActionResult Index()
         {
+            var externalLibrary = new ExternalLibrary();
+            ViewBag.ExternalLibrary = externalLibrary.Name;
             return View();
         }
         
