@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Data.Context;
 using System.IO;
+using NetCoreStack.WebSockets.ProxyClient;
+using Hisar.Component.Guideline.Core;
 
 namespace Hisar.Component.Guideline
 {
@@ -28,6 +30,14 @@ namespace Hisar.Component.Guideline
 
         public void ConfigureServices(IServiceCollection services)
         {
+#if DEBUG
+            services.AddProxyWebSockets(options => {
+                options.ConnectorName = $"{nameof(Guideline)}-Component";
+                options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
+                options.RegisterInvocator<CommandInvocator>(NetCoreStack.WebSockets.WebSocketCommands.All);
+            });
+#endif
+
             services.AddHisarBsonContext<MongoDbContext>(Configuration);
 
             services.AddMvc();
@@ -36,6 +46,7 @@ namespace Hisar.Component.Guideline
         
         public void Configure(IApplicationBuilder app)
         {
+            app.UseProxyWebSockets();
             app.UseMvc(ConfigureRoutes);
         }
 

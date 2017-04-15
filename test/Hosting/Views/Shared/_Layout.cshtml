@@ -1,5 +1,4 @@
-﻿@inject ITemplateProvider Template
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -40,7 +39,6 @@
             }
         }
     </style>
-    @Template.LayoutFactory.CreatePreWebPackSection()
     @RenderSection("styles", required: false)
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -94,7 +92,7 @@
             <div class="col-md-4">
                 <h1>Business Name or Tagline</h1>
                 <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-                <a class="btn btn-primary btn-lg" href="#">Call to Action!</a>
+                <a class="btn btn-primary btn-lg" href="#">Call to Action</a>
             </div>
             <!-- /.col-md-4 -->
         </div>
@@ -140,10 +138,8 @@
         </footer>
     </div>
     <!-- /.container -->
-
     <!-- Bootstrap Core JavaScript -->
     <script src="~/js/bootstrap.min.js"></script>
-    @Template.LayoutFactory.CreatePostWebPackSection()
     @RenderSection("scripts", required: false)
 </body>
 </html>
