@@ -20,6 +20,9 @@ for the method mentioned above and
 
 our custom startup wrapper to handle component and application acts. For more details you can check the test projects source code in this repository.
 
+### Tools
+[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tools provide manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core CLI tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+
 
 [Latest release on Nuget](https://www.nuget.org/packages/NetCoreStack.Hisar/)
 
