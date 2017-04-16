@@ -5,15 +5,15 @@ namespace NetCoreStack.Hisar.Server
 {
     public class HisarServerViewComponent : HisarViewComponent
     {
-        private IBsonUnitOfWork _bsonUnitOfWork;
-        public IBsonUnitOfWork BsonUnitOfWork
+        private IMongoUnitOfWork _unitOfWork;
+        public IMongoUnitOfWork UnitOfWork
         {
             get
             {
-                if (_bsonUnitOfWork == null)
-                    _bsonUnitOfWork = Resolver?.GetService<IBsonUnitOfWork>();
+                if (_unitOfWork == null)
+                    _unitOfWork = Resolver?.GetService<IMongoUnitOfWork>();
 
-                return _bsonUnitOfWork;
+                return _unitOfWork;
             }
         }
     }

@@ -7,7 +7,7 @@ namespace NetCoreStack.Hisar.Server
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddHisarBsonContext<TContext>(this IServiceCollection services, 
+        public static void AddHisarMongoDbContext<TContext>(this IServiceCollection services, 
             IConfigurationRoot configuration) where TContext : MongoDbContext
         {
             services.AddNetCoreStackBsonDb<TContext>(configuration);

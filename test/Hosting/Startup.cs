@@ -34,7 +34,7 @@ namespace Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHisarBsonContext<MongoDbContext>(Configuration);
+            services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)

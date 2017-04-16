@@ -6,14 +6,14 @@ namespace NetCoreStack.Hisar.Server
 {
     public class HisarServerExceptionFilter : IHisarExceptionFilter
     {
-        private IBsonUnitOfWork GetBsonUnitOfWork(ExceptionContext context)
+        private IMongoUnitOfWork GetUnitOfWork(ExceptionContext context)
         {
-            return ServiceProviderServiceExtensions.GetService<IBsonUnitOfWork>(context.HttpContext.RequestServices);
+            return ServiceProviderServiceExtensions.GetService<IMongoUnitOfWork>(context.HttpContext.RequestServices);
         }
 
         public void Invoke(ExceptionContext context, SystemLog systemLog)
         {
-            var bsonUnitOfWork = GetBsonUnitOfWork(context);
+            var bsonUnitOfWork = GetUnitOfWork(context);
             bsonUnitOfWork.Repository<SystemLog>().Insert(systemLog);
         }
     }

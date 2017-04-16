@@ -38,7 +38,7 @@ namespace Hisar.Component.Guideline
             });
 #endif
 
-            services.AddHisarBsonContext<MongoDbContext>(Configuration);
+            services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
 
             services.AddMvc();
             services.AddSingleton<ILayoutFilter, GuidelineLayoutWebPackFilter>();
