@@ -178,7 +178,7 @@ namespace NetCoreStack.Hisar
             await Task.CompletedTask;
 
             var emptyComponentBuilder = new TagBuilder("div");
-            emptyComponentBuilder.InnerHtml.AppendHtml($"Component: {name}");
+            emptyComponentBuilder.InnerHtml.AppendHtml($"Component Placeholder: {name}");
             return emptyComponentBuilder;
         }
     }

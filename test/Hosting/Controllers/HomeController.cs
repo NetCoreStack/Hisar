@@ -1,6 +1,5 @@
 ﻿using NetCoreStack.Hisar.Server;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace Hosting.Controllers
 {

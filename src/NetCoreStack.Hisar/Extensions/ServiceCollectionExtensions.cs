@@ -8,6 +8,8 @@ using Microsoft.Extensions.FileProviders;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Helpers;
 using NetCoreStack.Mvc.Interfaces;
+using NetCoreStack.WebSockets;
+using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.Reflection;
@@ -30,13 +32,15 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<ITemplateProvider, DefaultTemplateProvider>();
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
 
+            // Custom view component helper
+            // services.TryAddTransient<HisarViewComponentHelper>();
+            services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
+
             // Per request services
             services.TryAddScoped<IUrlGeneratorHelper, UrlGeneratorHelper>();
 
             // New instances
-            services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();
-            //services.TryAddTransient<HisarViewComponentHelper>();
-            services.TryAddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
+            services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            
             services.TryAddTransient<IHisarCacheValueProvider, HisarDefaultCacheValueProvider>();
 
             var componentHelper = new RunningComponentHelperOfT<TStartup>();
@@ -71,12 +75,11 @@ namespace NetCoreStack.Hisar
 
             if (isComponent)
             {
-                var defaultLayoutFileProvider = new DefaultLayoutFileProvider();
-                services.TryAddSingleton<IDefaultLayoutFileProvider>(_ => defaultLayoutFileProvider);
+                var defaultLayoutFileProvider = new DefaultCliFileLocator();
+                services.TryAddSingleton<IDefaultCliFileLocator>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
                 {
-                    options.FileProviders.Add(new DefaultFileProvider(defaultLayoutFileProvider));
-                    // options.FileProviders.Add(new MockEmbedFileProvider(typeof(DefaultHisarStartup<TStartup>).GetTypeInfo().Assembly));
+                    options.FileProviders.Add(new InMemoryCliFileProvider(defaultLayoutFileProvider));
                     var peRef = MetadataReference.CreateFromFile(assembly.Location);
                     options.AdditionalCompilationReferences.Add(peRef);
 
@@ -115,6 +118,21 @@ namespace NetCoreStack.Hisar
             }
 
             services.AddSingleton(_ => services);
+        }
+    }
+
+    public static class ServiceCollectionExtensionsProxy
+    {
+        public static void AddCliSocket<TStartup>(this IServiceCollection services)
+        {
+            var assembly = typeof(TStartup).GetTypeInfo().Assembly;
+            var componentId =  assembly.GetComponentId();
+
+            services.AddProxyWebSockets(options => {
+                options.ConnectorName = $"{nameof(componentId)}-Component";
+                options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
+                options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
+            });
         }
     }
 }

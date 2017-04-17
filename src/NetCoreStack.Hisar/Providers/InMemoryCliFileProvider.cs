@@ -1,20 +1,21 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
+using NetCoreStack.WebSockets.ProxyClient;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace NetCoreStack.Hisar
 {
-    public class DefaultFileProvider : IFileProvider
+    public class InMemoryCliFileProvider : IFileProvider
     {
         public static string LayoutFullName => "/Views/Shared/_Layout.cshtml";
-
+        
         private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars()
             .Where(c => c != '/' && c != '\\').ToArray();
-        
-        private readonly IDefaultLayoutFileProvider _layoutFileProvider;
-        public DefaultFileProvider(IDefaultLayoutFileProvider layoutFileProvider)
+
+        private readonly IDefaultCliFileLocator _layoutFileProvider;
+        public InMemoryCliFileProvider(IDefaultCliFileLocator layoutFileProvider)
         {
             _layoutFileProvider = layoutFileProvider;
         }

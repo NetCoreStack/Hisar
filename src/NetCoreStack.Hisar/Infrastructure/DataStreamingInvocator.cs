@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Routing;
-using NetCoreStack.Hisar;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using System;
@@ -8,16 +7,16 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hisar.Component.Guideline.Core
+namespace NetCoreStack.Hisar
 {
-    public class DataStreamingInvocator : IClientWebSocketCommandInvocator
+    internal class DataStreamingInvocator : IClientWebSocketCommandInvocator
     {
         private readonly IWebSocketConnector _connector;
-        private readonly IDefaultLayoutFileProvider _layoutFileProvider;
-        public DataStreamingInvocator(IWebSocketConnector connector, IDefaultLayoutFileProvider layoutFileProvider)
+        private readonly IDefaultCliFileLocator _cliFileProvider;
+        public DataStreamingInvocator(IWebSocketConnector connector, IDefaultCliFileLocator layoutFileProvider)
         {
             _connector = connector;
-            _layoutFileProvider = layoutFileProvider;
+            _cliFileProvider = layoutFileProvider;
         }
 
         public async Task InvokeAsync(WebSocketMessageContext context)
@@ -36,16 +35,15 @@ namespace Hisar.Component.Guideline.Core
 
             if (context.MessageType == WebSocketMessageType.Binary)
             {
-                object key = null;
-                if (context.Header.TryGetValue("pageupdated", out key))
+                if (context.Header.TryGetValue("fileupdated", out object fullname))
                 {
                     var pageContent = context.Value?.ToString();
                     using (MemoryStream memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(pageContent)))
                     {
-                        var fullname = DefaultFileProvider.LayoutFullName;
-                        var name = Path.GetFileName(fullname);
-                        _layoutFileProvider.Layout = new InMemoryFileInfo(name, fullname, memoryStream.ToArray(), DateTime.UtcNow);
-                        _layoutFileProvider.RaiseChange(fullname);
+                        var fileFullName = fullname.ToString();
+                        var name = Path.GetFileName(fileFullName);
+                        _cliFileProvider.Layout = new InMemoryFileInfo(name, fileFullName, memoryStream.ToArray(), DateTime.UtcNow);
+                        _cliFileProvider.RaiseChange(fileFullName);
                     }
                 }
             }

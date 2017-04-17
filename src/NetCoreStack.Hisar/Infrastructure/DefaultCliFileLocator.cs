@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NetCoreStack.Hisar
 {
-    public class DefaultLayoutFileProvider : IDefaultLayoutFileProvider
+    public class DefaultCliFileLocator : IDefaultCliFileLocator
     {
         private struct ChangeTokenInfo
         {
@@ -45,7 +45,7 @@ namespace NetCoreStack.Hisar
 
         public IFileInfo Layout { get; set; }
 
-        public DefaultLayoutFileProvider()
+        public DefaultCliFileLocator()
         {
             using (MemoryStream memoryStream = new MemoryStream(Encoding.UTF8.GetBytes("<html><head><body>@RenderBody()</body></head></html>")))
             {
@@ -85,6 +85,12 @@ namespace NetCoreStack.Hisar
 
             IChangeToken changeToken = tokenInfo.ChangeToken;
             return changeToken;
+        }
+
+        public IFileInfo GetFileInfo(string subpath)
+        {
+            var name = Path.GetFileName(subpath);
+            return new NotFoundFileInfo(name);
         }
 
         public IChangeToken CreateFileChangeToken(string pattern)

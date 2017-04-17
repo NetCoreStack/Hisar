@@ -2,19 +2,20 @@
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using NetCoreStack.WebSockets.ProxyClient;
 using System;
 using System.Collections.Generic;
 
 namespace NetCoreStack.Hisar
 {
-    public static class ApplicationBuilderExtensions
+    internal static class ApplicationBuilderExtensions
     {
         private static RunningComponentHelper GetComponentHelper(IServiceProvider applicationServices)
         {
             return ServiceProviderServiceExtensions.GetService<RunningComponentHelper>(applicationServices);
         }
 
-        public static IApplicationBuilder UseHisar<TStartup>(this IApplicationBuilder app)
+        internal static IApplicationBuilder UseHisar<TStartup>(this IApplicationBuilder app)
         {
             ThrowIfServiceNotRegistered(app.ApplicationServices);
             app.UseStaticFiles();
@@ -23,7 +24,10 @@ namespace NetCoreStack.Hisar
             bool isExternalComponent = componentHelper.IsExternalComponent;
             if (isExternalComponent)
             {
-                // noop
+                app.UseStaticFiles(new StaticFileOptions()
+                {
+                    FileProvider = new StaticCliFileProvider()
+                });
             }
             else
             {
@@ -112,6 +116,14 @@ namespace NetCoreStack.Hisar
             var service = applicationServices.GetService<HisarMarkerService>();
             if (service == null)
                 throw new InvalidOperationException(string.Format("Required services are not registered - are you missing a call to AddHisar?"));
+        }
+    }
+
+    public static class ApplicationBuilderExtensionsProxy
+    {
+        public static void UseCliProxy(this IApplicationBuilder app)
+        {
+            app.UseProxyWebSockets();
         }
     }
 }
