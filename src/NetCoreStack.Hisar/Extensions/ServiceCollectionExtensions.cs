@@ -71,10 +71,12 @@ namespace NetCoreStack.Hisar
 
             if (isComponent)
             {
+                var defaultLayoutFileProvider = new DefaultLayoutFileProvider();
+                services.TryAddSingleton<IDefaultLayoutFileProvider>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
                 {
-                    options.FileProviders.Add(new DefaultFileProvider(new DefaultLayoutFileProvider()));
-                    options.FileProviders.Add(new MockEmbedFileProvider(typeof(DefaultHisarStartup<TStartup>).GetTypeInfo().Assembly));
+                    options.FileProviders.Add(new DefaultFileProvider(defaultLayoutFileProvider));
+                    // options.FileProviders.Add(new MockEmbedFileProvider(typeof(DefaultHisarStartup<TStartup>).GetTypeInfo().Assembly));
                     var peRef = MetadataReference.CreateFromFile(assembly.Location);
                     options.AdditionalCompilationReferences.Add(peRef);
 

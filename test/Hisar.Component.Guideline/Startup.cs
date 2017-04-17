@@ -34,7 +34,7 @@ namespace Hisar.Component.Guideline
             services.AddProxyWebSockets(options => {
                 options.ConnectorName = $"{nameof(Guideline)}-Component";
                 options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
-                options.RegisterInvocator<CommandInvocator>(NetCoreStack.WebSockets.WebSocketCommands.All);
+                options.RegisterInvocator<DataStreamingInvocator>(NetCoreStack.WebSockets.WebSocketCommands.All);
             });
 #endif
 

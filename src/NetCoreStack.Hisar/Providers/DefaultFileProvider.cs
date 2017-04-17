@@ -8,10 +8,11 @@ namespace NetCoreStack.Hisar
 {
     public class DefaultFileProvider : IFileProvider
     {
-        private const string _layoutFileName = "_Layout.cshtml";
+        public static string LayoutFullName => "/Views/Shared/_Layout.cshtml";
+
         private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars()
             .Where(c => c != '/' && c != '\\').ToArray();
-
+        
         private readonly IDefaultLayoutFileProvider _layoutFileProvider;
         public DefaultFileProvider(IDefaultLayoutFileProvider layoutFileProvider)
         {
@@ -30,18 +31,18 @@ namespace NetCoreStack.Hisar
 
         public IFileInfo GetFileInfo(string subpath)
         {
-            var name = Path.GetFileName(subpath);
-            if (name == _layoutFileName)
+            if (subpath == LayoutFullName)
             {
                 return _layoutFileProvider.Layout;
             }
-            
+
+            var name = Path.GetFileName(subpath);
             return new NotFoundFileInfo(name);
         }
 
         public IChangeToken Watch(string filter)
         {
-            return NullChangeToken.Singleton;
+            return _layoutFileProvider.CreateFileChangeToken(filter);
         }
     }
 }
