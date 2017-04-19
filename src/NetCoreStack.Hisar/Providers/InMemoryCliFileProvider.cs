@@ -14,8 +14,8 @@ namespace NetCoreStack.Hisar
         private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars()
             .Where(c => c != '/' && c != '\\').ToArray();
 
-        private readonly IDefaultCliFileLocator _layoutFileProvider;
-        public InMemoryCliFileProvider(IDefaultCliFileLocator layoutFileProvider)
+        private readonly IDefaultProxyFileLocator _layoutFileProvider;
+        public InMemoryCliFileProvider(IDefaultProxyFileLocator layoutFileProvider)
         {
             _layoutFileProvider = layoutFileProvider;
         }

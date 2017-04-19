@@ -3,7 +3,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace NetCoreStack.Hisar
 {
-    public interface IDefaultCliFileLocator
+    public interface IDefaultProxyFileLocator
     {
         IFileInfo Layout { get; set; }
         IFileInfo GetFileInfo(string fullname);

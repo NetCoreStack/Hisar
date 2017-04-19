@@ -21,6 +21,7 @@
     <Content Include="wwwroot\js\bootstrap.js" />
     <Content Include="wwwroot\js\bootstrap.min.js" />
     <Content Include="wwwroot\js\jquery.js" />
+    <Content Include="wwwroot\js\main.js" />
   </ItemGroup>
 
   <ItemGroup>

@@ -75,8 +75,8 @@ namespace NetCoreStack.Hisar
 
             if (isComponent)
             {
-                var defaultLayoutFileProvider = new DefaultCliFileLocator();
-                services.TryAddSingleton<IDefaultCliFileLocator>(_ => defaultLayoutFileProvider);
+                var defaultLayoutFileProvider = new DefaultProxyFileLocator();
+                services.TryAddSingleton<IDefaultProxyFileLocator>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new InMemoryCliFileProvider(defaultLayoutFileProvider));

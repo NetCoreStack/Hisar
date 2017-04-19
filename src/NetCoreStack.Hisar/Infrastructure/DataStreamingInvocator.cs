@@ -12,8 +12,8 @@ namespace NetCoreStack.Hisar
     internal class DataStreamingInvocator : IClientWebSocketCommandInvocator
     {
         private readonly IWebSocketConnector _connector;
-        private readonly IDefaultCliFileLocator _cliFileProvider;
-        public DataStreamingInvocator(IWebSocketConnector connector, IDefaultCliFileLocator layoutFileProvider)
+        private readonly IDefaultProxyFileLocator _cliFileProvider;
+        public DataStreamingInvocator(IWebSocketConnector connector, IDefaultProxyFileLocator layoutFileProvider)
         {
             _connector = connector;
             _cliFileProvider = layoutFileProvider;

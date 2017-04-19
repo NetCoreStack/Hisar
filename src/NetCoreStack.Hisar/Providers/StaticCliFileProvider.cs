@@ -12,7 +12,7 @@ namespace NetCoreStack.Hisar
     {
         private static readonly HttpClient _client = new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:1444")
+            BaseAddress = new Uri("http://localhost:1444/")
         };
 
         public StaticCliFileProvider()
@@ -33,7 +33,13 @@ namespace NetCoreStack.Hisar
             }
 
             var name = Path.GetFileName(fullname);
-            var response = _client.GetStringAsync("getfile?fullname=" + fullname).GetAwaiter().GetResult();
+            var extension = Path.GetExtension(name);
+            if (extension == ".map")
+            {
+                return new NotFoundFileInfo(name);
+            }
+
+            var response = _client.GetStringAsync("api/page/getfile?fullname=" + fullname).GetAwaiter().GetResult();
             return new InMemoryFileInfo(name, subpath, Encoding.UTF8.GetBytes(response), DateTime.UtcNow);
         }
 

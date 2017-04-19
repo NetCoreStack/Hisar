@@ -39,8 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="NetCoreStack.ComponentBinder.Tools" Version="1.0.0-*" />
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.0" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
