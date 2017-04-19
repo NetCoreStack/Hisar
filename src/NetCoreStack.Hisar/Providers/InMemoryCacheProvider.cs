@@ -64,7 +64,7 @@ namespace NetCoreStack.Hisar
 
         public object SetObject(string key, object value, CacheProviderOptions options)
         {
-            if (!key.HasValue())
+            if (string.IsNullOrEmpty(key))
             {
                 throw new ArgumentNullException(nameof(key));
             }
