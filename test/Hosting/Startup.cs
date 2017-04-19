@@ -65,7 +65,11 @@ namespace Hosting
 
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .AddCommandLine(args).Build();
+
             var host = new WebHostBuilder()
+                .UseConfiguration(configuration)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
