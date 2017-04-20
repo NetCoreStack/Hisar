@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hosting", "test\Hosting\Hos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.CommonLibrary", "test\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj", "{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Carousel", "test\Hisar.Component.Carousel\Hisar.Component.Carousel.csproj", "{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 		{516CC571-5C36-4067-BCD2-7110DC7A2F18} = {7FD6AB70-993F-484A-B2DD-785854EAB1F5}
 		{CFB39F2E-057F-4EA1-AFEB-5E133E406E09} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
+		{EB4A1EC0-A3E6-462D-9674-F4DC6DA10BB9} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 	EndGlobalSection
 EndGlobal

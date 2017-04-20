@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\</SolutionDir>
-  </PropertyGroup> 
+  </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Views\Home\Index.cshtml" />
@@ -22,12 +22,9 @@
     <EmbeddedResource Include="Views\_ViewImports.cshtml" />
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
     <EmbeddedResource Include="wwwroot\favicon.ico" />
-    <EmbeddedResource Include="wwwroot\img\AnyDeveloperAnyLanguage.png" />
     <EmbeddedResource Include="wwwroot\js\component.js" />
     <EmbeddedResource Include="wwwroot\js\component.min.js" />
     <EmbeddedResource Include="wwwroot\_references.js" />
-    <EmbeddedResource Remove="wwwroot\img\myimage.jpg" />
-    <Content Include="wwwroot\img\myimage.jpg" />
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>

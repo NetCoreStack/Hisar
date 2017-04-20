@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>Hisar.Component.Carousel</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Hisar.Component.Carousel</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\</SolutionDir>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
+    <Exec Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' != 'Windows_NT' ">
+    <Exec Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Hosting/ExternalComponents" />
+  </Target>
+
+  <ItemGroup>
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.eot">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.ttf">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff2">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\Home\Index.cshtml" />
+    <EmbeddedResource Include="Views\Shared\Components\Carousel\Default.cshtml" />
+    <EmbeddedResource Include="Views\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
+    <EmbeddedResource Include="wwwroot\favicon.ico" />
+    <EmbeddedResource Include="wwwroot\img\banner1.svg" />
+    <EmbeddedResource Include="wwwroot\img\banner2.svg" />
+    <EmbeddedResource Include="wwwroot\img\banner4.svg" />
+    <EmbeddedResource Include="wwwroot\img\banner5.png" />
+    <EmbeddedResource Include="wwwroot\img\banner6.jpg" />
+    <EmbeddedResource Include="wwwroot\js\carousel.js" />
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.4" />
+  </ItemGroup>
+
+</Project>
