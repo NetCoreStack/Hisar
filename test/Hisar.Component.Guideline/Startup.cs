@@ -28,7 +28,7 @@ namespace Hisar.Component.Guideline
 
         public void ConfigureServices(IServiceCollection services)
         {
-#if DEBUG
+#if !RELEASE
             services.AddCliSocket<Startup>();
 #endif
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
@@ -39,7 +39,7 @@ namespace Hisar.Component.Guideline
         
         public void Configure(IApplicationBuilder app)
         {
-#if DEBUG
+#if !RELEASE
             app.UseCliProxy();
 #endif
             app.UseMvc(ConfigureRoutes);
