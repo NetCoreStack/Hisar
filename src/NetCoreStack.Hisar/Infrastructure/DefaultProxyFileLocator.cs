@@ -30,11 +30,6 @@ namespace NetCoreStack.Hisar
 
         public IFileInfo GetFileInfo(string fullname)
         {
-            if (fullname.StartsWith("/"))
-            {
-                fullname = fullname.Substring(1);
-            }
-
             var name = Path.GetFileName(fullname);
             var extension = Path.GetExtension(name);
             if (extension == ".map")

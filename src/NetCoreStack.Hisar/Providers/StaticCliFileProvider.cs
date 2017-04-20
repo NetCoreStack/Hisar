@@ -27,20 +27,20 @@ namespace NetCoreStack.Hisar
         public IFileInfo GetFileInfo(string subpath)
         {
             var fullname = subpath;
-            if (fullname.StartsWith("/"))
-            {
-                fullname = fullname.Substring(1);
-            }
-
             var name = Path.GetFileName(fullname);
             var extension = Path.GetExtension(name);
             if (extension == ".map")
             {
                 return new NotFoundFileInfo(name);
             }
+            
+            var response = _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/page/getfile?fullname=" + fullname)).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                return new InMemoryFileInfo(name, subpath, Encoding.UTF8.GetBytes(response.Content.ReadAsStringAsync().GetAwaiter().GetResult()), DateTime.UtcNow);
+            }
 
-            var response = _client.GetStringAsync("api/page/getfile?fullname=" + fullname).GetAwaiter().GetResult();
-            return new InMemoryFileInfo(name, subpath, Encoding.UTF8.GetBytes(response), DateTime.UtcNow);
+            return new NotFoundFileInfo(name);
         }
 
         public IChangeToken Watch(string filter)
