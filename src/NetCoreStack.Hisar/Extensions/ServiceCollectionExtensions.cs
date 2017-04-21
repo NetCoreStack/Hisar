@@ -33,7 +33,6 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
 
             // Custom view component helper
-            // services.AddTransient<HisarViewComponentHelper>();
             services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
 
             // Per request services
@@ -96,24 +95,11 @@ namespace NetCoreStack.Hisar
 
                 builder.AddRazorOptions(options =>
                 {
-                    options.ViewLocationExpanders.Add(new HisarViewLocationExpander(assemblyLoader));
                     options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
-
                     foreach (KeyValuePair<string, Assembly> entry in assemblyLoader.ComponentAssemblyLookup)
                     {
                         var peRef = MetadataReference.CreateFromFile(entry.Value.Location);
                         options.AdditionalCompilationReferences.Add(peRef);
-
-                        //var namespaceExpander = entry.Value.GetName().Name.Replace(".", "/");
-                        //options.AreaViewLocationFormats.Add("/" + entry.Key + "/Views/{1}/{0}.cshtml");
-                        //options.AreaViewLocationFormats.Add("/" + entry.Key + "/Views/Shared/{0}.cshtml");
-
-                        //options.ViewLocationFormats.Add("/" + entry.Key + "/Views/{1}/{0}.cshtml");
-                        //options.ViewLocationFormats.Add("/" + entry.Key + "/Views/Shared/{0}.cshtml");
-
-                        //// component formats order!
-                        //options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
-                        //options.ViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
                     }
                 });
             }

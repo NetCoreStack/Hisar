@@ -41,24 +41,12 @@ namespace NetCoreStack.Hisar
         }
 
         protected abstract RunningComponentDefinition ResolveRunningComponent();
-
-        public abstract string GetComponentName(string name);
     }
 
     public class RunningComponentHelperOfT<TStartup> : RunningComponentHelper
     {
         public RunningComponentHelperOfT()
         {
-        }
-
-        public override string GetComponentName(string name)
-        {
-            if (IsExternalComponent)
-            {
-                return name;
-            }
-
-            return $"{ComponentId}.{name}";
         }
 
         protected override RunningComponentDefinition ResolveRunningComponent()
