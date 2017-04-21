@@ -1,10 +1,11 @@
-﻿using NetCoreStack.Hisar.Server;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using NetCoreStack.Hisar;
 using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline.ViewComponents
 {
-    public class GuidelineViewComponent : HisarServerViewComponent
+    [ViewComponent(Name = "MyTest")]
+    public class TestViewComponent : HisarViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {

@@ -15,27 +15,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\Home\Index.cshtml" />
-    <EmbeddedResource Include="Views\Home\Registration.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\Guideline2\Default.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\Guideline\Default.cshtml" />
-    <EmbeddedResource Include="Views\_ViewImports.cshtml" />
-    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
-    <EmbeddedResource Include="wwwroot\favicon.ico" />
-    <EmbeddedResource Include="wwwroot\js\component.js" />
-    <EmbeddedResource Include="wwwroot\js\component.min.js" />
-    <EmbeddedResource Include="wwwroot\_references.js" />
+    <EmbeddedResource Include="Views\**\*.cshtml" />
+    <EmbeddedResource Include="wwwroot\**\*.*" />
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' != 'Windows_NT' ">
-    <Exec Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Hosting/ExternalComponents" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
+    <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Hosting/ExternalComponents" />
   </Target>
 
   <ItemGroup>

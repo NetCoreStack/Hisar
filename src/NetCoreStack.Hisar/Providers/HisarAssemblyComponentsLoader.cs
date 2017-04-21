@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +20,6 @@ namespace NetCoreStack.Hisar
         private readonly IHostingEnvironment _env;
         public IDictionary<string, Assembly> ComponentAssemblyLookup { get; set; }
         public IDictionary<string, HisarConventionBasedStartup> StartupLookup { get; set; }
-        public IList<EmbeddedFileProvider> EmbeddedFileProviders { get; set; }
 
         public HisarAssemblyComponentsLoader(IServiceProvider serviceProvider, IHostingEnvironment env)
         {
@@ -29,7 +27,6 @@ namespace NetCoreStack.Hisar
             _env = env;
             ComponentAssemblyLookup = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             StartupLookup = new Dictionary<string, HisarConventionBasedStartup>();
-            EmbeddedFileProviders = new List<EmbeddedFileProvider>();
         }
 
         protected virtual bool IsController(TypeInfo typeInfo)
@@ -87,7 +84,6 @@ namespace NetCoreStack.Hisar
                         var assemblyName = assembly.GetName().Name;
                         var componentId = assembly.GetComponentId();
                         ComponentAssemblyLookup.Add(componentId, assembly);
-                        EmbeddedFileProviders.Add(new EmbeddedFileProvider(assembly, ComponentConventionBaseNamespace));
 
                         cacheItems.AddRange(assembly.GetTypesAttributes<HisarCacheAttribute>());
                         try

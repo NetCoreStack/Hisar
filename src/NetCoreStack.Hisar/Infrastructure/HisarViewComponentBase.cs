@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
@@ -24,6 +26,55 @@ namespace NetCoreStack.Hisar
 
                 return _cacheProvider;
             }
+        }
+
+        private RunningComponentHelper _componentHelper;
+        protected RunningComponentHelper ComponentHelper
+        {
+            get
+            {
+                if (_componentHelper == null)
+                    _componentHelper = Resolver.GetService<RunningComponentHelper>();
+
+                return _componentHelper;
+            }
+        }
+
+        protected string ExecutionComponentId { get; }
+
+        protected string ComponentName { get; }
+
+        public HisarViewComponent()
+        {
+            var componentType = GetType().GetTypeInfo();
+
+            var attribute = componentType.GetCustomAttribute<ViewComponentAttribute>();
+            if (!string.IsNullOrEmpty(attribute?.Name))
+                ComponentName = attribute.Name;
+            else
+                ComponentName = ViewComponentConventions.GetComponentName(componentType);
+            
+            ExecutionComponentId = componentType.Assembly.GetComponentId();
+        }
+
+        public new ViewViewComponentResult View()
+        {
+            if (ComponentHelper.IsExternalComponent)
+            {
+                return base.View();
+            }
+
+            return base.View($"{ExecutionComponentId}.Default");
+        }
+
+        public new ViewViewComponentResult View(string viewName)
+        {
+            if (ComponentHelper.IsExternalComponent)
+            {
+                return base.View(viewName);
+            }
+
+            return base.View($"{ExecutionComponentId}.{viewName}");
         }
     }
 }

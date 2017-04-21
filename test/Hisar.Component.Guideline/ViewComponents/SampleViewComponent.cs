@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline.ViewComponents
 {
-    public class Guideline2ViewComponent : HisarServerViewComponent
+    public class SampleViewComponent : HisarServerViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {

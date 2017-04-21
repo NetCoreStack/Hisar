@@ -12,44 +12,14 @@
     <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\</SolutionDir>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' != 'Windows_NT' ">
-    <Exec Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Hosting/ExternalComponents" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
+    <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Hosting/ExternalComponents" />
   </Target>
 
   <ItemGroup>
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.eot">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.svg">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.ttf">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff2">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Views\Home\Index.cshtml" />
-    <EmbeddedResource Include="Views\Shared\Components\Carousel\Default.cshtml" />
-    <EmbeddedResource Include="Views\_ViewImports.cshtml" />
-    <EmbeddedResource Include="Views\_ViewStart.cshtml" />
-    <EmbeddedResource Include="wwwroot\favicon.ico" />
-    <EmbeddedResource Include="wwwroot\img\banner1.svg" />
-    <EmbeddedResource Include="wwwroot\img\banner2.svg" />
-    <EmbeddedResource Include="wwwroot\img\banner4.svg" />
-    <EmbeddedResource Include="wwwroot\img\banner5.png" />
-    <EmbeddedResource Include="wwwroot\img\banner6.jpg" />
-    <EmbeddedResource Include="wwwroot\js\carousel.js" />
+    <EmbeddedResource Include="Views\**\*.cshtml" />
+    <EmbeddedResource Include="wwwroot\**\*.*" />
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
