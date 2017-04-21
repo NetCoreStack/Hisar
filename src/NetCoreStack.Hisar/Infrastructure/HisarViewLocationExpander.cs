@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
@@ -18,20 +17,6 @@ namespace NetCoreStack.Hisar
             if (!string.IsNullOrEmpty(context.ViewName) && context.ViewName.StartsWith("Components/"))
             {
                 return viewLocations;
-            }
-
-            if (!string.IsNullOrEmpty(context.AreaName))
-            {
-                List<string> customViewLocations = new List<string>(viewLocations);
-                foreach (KeyValuePair<string, Assembly> entry in _assemblyLoader.ComponentAssemblyLookup)
-                {
-                    var namespaceExpander = entry.Value.GetName().Name.Replace(".", "/");
-                    customViewLocations.Add("/" + entry.Key + "/Views/{1}/{0}.cshtml");
-                    customViewLocations.Add("/" + entry.Key + "/Views/Shared/{0}.cshtml");
-                    customViewLocations.Add("/" + entry.Key + "/Views/{1}/{0}.cshtml");
-                }
-
-                return customViewLocations;
             }
 
             return viewLocations;

@@ -103,8 +103,6 @@ namespace NetCoreStack.Hisar
                     {
                         var peRef = MetadataReference.CreateFromFile(entry.Value.Location);
                         options.AdditionalCompilationReferences.Add(peRef);
-                        options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
-
 
                         //var namespaceExpander = entry.Value.GetName().Name.Replace(".", "/");
                         //options.AreaViewLocationFormats.Add("/" + entry.Key + "/Views/{1}/{0}.cshtml");
