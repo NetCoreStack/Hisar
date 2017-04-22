@@ -5,7 +5,6 @@ using Hisar.CommonLibrary;
 
 namespace Hisar.Component.Guideline.Controllers
 {
-    [HisarRoute(nameof(Guideline))]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace NetCoreStack.Hisar
 {
@@ -7,57 +8,28 @@ namespace NetCoreStack.Hisar
     {
         public void Apply(ApplicationModel application)
         {
-            foreach (var controller in application.Controllers)
+            foreach (var controllerModel in application.Controllers)
             {
-                foreach (var action in controller.Actions)
+                var componentId = controllerModel.ControllerType.Assembly.GetComponentId();
+                if (!componentId.Equals(EngineConstants.HostingComponentName, StringComparison.OrdinalIgnoreCase))
                 {
-                    var selectorIndex = 0;
-                    if (action.ActionName == "Index")
+                    var attribute = new HisarRouteAttribute(componentId);
+                    var routeModel = new AttributeRouteModel(attribute)
                     {
-                        action.Selectors[0].AttributeRouteModel = new AttributeRouteModel()
-                        {
-                            Template = ""
-                        };
-
-                        action.Selectors.Add(new SelectorModel(action.Selectors[0])
-                        {
-                            AttributeRouteModel = new AttributeRouteModel()
-                            {
-                                Template = "[controller]"
-                            }
-                        });
-
-                        selectorIndex++;
-                    }
-
-                    var attributeRouteModel = new AttributeRouteModel()
-                    {
-                        Template = "[controller]/[action]"
+                        Name = componentId
                     };
 
-                    if (selectorIndex > 0)
+                    controllerModel.Selectors[0].AttributeRouteModel = routeModel;
+                    if (controllerModel.Attributes is List<object> attributes)
                     {
-                        action.Selectors.Add(new SelectorModel(action.Selectors[0])
-                        {
-                            AttributeRouteModel = attributeRouteModel
-                        });
+                        attributes.Add(attribute);
                     }
-                    else
-                        action.Selectors[selectorIndex].AttributeRouteModel = attributeRouteModel;
-                }
 
-                var hasAttributeRouteModels = controller.Selectors.Any(selector => selector.AttributeRouteModel != null);
-                if (hasAttributeRouteModels)
-                {
-                    var hisarAttribute = controller.Selectors.Where(x => x.AttributeRouteModel.Attribute is HisarRouteAttribute).ToList();
-                    if (hisarAttribute != null)
+                    if (!controllerModel.RouteValues.ContainsKey("area"))
                     {
-                        hisarAttribute[0].AttributeRouteModel = new AttributeRouteModel()
-                        {
-                            Template = ""
-                        };
+                        controllerModel.RouteValues.Add("area", componentId);
                     }
-                }
+                }                
             }
         }
     }

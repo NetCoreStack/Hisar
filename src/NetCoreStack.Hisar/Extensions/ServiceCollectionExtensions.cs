@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.FileProviders;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Helpers;
 using NetCoreStack.Mvc.Interfaces;
@@ -52,13 +51,13 @@ namespace NetCoreStack.Hisar
                 builder = services.AddMvc(options =>
                 {
                     options.Filters.Add(new HisarExceptionFilter());
-                    options.Conventions.Add(new NameSpaceRoutingConvention());
                 });
             }
             else
             {
                 builder = services.AddMvc(options => {
                     options.Filters.Add(new HisarExceptionFilter());
+                    options.Conventions.Add(new NameSpaceRoutingConvention());
                 });
             }
 
