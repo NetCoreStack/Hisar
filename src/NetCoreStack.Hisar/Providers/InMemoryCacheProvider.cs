@@ -104,13 +104,10 @@ namespace NetCoreStack.Hisar
             _memoryCache.Remove(key);
         }
 
-        //public TEntity GetItem<TEntity>(long? id) where TEntity : EntityBase
-        //{
-        //    if (!id.HasValue)
-        //        return null;
-
-        //    return GetItem((TEntity e) => e.ID == id);
-        //}
+        public TEntity GetItem<TEntity>(long id) where TEntity : EntityIdentity
+        {
+            return GetItem((TEntity e) => e.Id == id);
+        }
 
         public TEntity GetItem<TEntity>(Func<TEntity, bool> idSelector)
         {

@@ -1,4 +1,5 @@
-﻿using NetCoreStack.Mvc.Types;
+﻿using NetCoreStack.Contracts;
+using NetCoreStack.Mvc.Types;
 using System;
 using System.Collections.Generic;
 
@@ -19,6 +20,6 @@ namespace NetCoreStack.Hisar
         TEntity GetItem<TEntity>(Func<TEntity, bool> idSelector);
 
         // TODO EntityIdentity
-        // TEntity GetItem<TEntity>(long? id) where TEntity : EntityIdentity;
+        TEntity GetItem<TEntity>(long id) where TEntity : EntityIdentity;
     }
 }
