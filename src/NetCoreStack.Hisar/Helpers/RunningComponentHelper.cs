@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace NetCoreStack.Hisar

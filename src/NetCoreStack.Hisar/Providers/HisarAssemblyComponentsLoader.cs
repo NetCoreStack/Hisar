@@ -81,6 +81,8 @@ namespace NetCoreStack.Hisar
                         Path.GetExtension(fileName) == ".dll")
                     {
                         var fullPath = Path.GetFullPath(file);
+
+                        // AssemblyLoadContext.Default.Resolving += ReferencedAssembliesResolver.Resolving;
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
                         ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsDirectory, assembly);
                         var assemblyName = assembly.GetName().Name;

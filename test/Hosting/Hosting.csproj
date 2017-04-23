@@ -52,6 +52,7 @@
   <ItemGroup>
     <Folder Include="ExternalComponents\" />
     <Folder Include="ExternalComponents\" />
+    <Folder Include="ExternalComponents\" />
   </ItemGroup>
 
 </Project>

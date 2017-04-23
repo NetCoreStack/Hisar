@@ -1,11 +1,11 @@
-// Hisar Cli auto generated component info class!
-using System.Reflection;
-using NetCoreStack.Hisar;
+// Hisar Cli auto generated component class!
 using Microsoft.AspNetCore.Mvc;
+using NetCoreStack.Hisar;
+using System.Reflection;
 
 namespace Hisar.Component.Carousel
 {
-    public static class ComponentHelper
+    public static partial class ComponentHelper
     {
         public static string ComponentId { get; }
 

@@ -1,5 +1,4 @@
 ﻿using Hisar.Component.Guideline.Models;
-using NetCoreStack.Hisar;
 using Microsoft.AspNetCore.Mvc;
 using Hisar.CommonLibrary;
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Primitives;
-using NetCoreStack.WebSockets.ProxyClient;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
