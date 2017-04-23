@@ -100,17 +100,7 @@ namespace NetCoreStack.Hisar
                         var nameSpace = entry.Value.GetName().Name;
                         var peRef = MetadataReference.CreateFromFile(entry.Value.Location);
                         options.AdditionalCompilationReferences.Add(peRef);
-                        // options.CompilationOptions.Usings.Add(nameSpace);
                     }
-
-                    //options.CompilationCallback = context =>
-                    //{
-                    //    var componentAssembly = context.Compilation.Assembly;
-                    //    if (componentAssembly != null)
-                    //    {
-
-                    //    }
-                    //};
                 });
             }
 
