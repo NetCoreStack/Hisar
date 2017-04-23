@@ -8,6 +8,7 @@
     <PackageId>Hisar.Component.Guideline</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,9 +23,9 @@
     </None>
   </ItemGroup>
 
-  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="cd $(ProjectDir) &amp; dotnet hisar build $(ProjectDir)" />
-  </Target>-->
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build $(ProjectDir)" />
+  </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
@@ -32,6 +33,8 @@
   </Target>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.0.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.1" />
@@ -50,7 +53,7 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.7" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>

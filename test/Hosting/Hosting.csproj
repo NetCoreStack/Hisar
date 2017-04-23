@@ -34,9 +34,7 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="1.1.0" />
-    <PackageReference Include="Swashbuckle" Version="6.0.0-beta902" />
-    <PackageReference Include="TweetinviAPI" Version="1.1.1" />
-    <PackageReference Include="DevZH.HtmlAgilityPack" Version="1.4.9.4-final" />
+    <PackageReference Include="Swagger" Version="1.0.0" />
     <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="1.0.1" />

@@ -3,7 +3,7 @@ using System.Reflection;
 using NetCoreStack.Hisar;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hisar.Component.Guideline
+namespace Hisar.Component.Carousel
 {
     public static class ComponentHelper
     {

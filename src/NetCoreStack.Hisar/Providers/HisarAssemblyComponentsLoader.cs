@@ -70,7 +70,8 @@ namespace NetCoreStack.Hisar
             var entityList = new List<Type>();
             var cacheItems = new List<HisarCacheAttribute>();
 
-            var files = Directory.GetFiles("ExternalComponents");
+            var externalComponentsDirectory = Path.GetFullPath("ExternalComponents");
+            var files = Directory.GetFiles(externalComponentsDirectory);
             if (files != null && files.Any())
             {
                 foreach (var file in files)
@@ -81,6 +82,7 @@ namespace NetCoreStack.Hisar
                     {
                         var fullPath = Path.GetFullPath(file);
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsDirectory, assembly);
                         var assemblyName = assembly.GetName().Name;
                         var componentId = assembly.GetComponentId();
                         ComponentAssemblyLookup.Add(componentId, assembly);

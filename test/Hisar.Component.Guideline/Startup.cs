@@ -1,4 +1,5 @@
-﻿using Hisar.Component.Guideline.Filters;
+﻿using AutoMapper;
+using Hisar.Component.Guideline.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -33,6 +34,8 @@ namespace Hisar.Component.Guideline
 #endif
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddSingleton<ILayoutFilter, GuidelineLayoutWebPackFilter>();
+
+            services.AddAutoMapper();
 
             services.AddMvc();
         }

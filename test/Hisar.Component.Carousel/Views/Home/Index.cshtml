@@ -1,9 +1,7 @@
-﻿@using Hisar.Component.Carousel
-
-@model CarouselViewModel
+﻿@using static Hisar.Component.Carousel.ComponentHelper
 
 @section styles {
-    <link rel="stylesheet" href="~/css/carousel.css" />
+    <link rel="stylesheet" href="@Content(Url, "~/css/carousel.css")" />
 }
 
 <h2>Carousel</h2>
