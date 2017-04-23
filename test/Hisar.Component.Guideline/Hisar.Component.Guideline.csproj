@@ -22,9 +22,9 @@
     </None>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="cd $(ProjectDir) &amp; dotnet hisar --build $(ProjectDir)" />
-  </Target>
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="cd $(ProjectDir) &amp; dotnet hisar build $(ProjectDir)" />
+  </Target>-->
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Hosting\ExternalComponents" />
@@ -50,7 +50,7 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.6" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>

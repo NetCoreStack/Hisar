@@ -1,4 +1,7 @@
-﻿<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+﻿@using Hisar.Component.Carousel
+
+@model CarouselViewModel
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -9,7 +12,7 @@
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="@Url.ComponentContent("~/img/banner1.svg")" alt="ASP.NET Core" class="img-responsive" />
+            <img src="@ComponentInfo.Content(Url, "~/img/banner1.svg")" alt="ASP.NET Core" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
                     Learn how to build ASP.NET CORE apps that can run anywhere.

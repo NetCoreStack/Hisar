@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hisar.Component.Guideline.Models;
+using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Hisar;
+using System;
 using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline.ViewComponents
@@ -9,7 +11,7 @@ namespace Hisar.Component.Guideline.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             await Task.CompletedTask;
-            return View();
+            return View(new GuidelineViewModel { Name = "Sample View Component: " + DateTime.Now });
         }
     }
 }

@@ -67,6 +67,16 @@ namespace NetCoreStack.Hisar
             return base.View($"{ExecutionComponentId}.Default");
         }
 
+        public new ViewViewComponentResult View<TModel>(TModel model)
+        {
+            if (ComponentHelper.IsExternalComponent)
+            {
+                return base.View(model);
+            }
+
+            return base.View($"{ExecutionComponentId}.Default", model);
+        }
+
         public new ViewViewComponentResult View(string viewName)
         {
             if (ComponentHelper.IsExternalComponent)

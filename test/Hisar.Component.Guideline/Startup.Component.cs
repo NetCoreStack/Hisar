@@ -5,19 +5,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hisar.Component.Guideline
 {
-    public static class ComponentInfo
+    public static class GuidelineComponent
     {
         public static string ComponentId { get; }
 
-        static ComponentInfo()
+        static GuidelineComponent()
         {
-            typeof(ComponentInfo).GetTypeInfo().Assembly.GetComponentId();
+            typeof(GuidelineComponent).GetTypeInfo().Assembly.GetComponentId();
         }
 
-        public static string ComponentContent(this IUrlHelper urlHelper, string contentPath)
+        public static string Content(IUrlHelper urlHelper, string contentPath)
         {
 #if !RELEASE
-            var componentHelper = ComponentInfoHelper.GetComponentHelper(urlHelper.ActionContext);
+            var componentHelper = ComponentHelperBase.GetComponentHelper(urlHelper.ActionContext);
             if (componentHelper != null)
             {
                 if (componentHelper.IsExternalComponent)
