@@ -29,7 +29,7 @@ namespace NetCoreStack.Hisar
                 contentPath = contentPath.Substring(2);
             }
 
-            contentPath = contentPath.Insert(0, string.Format(_prefixFormat, componentId));
+            contentPath = contentPath.Insert(0, string.Format(_prefixFormat, componentId.ToLowerInvariant()));
             return urlHelper.Content(contentPath);
         }
     }

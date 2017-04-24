@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\</SolutionDir>
+    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\..\</SolutionDir>
   </PropertyGroup>
 
   <ItemGroup>
@@ -56,13 +56,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj" />
-    <ProjectReference Include="..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
-    <ProjectReference Include="..\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj" />
+    <Folder Include="Filters\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
+    <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj" />
+    <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
+    <ProjectReference Include="..\..\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj" />
   </ItemGroup>
 
 </Project>
