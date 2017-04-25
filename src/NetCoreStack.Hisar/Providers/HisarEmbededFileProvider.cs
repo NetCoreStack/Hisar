@@ -34,6 +34,11 @@ namespace NetCoreStack.Hisar
             return string.IsNullOrEmpty(baseNamespace) ? string.Empty : baseNamespace + ".";
         }
 
+        protected virtual string EnsureIsComponentPart(string directoryName)
+        {
+            return directoryName;
+        }
+
         protected virtual IFileInfo FindFile(Assembly componentAssembly, string subpath, string name)
         {
             var baseNamespace = GetBaseNameSpace(componentAssembly);
@@ -71,6 +76,11 @@ namespace NetCoreStack.Hisar
             return new EmbeddedResourceFileInfo(componentAssembly, resourcePath, name, DateTimeOffset.UtcNow);
         }
 
+        protected virtual IFileInfo GetViewImportFile(string subpath, string name)
+        {
+            return new NotFoundFileInfo(subpath);
+        }
+
         protected virtual IFileInfo GetControllerFileInfo(string componentId, string subpath, string name)
         {
             if (ComponentsAssemblyLookup.TryGetValue(componentId, out Assembly componentAssembly))
@@ -87,6 +97,7 @@ namespace NetCoreStack.Hisar
 
         protected virtual IFileInfo GetComponentFileInfo(string subpath, string name)
         {
+            var directoryName = Path.GetDirectoryName(subpath);
             var nameTree = name.Split('.');
             if (nameTree.Length > 2)
             {
@@ -97,10 +108,14 @@ namespace NetCoreStack.Hisar
                 var componentViewName = string.Empty;
                 if (ComponentsAssemblyLookup.TryGetValue(componentId, out Assembly componentAssembly))
                 {
-                    var directoryName = Path.GetDirectoryName(subpath);
                     subpath = Path.Combine(directoryName, $"{viewName}.{extension}");
                     return FindFile(componentAssembly, subpath, name);
                 }
+            }
+
+            if (name == "_ViewImport.cshtml")
+            {
+                return GetViewImportFile(subpath, name);
             }
 
             return new NotFoundFileInfo(subpath);

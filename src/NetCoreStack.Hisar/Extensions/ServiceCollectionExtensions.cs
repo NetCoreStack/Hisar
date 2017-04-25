@@ -12,6 +12,8 @@ using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
+using System;
 
 namespace NetCoreStack.Hisar
 {
@@ -26,6 +28,7 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<ICommonCacheProvider, InMemoryCacheProvider>();
             services.TryAddSingleton<IJsonSerializer, JsonSerializer>();
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
+            services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
 
             // Custom view component helper
             services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
@@ -37,7 +40,8 @@ namespace NetCoreStack.Hisar
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            
             services.TryAddTransient<IHisarCacheValueProvider, HisarDefaultCacheValueProvider>();
 
-            var componentHelper = new RunningComponentHelperOfT<TStartup>();
+            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
+            var componentHelper = new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
 
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
             bool isComponent = componentHelper.IsExternalComponent;

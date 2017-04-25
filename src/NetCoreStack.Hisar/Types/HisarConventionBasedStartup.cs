@@ -20,7 +20,7 @@ namespace NetCoreStack.Hisar
         }
     }
 
-    internal class HisarConventionBasedStartup : ConventionBasedStartup
+    public class HisarConventionBasedStartup : ConventionBasedStartup
     {
         private readonly Type _startupType;
         private readonly IServiceProvider _sp;

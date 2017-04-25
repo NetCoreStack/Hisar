@@ -30,9 +30,13 @@ namespace NetCoreStack.Hisar
 
         public string ComponentId { get; }
 
-        public RunningComponentHelper()
+        public IComponentTypeResolver ComponentTypeResolver { get; }
+
+        public RunningComponentHelper(IComponentTypeResolver resolver)
         {
+            ComponentTypeResolver = resolver;
             var definition = ResolveRunningComponent();
+
             IsExternalComponent = definition.ComponentType == ComponentType.External;
             StartupType = definition.StartupType;
             ComponentId = definition.ComponentId;
@@ -43,19 +47,17 @@ namespace NetCoreStack.Hisar
 
     public class RunningComponentHelperOfT<TStartup> : RunningComponentHelper
     {
-        public RunningComponentHelperOfT()
+        public RunningComponentHelperOfT(IComponentTypeResolver resolver)
+            :base(resolver)
         {
         }
 
         protected override RunningComponentDefinition ResolveRunningComponent()
         {
             var startupType = typeof(TStartup);
-            var componentType = ComponentType.External;
             var assembly = startupType.GetTypeInfo().Assembly;
             var componentId = assembly.GetComponentId();
-
-            if (componentId.Equals(EngineConstants.HostingComponentName, StringComparison.OrdinalIgnoreCase))
-                componentType = ComponentType.Hosting;
+            var componentType = ComponentTypeResolver.Resolve(componentId);
 
             return new RunningComponentDefinition(componentId, startupType, componentType);
         }

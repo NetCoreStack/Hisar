@@ -11,7 +11,7 @@ using System.Runtime.Loader;
 
 namespace NetCoreStack.Hisar
 {
-    internal class HisarAssemblyComponentsLoader
+    public class HisarAssemblyComponentsLoader
     {
         public static readonly string ComponentConventionBaseNamespace = "Hisar.Component";
         private const string ControllerTypeNameSuffix = "Controller";

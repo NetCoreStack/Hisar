@@ -56,10 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Filters\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj" />
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
     <ProjectReference Include="..\..\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj" />
