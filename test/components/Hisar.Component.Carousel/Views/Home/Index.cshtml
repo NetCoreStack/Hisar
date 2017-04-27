@@ -1,8 +1,6 @@
-﻿@using static Hisar.Component.Carousel.ComponentHelper
-
-@section styles {
+﻿@section styles {
     <link rel="stylesheet" href="@Content(Url, "~/css/carousel.css")" />
 }
 
 <h2>Carousel</h2>
-@await Component.InvokeAsync("Carousel")
+@await Component.InvokeAsync(ResolveName)

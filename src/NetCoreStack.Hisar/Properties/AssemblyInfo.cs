@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NetCoreStack.Hisar")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription(".NET Core MVC Application Framework")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("NetCoreStack")]
 [assembly: AssemblyProduct("NetCoreStack.Hisar")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright 2017 NetCoreStack")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

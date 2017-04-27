@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using NetCoreStack.Hisar;
 using System.Reflection;
 
-namespace Hisar.Component.Carousel
+namespace Hisar.Component.Template
 {
     public static partial class ComponentHelper
     {

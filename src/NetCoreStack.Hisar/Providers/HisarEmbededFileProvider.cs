@@ -34,9 +34,10 @@ namespace NetCoreStack.Hisar
             return string.IsNullOrEmpty(baseNamespace) ? string.Empty : baseNamespace + ".";
         }
 
-        protected virtual string EnsureIsComponentPart(string directoryName)
+        protected virtual Assembly EnsureIsComponentPart(string part)
         {
-            return directoryName;
+            ComponentsAssemblyLookup.TryGetValue(part, out Assembly componentAssembly);
+            return componentAssembly;
         }
 
         protected virtual IFileInfo FindFile(Assembly componentAssembly, string subpath, string name)
@@ -76,12 +77,7 @@ namespace NetCoreStack.Hisar
             return new EmbeddedResourceFileInfo(componentAssembly, resourcePath, name, DateTimeOffset.UtcNow);
         }
 
-        protected virtual IFileInfo GetViewImportFile(string subpath, string name)
-        {
-            return new NotFoundFileInfo(subpath);
-        }
-
-        protected virtual IFileInfo GetControllerFileInfo(string componentId, string subpath, string name)
+        protected virtual IFileInfo GetViewFileInfo(string componentId, string subpath, string name)
         {
             if (ComponentsAssemblyLookup.TryGetValue(componentId, out Assembly componentAssembly))
             {
@@ -95,32 +91,46 @@ namespace NetCoreStack.Hisar
             return new NotFoundFileInfo(subpath);
         }
 
-        protected virtual IFileInfo GetComponentFileInfo(string subpath, string name)
+        protected virtual IFileInfo GetViewComponentFileInfo(string subpath, string name)
         {
             var directoryName = Path.GetDirectoryName(subpath);
+            var componentId = Path.GetFileName(directoryName);
             var nameTree = name.Split('.');
             if (nameTree.Length > 2)
             {
-                var componentId = nameTree[0];
+                var fileComponentId = nameTree[0];
                 var viewName = nameTree[1];
                 var extension = nameTree[2];
 
                 var componentViewName = string.Empty;
-                if (ComponentsAssemblyLookup.TryGetValue(componentId, out Assembly componentAssembly))
+                ComponentsAssemblyLookup.TryGetValue(componentId, out Assembly componentAssembly);
+
+                subpath = Path.Combine(directoryName, $"{viewName}.{extension}");
+                if (componentAssembly == null)
                 {
-                    subpath = Path.Combine(directoryName, $"{viewName}.{extension}");
-                    return FindFile(componentAssembly, subpath, name);
+                    if (ComponentsAssemblyLookup.TryGetValue(fileComponentId, out componentAssembly))
+                    {
+                        return FindFile(componentAssembly, subpath, name);
+                    }
                 }
+                else
+                    return FindFile(componentAssembly, subpath, name);
             }
 
-            if (name == "_ViewImport.cshtml")
+            var assembly = EnsureIsComponentPart(componentId);
+            if (assembly != null && name == "_ViewImports.cshtml")
             {
-                return GetViewImportFile(subpath, name);
+                return FindFile(assembly, "/Views/_ViewImports.cshtml", name);
             }
 
             return new NotFoundFileInfo(subpath);
         }
 
+        /// <summary>
+        /// Get embeded file from component assembly for specified subpath
+        /// </summary>
+        /// <param name="subpath"></param>
+        /// <returns <see cref="IFileInfo"/>></returns>
         public IFileInfo GetFileInfo(string subpath)
         {
             if (string.IsNullOrEmpty(subpath))
@@ -139,11 +149,11 @@ namespace NetCoreStack.Hisar
                     if (componentId.StartsWith("/"))
                         componentId = componentId.Substring(1);
                     
-                    return GetControllerFileInfo(componentId, subpath, name);
+                    return GetViewFileInfo(componentId, subpath, name);
                 }
             }
 
-            return GetComponentFileInfo(subpath, name);            
+            return GetViewComponentFileInfo(subpath, name);            
         }
 
         public IDirectoryContents GetDirectoryContents(string subpath)

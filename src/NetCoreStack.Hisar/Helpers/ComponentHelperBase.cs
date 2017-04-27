@@ -13,6 +13,17 @@ namespace NetCoreStack.Hisar
             return ServiceProviderServiceExtensions.GetService<RunningComponentHelper>(context.HttpContext.RequestServices);
         }
 
+        public static bool IsExternalComponent(ActionContext context)
+        {
+            var componentHelper = GetComponentHelper(context);
+            if (componentHelper != null)
+            {
+                return componentHelper.IsExternalComponent;
+            }
+
+            return false;
+        }
+
         public static string ResolveContentPath(IUrlHelper urlHelper, string componentId, string contentPath)
         {
             if (string.IsNullOrEmpty(contentPath))

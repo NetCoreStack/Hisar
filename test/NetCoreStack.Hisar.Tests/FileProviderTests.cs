@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Microsoft.Extensions.FileProviders;
+using System.Collections.Generic;
 
 namespace NetCoreStack.Hisar.Tests
 {
@@ -17,62 +18,86 @@ namespace NetCoreStack.Hisar.Tests
             ApplicationServices = _testBase.ApplicationServices;
         }
 
-        [Theory]
-        [InlineData("/Views/Home/Components/Carousel/Carousel.Default.cshtml")]
-        [InlineData("/Views/Shared/Components/Carousel/Carousel.Default.cshtml")]
-        [InlineData("/Views/Shared/Components/Carousel/_ViewImports.cshtml")]
-        [InlineData("/Views/Shared/Components/_ViewImports.cshtml")]
-        [InlineData("/Views/Shared/_ViewImports.cshtml")]
-        [InlineData("/_ViewImports.cshtml")]
-        public void GetComponentFileInfo(string subpath)
+        [Fact]
+        public void GetComponentFileInfo()
         {
+            var list = new List<string>
+            {
+                "/Views/Home/Components/Carousel/Carousel.Default.cshtml",
+                "/Views/Shared/Components/Carousel/Carousel.Default.cshtml",
+                "/Views/Shared/Components/Carousel/_ViewImports.cshtml",
+                "/Views/Shared/Components/_ViewImports.cshtml",
+                "/Views/Shared/_ViewImports.cshtml",
+                "/_ViewImports.cshtml"
+            };
+
             var loader = ApplicationServices.GetService<HisarAssemblyComponentsLoader>();
             var hisarEmbedFileProvider = new HisarEmbededFileProvider(loader.ComponentAssemblyLookup);
-            IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(subpath);
-            if (fileInfo == null)
+
+            foreach (var fullpath in list)
             {
+                IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(fullpath);
+                if (fileInfo == null)
+                {
 
-            }
-        }
-
-        [Theory]
-        [InlineData("/Areas/Guideline/Views/Home/Index.cshtml")]
-        [InlineData("/Areas/Guideline/Views/Home/_ViewImports.cshtml")]
-        [InlineData("/Areas/Guideline/Views/_ViewImports.cshtml")]
-        [InlineData("/Areas/Guideline/_ViewImports.cshtml")]
-        [InlineData("/Areas/_ViewImports.cshtml")]
-        [InlineData("/_ViewImports.cshtml")]
-        [InlineData("/Areas/Guideline/Views/Home/_ViewStart.cshtml")]
-        [InlineData("/Areas/Guideline/Views/_ViewStart.cshtml")]
-        [InlineData("/Areas/Guideline/_ViewStart.cshtml")]
-        [InlineData("/Areas/_ViewStart.cshtml")]
-        public void GetControllerFileInfo(string subpath)
-        {
-            var loader = ApplicationServices.GetService<HisarAssemblyComponentsLoader>();
-            var hisarEmbedFileProvider = new HisarEmbededFileProvider(loader.ComponentAssemblyLookup);
-            IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(subpath);
-            if (fileInfo == null)
-            {
-
+                }
             }
         }
 
         [Fact]
-        [InlineData("/Areas/Guideline/Views/Home/Components/MyTest/Guideline.Default.cshtml")]
-        [InlineData("/Areas/Guideline/Views/Shared/Components/MyTest/Guideline.Default.cshtml")]
-        [InlineData("/Views/Shared/Components/MyTest/Guideline.Default.cshtml")]
-        [InlineData("/Views/Shared/Components/MyTest/_ViewImports.cshtml")]
-        [InlineData("/Views/Shared/Components/_ViewImports.cshtml")]
-        [InlineData("/Views/Shared/_ViewImports.cshtml")]
-        [InlineData("/_ViewImports.cshtml")]
-        public void GetComponentWithFullPath(string subpath)
+        public void GetControllerFileInfo()
         {
+            var list = new List<string>
+            {
+                "/Areas/Guideline/Views/Home/Index.cshtml",
+                "/Areas/Guideline/Views/Home/_ViewImports.cshtml",
+                "/Areas/Guideline/Views/_ViewImports.cshtml",
+                "/Areas/Guideline/_ViewImports.cshtml",
+                "/Areas/_ViewImports.cshtml",
+                "/_ViewImports.cshtml",
+                "/Areas/Guideline/Views/Home/_ViewStart.cshtml",
+                "/Areas/Guideline/Views/_ViewStart.cshtml",
+                "/Areas/Guideline/_ViewStart.cshtml",
+                "/Areas/_ViewStart.cshtml"
+            };
+
             var loader = ApplicationServices.GetService<HisarAssemblyComponentsLoader>();
             var hisarEmbedFileProvider = new HisarEmbededFileProvider(loader.ComponentAssemblyLookup);
-            IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(subpath);
-            if (fileInfo == null)
-            {
 
+            foreach (var fullpath in list)
+            {
+                IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(fullpath);
+                if (fileInfo == null)
+                {
+
+                }
+            }
+        }
+
+        [Fact]
+        public void GetComponentWithFullPath()
+        {
+            var list = new List<string>
+            {
+                "/Areas/Guideline/Views/Home/Components/MyTest/Guideline.Default.cshtml",
+                "/Areas/Guideline/Views/Shared/Components/MyTest/Guideline.Default.cshtml",
+                "/Views/Shared/Components/MyTest/Guideline.Default.cshtml",
+                "/Views/Shared/Components/MyTest/_ViewImports.cshtml",
+                "/Views/Shared/Components/_ViewImports.cshtml",
+                "/Views/Shared/_ViewImports.cshtml",
+                "/_ViewImports.cshtml"
+            };
+
+            var loader = ApplicationServices.GetService<HisarAssemblyComponentsLoader>();
+            var hisarEmbedFileProvider = new HisarEmbededFileProvider(loader.ComponentAssemblyLookup);
+
+            foreach (var fullpath in list)
+            {
+                IFileInfo fileInfo = hisarEmbedFileProvider.GetFileInfo(fullpath);
+                if (fileInfo == null)
+                {
+
+                }
             }
         }
     }

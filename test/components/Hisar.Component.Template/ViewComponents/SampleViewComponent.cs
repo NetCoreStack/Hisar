@@ -1,10 +1,10 @@
-﻿using Hisar.Component.Guideline.Models;
+﻿using Hisar.Component.Template.Models;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Hisar;
 using System;
 using System.Threading.Tasks;
 
-namespace Hisar.Component.Guideline.ViewComponents
+namespace Hisar.Component.Template.ViewComponents
 {
     public class SampleViewComponent : HisarViewComponent
     {

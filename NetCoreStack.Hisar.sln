@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Guideline",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreStack.Hisar.Tests", "test\NetCoreStack.Hisar.Tests\NetCoreStack.Hisar.Tests.csproj", "{50963AE7-841E-4934-9ECF-1C1250B341FB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Template", "test\components\Hisar.Component.Template\Hisar.Component.Template.csproj", "{EF6A7C42-C95B-4CA9-8C1F-B22485439696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{50963AE7-841E-4934-9ECF-1C1250B341FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50963AE7-841E-4934-9ECF-1C1250B341FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50963AE7-841E-4934-9ECF-1C1250B341FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF6A7C42-C95B-4CA9-8C1F-B22485439696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF6A7C42-C95B-4CA9-8C1F-B22485439696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF6A7C42-C95B-4CA9-8C1F-B22485439696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF6A7C42-C95B-4CA9-8C1F-B22485439696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,5 +83,6 @@ Global
 		{5A5B5736-AFBB-4C8C-A2BA-731795974B07} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 		{7E260A2E-702A-46CA-9824-B9B843017FE3} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 		{50963AE7-841E-4934-9ECF-1C1250B341FB} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
+		{EF6A7C42-C95B-4CA9-8C1F-B22485439696} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 	EndGlobalSection
 EndGlobal

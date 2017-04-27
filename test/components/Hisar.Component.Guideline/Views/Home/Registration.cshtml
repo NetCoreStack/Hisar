@@ -2,8 +2,6 @@
     ViewData["Title"] = "Registration Page";
 }
 
-@using Hisar.Component.Guideline.Models
-
 <h2>@ViewData["Title"].</h2>
 <h3>@ViewData["Message"]</h3>
 
@@ -38,8 +36,9 @@
         </form>
         <br />
 
-        @await Component.InvokeAsync("Sample")
-        @await Component.InvokeAsync("Sample2")
+        @await Component.InvokeAsync(ResolveName("Sample"))
+        @await Component.InvokeAsync(ResolveName("Sample2"))
+        @await Component.InvokeAsync(ResolveName<WithAttribute>())
     </div>
 
     @section scripts {

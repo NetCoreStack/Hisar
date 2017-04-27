@@ -12,6 +12,11 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <PackageLicenseUrl>https://github.com/NetCoreStack/Hisar/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/NetCoreStack/Hisar</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/NetCoreStack/Hisar</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>dotnet,mvc,application-framework,cross-platform,cms-framework,extensibiliy</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

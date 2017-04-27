@@ -1,0 +1,9 @@
+﻿<h1 id="componentName">Sample Component</h1>
+<div class="row">
+    <img src="@Content(Url, "~/img/banner1.svg")" />
+</div>
+<hr />
+@await Component.InvokeAsync("Sample")
+<hr />
+@ViewBag.StrProperty
+<hr />
