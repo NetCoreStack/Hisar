@@ -36,9 +36,9 @@
         </form>
         <br />
 
-        @await Component.InvokeAsync(ResolveName("Sample"))
-        @await Component.InvokeAsync(ResolveName("Sample2"))
-        @await Component.InvokeAsync(ResolveName<WithAttribute>())
+        @await Component.InvokeAsync(ViewContext.ResolveName("Sample"))
+        @await Component.InvokeAsync(ViewContext.ResolveName("Sample2"))
+        @await Component.InvokeAsync(ViewContext.ResolveName<WithAttribute>())
     </div>
 
     @section scripts {

@@ -1,5 +1,6 @@
 // Hisar Cli auto generated component class!
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using NetCoreStack.Hisar;
 using System.Reflection;
@@ -15,37 +16,32 @@ namespace Hisar.Component.Carousel
             ComponentId = typeof(ComponentHelper).GetTypeInfo().Assembly.GetComponentId();
         }
 
-        public static string Content(IUrlHelper urlHelper, string contentPath)
+        public static string ComponentContent(this IUrlHelper urlHelper, string contentPath)
         {
-#if !RELEASE
-            var componentHelper = ComponentHelperBase.GetComponentHelper(urlHelper.ActionContext);
-            if (componentHelper != null)
+            if (ComponentHelperBase.IsExternalComponent(urlHelper.ActionContext))
             {
-                if (componentHelper.IsExternalComponent)
-                {
-                    return urlHelper.Content(contentPath);
-                }
+                return urlHelper.Content(contentPath);
             }
-#endif
 
             return ComponentHelperBase.ResolveContentPath(urlHelper, ComponentId, contentPath);
         }
-
-#pragma warning disable 0162
-        public static string ResolveName(string name)
+        
+        public static string ResolveName(this ViewContext context, string name)
         {
-#if !RELEASE
-            return name;
-#endif
+            if (ComponentHelperBase.IsExternalComponent(context))
+            {
+                return name;
+            }
 
             return $"{ComponentId}.{name}";
         }
 
-        public static string ResolveName<TComponent>()
+        public static string ResolveName<TComponent>(this ViewContext context)
         {
-#if !RELEASE
-            return ViewComponentConventions.GetComponentName(typeof(TComponent).GetTypeInfo());
-#endif
+            if (ComponentHelperBase.IsExternalComponent(context))
+            {
+                return ViewComponentConventions.GetComponentName(typeof(TComponent).GetTypeInfo());
+            }
 
             var componentName = ViewComponentConventions.GetComponentName(typeof(TComponent).GetTypeInfo());
             return $"{ComponentId}.{componentName}";

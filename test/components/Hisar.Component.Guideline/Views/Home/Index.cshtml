@@ -1,7 +1,7 @@
 ﻿<h1 id="componentName">Guideline Component - II</h1>
 <a class="btn btn-default" href="@Url.Action("registration", "home")">Go To Registration</a>
 <hr />
-@await Component.InvokeAsync(ResolveName("MyTest"))
+@await Component.InvokeAsync(ViewContext.ResolveName("MyTest"))
 <hr />
 @ViewBag.ExternalLibrary
 <hr />

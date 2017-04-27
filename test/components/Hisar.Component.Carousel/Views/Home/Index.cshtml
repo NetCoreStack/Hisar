@@ -1,6 +1,6 @@
 ﻿@section styles {
-    <link rel="stylesheet" href="@Content(Url, "~/css/carousel.css")" />
+    <link rel="stylesheet" href="@Url.ComponentContent("~/css/carousel.css")" />
 }
 
 <h2>Carousel</h2>
-@await Component.InvokeAsync(ResolveName)
+@await Component.InvokeAsync(ViewContext.ResolveName("Carousel"))

@@ -16,7 +16,7 @@ namespace Hisar.Component.Guideline
             ComponentId = typeof(ComponentHelper).GetTypeInfo().Assembly.GetComponentId();
         }
 
-        public static string Content(IUrlHelper urlHelper, string contentPath)
+        public static string ComponentContent(this IUrlHelper urlHelper, string contentPath)
         {
             if (ComponentHelperBase.IsExternalComponent(urlHelper.ActionContext))
             {
