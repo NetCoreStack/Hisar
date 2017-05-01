@@ -1,11 +1,14 @@
 ﻿
 <div class="row">
-    <div class="col-md-6 col-lg-6">
+    <div class="col-md-12">
+        @await Component.InvokeAsync("Carousel.Carousel")
+    </div>
+    <div class="col-md-12">
+        <hr />
         @await Component.InvokeAsync("Guideline.Sample")
     </div>    
-</div>
-<div>
-    <div class="col-lg-12">
-        @await Component.InvokeAsync("Carousel")
-    </div>
+    <div class="col-md-6 col-lg-6">
+        <hr />
+        @await Component.InvokeAsync("Carousel.Sample")
+    </div>  
 </div>

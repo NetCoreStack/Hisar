@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace NetCoreStack.Hisar
 {
@@ -55,6 +56,8 @@ namespace NetCoreStack.Hisar
             }
             else
             {
+                services.AddSingleton<IViewComponentSelector, HostingViewComponentSelector>();
+
                 builder = services.AddMvc(options => {
                     options.Filters.Add(new HisarExceptionFilter());
                     options.Conventions.Add(new NameSpaceRoutingConvention());
