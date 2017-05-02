@@ -11,7 +11,35 @@ The purpose of this framework is that eliminate the **monolithic application cha
 
 Despite the other framework you don't need to reference any component (module) to main application but if you want the component to act as part of the main application you can copy the output .dll to ExternalComponents folder of main application so the Hisar platform engine resolves all dependencies, controllers, views, contents and then registers the component with convention name.
 
-For example; you got a component which is name **Hisar.Component.Carousel**. For convention, Hisar engine resolves that namespace as a **Carousel** component when to act as a part of the main application. For this component, controllers will work as an **Area** with http://\<domainname\>/guideline URL prefix in main application.
+#### Controllers
+
+For example; you got a component which is name **Hisar.Component.Carousel**. For convention, Hisar engine resolves that namespace as a **Carousel** component when to act as a part of the main application. For this component, **Controllers** will work as an **Area** with http://\<domainname\>/carousel URL prefix in main application.
+
+#### ViewComponents
+[View components]((https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components)) are similar to partial views, but they are much more powerful. Hisar ViewComponents work as follows;
+
+```csharp
+@section styles {
+    <link rel="stylesheet" href="@Url.ComponentContent("~/css/carousel.css")" />
+}
+
+<h2>Carousel</h2>
+@await Component.InvokeAsync(ViewContext.ResolveName("Carousel"))
+```
+    ViewContext.ResolveName("Carousel")
+
+extension method creates convention name for the executing view component according to running component state. In this way, the Component (module, which has CarouselViewComponent) works on its own and resolve the convenient name for any state. (Standalone app or part of the main application)
+
+#### Component Contents
+```csharp
+<img src="@Url.ComponentContent("~/img/banner1.svg")" alt="ASP.NET Core" class="img-responsive" />
+```
+
+    Url.ComponentContent("~/img/banner1.svg")
+
+this extension method makes the content accessible for the specified path for any state.
+
+#### Startup.cs
 
 **Startup.cs** is the bootstrap - starter class for the ASP.NET Core web application. We tried to preserve as much as possible in the same way that file except 
 
