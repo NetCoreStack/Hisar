@@ -55,8 +55,8 @@ our custom startup wrapper to handle component and application acts. For more de
 When you start develop the component you can fallow these steps;
  - Create a web application with Hisar.Component prefix. (Hisar.Component.YourComponentName)
  - Add NetCoreStack.Hisar package to the project.
- - Update the line UseStartup<Startup> to UseStartup<DefaultHisarStartup<Startup>> for WebHostBuilder class.
- - Add WebCli Tools to the project manually
+ - Update the line UseStartup\<Startup> to UseStartup\<DefaultHisarStartup<Startup>> for WebHostBuilder.
+ - Add Hisar WebCli tool to the project manually
     ```xml
     <ItemGroup>
         <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.18" />
