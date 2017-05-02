@@ -41,7 +41,7 @@ this extension method makes the content accessible for the specified path for an
 
 #### Startup.cs
 
-**Startup.cs** is the bootstrap - starter class for the ASP.NET Core web application. We tried to preserve as much as possible in the same way that file except 
+**Startup.cs** is the bootstrap - starter class for the ASP.NET Core web application. We tried to preserve as much as possible in the same way this file except 
 
     public static void ConfigureRoutes(IRouteBuilder routes)
 
@@ -51,8 +51,44 @@ for the method mentioned above and
 
 our custom startup wrapper to handle component and application acts. For more details, you can check the test projects source code in this repository.
 
+## Component Development
+When you start develop the component you can fallow these steps;
+ - Create an web application with Hisar.Component prefix. (Hisar.Component.YourComponentName)
+ - Add NetCoreStack.Hisar package to the project.
+ - Update the line UseStartup<Startup> to UseStartup<DefaultHisarStartup<Startup>> for WebHostBuilder class.
+ - Add WebCli Tools to the project manually
+    ```xml
+    <ItemGroup>
+        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.18" />
+    </ItemGroup>
+    ```
+ - Add PreBuild event to generate component helper classes.
+    ```xml
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build $(ProjectDir)" />
+    </Target>
+    ```
+
+ - Add all the required contents as embedded resources.
+    ```xml
+    <ItemGroup>
+        <EmbeddedResource Include="Views\**\*.cshtml" />
+        <EmbeddedResource Include="wwwroot\**\*.*" />
+        <None Update="wwwroot\**\*">
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </None>
+    </ItemGroup>
+    ```
+ - If you have any templating directory for static serve files or hosting main web application, start the Web Cli tool on project root directory from command line. It will start the Web Cli application on **http://localhost:1444** to manage all main application contents or provide _Layout.cshtml if no appdir option specified. (One working Cli tool is enough for same templating usage)
+
+    dotnet hisar --appdir \<the-path-of-your-hosting-app-relative-or-absolute> 
+
 ## Tools
-[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core CLI tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core Cli tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+
+## TODO
+ - Hisar Package Repository
+ - Component Marketplace (Upload, search, download and enable the component)
 
 ## Contributing to Repository
  - Fork and clone locally.
