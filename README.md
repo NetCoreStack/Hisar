@@ -55,7 +55,7 @@ our custom startup wrapper to handle component and application acts. For more de
 When you start develop the component you can fallow these steps;
  - Create a web application with Hisar.Component prefix. (Hisar.Component.YourComponentName)
  - Add NetCoreStack.Hisar package to the project.
- - Update the line UseStartup\<Startup> to UseStartup\<DefaultHisarStartup<Startup>> for WebHostBuilder.
+ - Update the line UseStartup\<Startup> to UseStartup\<DefaultHisarStartup\<Startup>> for WebHostBuilder.
  - Add Hisar WebCli tool to the project manually
     ```xml
     <ItemGroup>
@@ -81,7 +81,7 @@ When you start develop the component you can fallow these steps;
     ```
  - If you have any templating directory for static serve files or hosting main web application, start the Web Cli tool on project root directory from command line. It will start the Web Cli application on **http://localhost:1444** to manage all main application contents or provide _Layout.cshtml if no appdir option specified. (One working Cli tool is enough for same templating usage)
 
-    dotnet hisar --appdir \<the-path-of-your-hosting-app-relative-or-absolute> 
+        dotnet hisar --appdir \<the-path-of-your-hosting-app-relative-or-absolute> 
 
 ## Tools
 [Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core Cli tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
