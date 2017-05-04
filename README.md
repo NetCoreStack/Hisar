@@ -59,13 +59,13 @@ When you start develop the component you can fallow these steps;
  - Add Hisar WebCli tool to the project manually
     ```xml
     <ItemGroup>
-        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.0.18" />
+        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.1.0" />
     </ItemGroup>
     ```
  - Add PreBuild event to generate component helper classes.
     ```xml
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build $(ProjectDir)" />
+        <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build &quot;$(ProjectDir)&quot;" />
     </Target>
     ```
 
