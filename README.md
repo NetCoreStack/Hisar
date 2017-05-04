@@ -69,6 +69,28 @@ When you start develop the component you can fallow these steps;
     </Target>
     ```
 
+- Add Hisar Web Cli Services (Tooling)
+    ```csharp
+    public void ConfigureServices(IServiceCollection services)
+    {
+        #if !RELEASE
+        services.AddCliSocket<Startup>();
+        #endif
+        
+        // ...
+    }
+
+    public void Configure(IApplicationBuilder app, ...)
+    {
+        #if !RELEASE
+        app.UseCliProxy();
+        #endif
+        
+        // ...
+    }
+
+    ```
+
  - Add all the required contents as embedded resources.
     ```xml
     <ItemGroup>
