@@ -1,7 +1,7 @@
 ﻿using NetCoreStack.Hisar;
 using System.Collections.Generic;
 
-namespace Hosting
+namespace Landing.Hosting
 {
     public static class HostingFactory
     {

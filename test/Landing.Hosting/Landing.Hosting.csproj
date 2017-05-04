@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>Hosting</AssemblyName>
+    <AssemblyName>Landing.Hosting</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Hisar.WebClient.Hosting</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
@@ -50,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ExternalComponents\" />
     <Folder Include="ExternalComponents\" />
     <Folder Include="ExternalComponents\" />
     <Folder Include="ExternalComponents\" />

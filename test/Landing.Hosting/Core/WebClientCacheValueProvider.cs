@@ -1,7 +1,7 @@
 ﻿using NetCoreStack.Hisar;
 using System;
 
-namespace Hosting
+namespace Landing.Hosting
 {
     public class WebClientCacheValueProvider : IHisarCacheValueProvider
     {

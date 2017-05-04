@@ -1,7 +1,7 @@
 ﻿using NetCoreStack.Hisar.Server;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Hosting.Controllers
+namespace Landing.Hosting.Controllers
 {
     public class HomeController : HisarControllerServerBase
     {

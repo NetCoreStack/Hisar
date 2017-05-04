@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
-namespace Hosting.Controllers
+namespace Landing.Hosting.Controllers
 {
     public class TestController : Controller
     {

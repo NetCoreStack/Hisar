@@ -10,7 +10,7 @@ using NetCoreStack.Data.Context;
 using System;
 using System.IO;
 
-namespace Hosting
+namespace Landing.Hosting
 {
     public class Startup
     {
