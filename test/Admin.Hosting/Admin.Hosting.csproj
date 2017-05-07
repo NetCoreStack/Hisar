@@ -5,55 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\css\bootstrap.min.css" />
-    <Content Include="wwwroot\css\bootstrap.min.css.map" />
-    <Content Include="wwwroot\css\custom.css" />
-    <Content Include="wwwroot\fonts\fontawesome-webfont.eot" />
-    <Content Include="wwwroot\fonts\fontawesome-webfont.svg" />
-    <Content Include="wwwroot\fonts\fontawesome-webfont.ttf" />
-    <Content Include="wwwroot\fonts\fontawesome-webfont.woff" />
-    <Content Include="wwwroot\fonts\fontawesome-webfont.woff2" />
-    <Content Include="wwwroot\fonts\FontAwesome.otf" />
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="wwwroot\img\back_disabled.png" />
-    <Content Include="wwwroot\img\back_enabled.png" />
-    <Content Include="wwwroot\img\back_enabled_hover.png" />
-    <Content Include="wwwroot\img\forward_disabled.png" />
-    <Content Include="wwwroot\img\forward_enabled.png" />
-    <Content Include="wwwroot\img\forward_enabled_hover.png" />
-    <Content Include="wwwroot\img\loading.gif" />
-    <Content Include="wwwroot\img\user.png" />
-    <Content Include="wwwroot\js\custom.js" />
-    <Content Include="wwwroot\js\custom.min.js" />
-    <Content Include="wwwroot\js\jquery.min.js" />
-    <Content Include="wwwroot\js\jquery.min.map" />
-    <Content Include="wwwroot\js\skycons.js" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.1" />
-    <PackageReference Include="NetCoreStack.Hisar" Version="1.0.0-preview-204" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Folder Include="ExternalComponents\" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <None Include="wwwroot\css\font-awesome.min.css" />
-    <None Include="wwwroot\js\bootstrap.min.js" />
+    <ProjectReference Include="..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
   </ItemGroup>
-
 
 </Project>
