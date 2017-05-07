@@ -33,11 +33,12 @@ namespace NetCoreStack.Hisar
             {
                 return new NotFoundFileInfo(name);
             }
-            
-            var response = _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/page/getfile?fullname=" + fullname)).GetAwaiter().GetResult();
+
+            var response = _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, "api/page/getfile?fullname=" + fullname)).Result;
             if (response.IsSuccessStatusCode)
             {
-                return new InMemoryFileInfo(name, subpath, Encoding.UTF8.GetBytes(response.Content.ReadAsStringAsync().GetAwaiter().GetResult()), DateTime.UtcNow);
+                byte[] bytes = response.Content.ReadAsByteArrayAsync().Result;
+                return new InMemoryFileInfo(name, subpath, bytes, DateTime.UtcNow);
             }
 
             return new NotFoundFileInfo(name);

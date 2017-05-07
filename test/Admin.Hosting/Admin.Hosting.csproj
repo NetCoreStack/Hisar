@@ -4,6 +4,36 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Include="wwwroot\css\bootstrap.min.css" />
+    <Content Include="wwwroot\css\bootstrap.min.css.map" />
+    <Content Include="wwwroot\css\custom.css" />
+    <Content Include="wwwroot\fonts\fontawesome-webfont.eot" />
+    <Content Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <Content Include="wwwroot\fonts\fontawesome-webfont.ttf" />
+    <Content Include="wwwroot\fonts\fontawesome-webfont.woff" />
+    <Content Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <Content Include="wwwroot\fonts\FontAwesome.otf" />
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="wwwroot\img\back_disabled.png" />
+    <Content Include="wwwroot\img\back_enabled.png" />
+    <Content Include="wwwroot\img\back_enabled_hover.png" />
+    <Content Include="wwwroot\img\forward_disabled.png" />
+    <Content Include="wwwroot\img\forward_enabled.png" />
+    <Content Include="wwwroot\img\forward_enabled_hover.png" />
+    <Content Include="wwwroot\img\loading.gif" />
+    <Content Include="wwwroot\img\user.png" />
+    <Content Include="wwwroot\js\custom.js" />
+    <Content Include="wwwroot\js\custom.min.js" />
+    <Content Include="wwwroot\js\jquery.min.js" />
+    <Content Include="wwwroot\js\jquery.min.map" />
+    <Content Include="wwwroot\js\skycons.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
@@ -17,8 +47,12 @@
 
   <ItemGroup>
     <Folder Include="ExternalComponents\" />
-    <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\fonts\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\css\font-awesome.min.css" />
+    <None Include="wwwroot\js\bootstrap.min.js" />
   </ItemGroup>
 
 
