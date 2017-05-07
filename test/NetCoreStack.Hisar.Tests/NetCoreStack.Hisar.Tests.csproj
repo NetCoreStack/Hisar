@@ -28,18 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ExternalComponents\Hisar.CommonLibrary.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ExternalComponents\Hisar.Component.Carousel.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ExternalComponents\Hisar.Component.Guideline.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ExternalComponents\Hisar.Component.Template.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="ExternalComponents\" />
   </ItemGroup>
 
 </Project>
