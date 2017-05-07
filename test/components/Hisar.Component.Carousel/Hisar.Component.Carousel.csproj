@@ -36,7 +36,7 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.1.1" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.1.2" />
   </ItemGroup>
 
   <ItemGroup>
