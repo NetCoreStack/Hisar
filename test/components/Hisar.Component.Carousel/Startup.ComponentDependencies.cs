@@ -7,8 +7,8 @@ namespace Hisar.Component.Carousel
     {
         public static IReadOnlyDictionary<string, string> ComponentDependencies { get; } = new Dictionary<string, string>
         {
-            ["Microsoft.AspNetCore"] = "1.1.1",
-			["Microsoft.Extensions.Configuration.CommandLine"] = "1.1.1"
+            ["Microsoft.AspNetCore"] = "1.1.2",
+			["Microsoft.Extensions.Configuration.CommandLine"] = "1.1.2"
 
         };
     }
