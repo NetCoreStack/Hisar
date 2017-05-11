@@ -30,7 +30,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-ExternalComponents/
+ExternalComponents/*
 
 # Visual Studo 2015 cache/options directory
 .vs/
