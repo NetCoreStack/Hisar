@@ -1,0 +1,32 @@
+﻿@section styles{
+    
+    @*<script src="~/js/knockout-3.4.2.js"></script>*@
+    <link href="@Url.ComponentContent("~/css/bootstrap-toggle.min.css")" rel="stylesheet" />
+    <style>
+        #cmContainer{ position: relative; overflow: hidden;}
+         .font-consolas{font-family: Consolas;}
+        .list-group.has-sub-menu .list-group-submenu{border-left:5px solid #ddd;}
+        .list-group.has-sub-menu .menu-ico-collapse {float: right;margin-left: 10px;}
+        .list-group.has-sub-menu .list-group-item.collapsed .menu-ico-collapse .fa-angle-down:before {content: "\f107";}
+        .list-group.has-sub-menu .list-group-item .menu-ico-collapse .fa-angle-down:before {content: "\f106";}
+        .list-group.has-sub-menu .list-group-submenu .list-group-item{padding-left:10px;}
+        .list-group.has-sub-menu .list-group-submenu .list-group-item i.fa{margin-right:5px;}
+        .list-group.has-sub-menu .list-group-submenu .list-group-item:first-child {border-top-right-radius: 0;border-top-left-radius: 0;}
+        .list-group.has-sub-menu .list-group-submenu .list-group-item:last-child {margin-bottom: -1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+    </style>
+}
+
+@section scripts{
+    
+    <script src="@Url.ComponentContent("~/js/bootstrap-toggle.min.js")"></script>
+    <script src="@Url.ComponentContent("~/js/componentManagement.js")"></script>  
+    
+    <script>
+        $(function () {
+            
+        })
+    </script>
+}
+
+
+@await Component.InvokeAsync(ViewContext.ResolveName("CoreManagement"))
