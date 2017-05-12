@@ -11,7 +11,7 @@ namespace Hisar.Component.CoreManagement.Controllers
     {
         public IActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -26,18 +26,14 @@ namespace Hisar.Component.CoreManagement.Controllers
                     PackageVersion= "1.2.3.4",
                     Authors= "Gencebay Demir",
                     Company= "Bilge Adam Bilişim Hiz. Ltd. Şti.",
-                    Product= "Carousel",
                     Description= "NetcoreStack Hisar Carousel",
                     Copyright= "Opengl Licence",
                     LicenceUrl= "http://opengl.com",
                     ProjectUrl= "https://github.com/NetCoreStack/Hisar",
-                    IconUrl= "https://cdn0.iconfinder.com/data/icons/summer-2/128/Summer_512px-04.png",
+                    IconUrl= "https://cdn3.iconfinder.com/data/icons/google-suits-1/32/21_g_suit_google_pack_service_image-128.png",
                     RepositoryUrl= "https://github.com/NetCoreStack/Hisar",
                     Tags= "Hisar,Carousel,Slider,Plugin",
                     ReleaseNotes= "<section><h2>Your placeholder text :</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ad rem redeamus; Sumenda potius quam expetenda. <mark>Maximus dolor, inquit, brevis est.</mark> Duo Reges: constructio interrete.</p><ol><li>Atque haec ita iustitiae propria sunt, ut sint virtutum reliquarum communia.</li><li>Hoc simile tandem est?</li><li>Ad eas enim res ab Epicuro praecepta dantur.</li><li>Ut in voluptate sit, qui epuletur, in dolore, qui torqueatur.</li></ol><pre> 	 Quae quod Aristoni et Pyrrhoni omnino visa sunt pro nihilo, 	 ut inter optime valere et gravissime aegrotare nihil prorsus 	 dicerent interesse, recte iam pridem contra eos desitum est 	 disputari. 	 Contineo me ab exemplis. 	 </pre></section>",
-                    NeutrelLanguage= "Tuskish,English",
-                    Version= "2.0.0.0",
-                    FileVersion= "3.0.0.0",
                     Components = new List<ComponentViewModel>()
                     {
                         new ComponentViewModel()
@@ -135,16 +131,6 @@ namespace Hisar.Component.CoreManagement.Controllers
                     Company= "Bilge Adam Bilişim Hiz. Ltd. Şti.",
                     Product= "Carousel",
                     Description= "NetcoreStack Hisar Guideline",
-                    Copyright= "Opengl Licence",
-                    LicenceUrl= "http://opengl.com",
-                    ProjectUrl= "https://github.com/NetCoreStack/Hisar",
-                    IconUrl= "https://cdn0.iconfinder.com/data/icons/summer-2/128/Summer_512px-04.png",
-                    RepositoryUrl= "https://github.com/NetCoreStack/Hisar",
-                    Tags= "Hisar,Guideline,Plugin",
-                    ReleaseNotes= "<section><h2>Your placeholder text :</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ad rem redeamus; Sumenda potius quam expetenda. <mark>Maximus dolor, inquit, brevis est.</mark> Duo Reges: constructio interrete.</p><ol><li>Atque haec ita iustitiae propria sunt, ut sint virtutum reliquarum communia.</li><li>Hoc simile tandem est?</li><li>Ad eas enim res ab Epicuro praecepta dantur.</li><li>Ut in voluptate sit, qui epuletur, in dolore, qui torqueatur.</li></ol><pre> 	 Quae quod Aristoni et Pyrrhoni omnino visa sunt pro nihilo, 	 ut inter optime valere et gravissime aegrotare nihil prorsus 	 dicerent interesse, recte iam pridem contra eos desitum est 	 disputari. 	 Contineo me ab exemplis. 	 </pre></section>",
-                    NeutrelLanguage= "Tuskish,English",
-                    Version= "2.0.0.0",
-                    FileVersion= "3.0.0.0",
                     Components = new List<ComponentViewModel>()
                     {
                         new ComponentViewModel()
