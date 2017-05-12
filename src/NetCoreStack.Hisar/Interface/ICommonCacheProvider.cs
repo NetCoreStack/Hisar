@@ -9,17 +9,16 @@ namespace NetCoreStack.Hisar
     {
         List<TEntity> GetList<TEntity>();
 
-        object GetObject(string key);
+        object GetItem(string key);
 
-        object SetObject(string key, object value, CacheProviderOptions options);
-
-        T GetObject<T>(string key);
+        object SetItem(string key, object value, CacheProviderOptions options);
 
         void Remove(string key);
 
         TEntity GetItem<TEntity>(Func<TEntity, bool> idSelector);
+        
+        TEntity GetItem<TEntity>(string id) where TEntity : IEntityIdentity<string>;
 
-        // TODO EntityIdentity
-        TEntity GetItem<TEntity>(long id) where TEntity : EntityIdentity;
+        TEntity GetItem<TEntity, TKey>(TKey id) where TEntity : IEntityIdentity<TKey> where TKey : class;
     }
 }

@@ -50,7 +50,7 @@ namespace NetCoreStack.Hisar
                             var cacheProvider = GetCacheProvider(context);
                             if (cacheProvider != null)
                             {
-                                cacheProvider.SetObject(key, value, new CacheProviderOptions
+                                cacheProvider.SetItem(key, value, new CacheProviderOptions
                                 {
                                     Priority = CacheItemPriority.NeverRemove,
                                     AbsoluteExpiration = absoluteExpiration

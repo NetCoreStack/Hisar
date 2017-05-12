@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NetCoreStack.Data.Contracts;
+using System;
 
 namespace Hisar.Component.Guideline.Models
 {
-    public class GuidelineViewModel
+    public class GuidelineEntity : EntityIdentityBson
     {
         public string Name { get; set; }
         public int Age { get; set; }

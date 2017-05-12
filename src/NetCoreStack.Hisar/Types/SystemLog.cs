@@ -1,4 +1,5 @@
 ﻿using NetCoreStack.Contracts;
+using NetCoreStack.Data.Contracts;
 using System;
 
 namespace NetCoreStack.Hisar

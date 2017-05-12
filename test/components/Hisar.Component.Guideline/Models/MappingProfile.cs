@@ -10,7 +10,7 @@ namespace Hisar.Component.Guideline.Models
     {
         public MappingProfile()
         {
-            CreateMap<GuidelineEntityBson, GuidelineViewModel>();
+            CreateMap<GuidelineEntity, GuidelineViewModel>();
         }
     }
 }

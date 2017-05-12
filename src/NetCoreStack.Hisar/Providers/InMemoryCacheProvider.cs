@@ -62,7 +62,7 @@ namespace NetCoreStack.Hisar
             return (List<TEntity>)value;
         }
 
-        public object SetObject(string key, object value, CacheProviderOptions options)
+        public object SetItem(string key, object value, CacheProviderOptions options)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -89,14 +89,9 @@ namespace NetCoreStack.Hisar
             return value;
         }
 
-        public object GetObject(string key)
+        public object GetItem(string key)
         {
             return _memoryCache.Get(key);
-        }
-
-        public T GetObject<T>(string key)
-        {
-            return (T)_memoryCache.Get(key);
         }
 
         public void Remove(string key)
@@ -104,15 +99,20 @@ namespace NetCoreStack.Hisar
             _memoryCache.Remove(key);
         }
 
-        public TEntity GetItem<TEntity>(long id) where TEntity : EntityIdentity
-        {
-            return GetItem((TEntity e) => e.Id == id);
-        }
-
         public TEntity GetItem<TEntity>(Func<TEntity, bool> idSelector)
         {
             var list = GetList<TEntity>();
             return list.SingleOrDefault(idSelector);
+        }
+
+        public TEntity GetItem<TEntity>(string id) where TEntity : IEntityIdentity<string>
+        {
+            return GetItem((TEntity e) => e.Id == id);
+        }
+
+        public TEntity GetItem<TEntity, TKey>(TKey id) where TEntity : IEntityIdentity<TKey> where TKey : class
+        {
+            return GetItem((TEntity e) => e.Id == id);
         }
     }
 }

@@ -35,7 +35,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
-    <PackageReference Include="NetCoreStack.Mvc" Version="1.0.0-preview-218" />
+    <PackageReference Include="NetCoreStack.Data.Contracts" Version="1.0.6" />
+    <PackageReference Include="NetCoreStack.Mvc" Version="1.0.0-preview-250" />
     <PackageReference Include="NetCoreStack.WebSockets.ProxyClient" Version="1.0.3" />
   </ItemGroup>
 

@@ -1,27 +1,38 @@
 ﻿@{
-    ViewData["Title"] = "Registration Page";
+    var configs = new ViewConfigurations
+    {
+        FormId = "registrationForm",
+        ApiUrlRoot = Url.Action("Registration", "Home"),
+        GridName = "registrationGrid"
+    };
 }
-
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
 @model GuidelineViewModel
 
     <div class="container">
-        <form asp-action="Registration" asp-controller="Home">
+        <form id="@configs.FormId">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-md-2 control-label">Name</label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(x => x.Name, htmlAttributes: new { @class = "form-control" })
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
                     <hr />
                     <div class="form-group">
                         <label class="col-md-2 control-label">Age</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" asp-for="Age">
+                            <input type="text" asp-for="Age" class="form-control">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Birth Date</label>
+                        <div class="col-md-10">
+                            @Html.Efe().DatePicker().Name(nameof(Model.BirthDate))
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
                         </div>
                     </div>
                 </div>                
@@ -46,6 +57,7 @@
         <script asp-src-include="~/js/**/*.js"></script>
 
         <script>
+            var viewModel = @Html.ViewInitializer(configs, Model);
             $(document).ready(function () {
                 $("#ajaxSubmit").click(function (e) {
                     var name = $("#Name").val();
