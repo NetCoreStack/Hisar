@@ -111,7 +111,7 @@
             var jqXHR = $.ajax({
                 type: "GET",
                 cache: false,
-                url: "/Home/GetAssemblies",
+                url: window.cmContext.rootUrl,
                 contentType: 'application/json; charset=utf-8',
                 success: function (data, textStatus, jqXHR) {
                     self.assemblies(ko.utils.arrayMap(data, function (c) {

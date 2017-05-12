@@ -91,7 +91,7 @@ namespace NetCoreStack.Hisar
             return new NotFoundFileInfo(subpath);
         }
 
-        protected virtual IFileInfo GetViewComponentFileInfo(string subpath, string name)
+        protected virtual IFileInfo GetComponentFileInfo(string subpath, string name)
         {
             var directoryName = Path.GetDirectoryName(subpath);
             var componentId = Path.GetFileName(directoryName);
@@ -121,6 +121,19 @@ namespace NetCoreStack.Hisar
             if (assembly != null && name == "_ViewImports.cshtml")
             {
                 return FindFile(assembly, "/Views/_ViewImports.cshtml", name);
+            }
+
+            string[] paths = subpath.Split('/');
+            if (paths.Length > 4)
+            {
+                for (int i = paths.Length; i-- > 0;)
+                {
+                    assembly = EnsureIsComponentPart(paths[i]);
+                    if (assembly != null)
+                    {
+                        return FindFile(assembly, subpath, name);
+                    }
+                }
             }
 
             return new NotFoundFileInfo(subpath);
@@ -153,7 +166,7 @@ namespace NetCoreStack.Hisar
                 }
             }
 
-            return GetViewComponentFileInfo(subpath, name);            
+            return GetComponentFileInfo(subpath, name);            
         }
 
         public IDirectoryContents GetDirectoryContents(string subpath)

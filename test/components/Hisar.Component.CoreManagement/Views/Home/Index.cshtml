@@ -1,9 +1,7 @@
 ﻿@section styles{
-    
-    @*<script src="~/js/knockout-3.4.2.js"></script>*@
     <link href="@Url.ComponentContent("~/css/bootstrap-toggle.min.css")" rel="stylesheet" />
     <style>
-        #cmContainer{ position: relative; overflow: hidden;}
+        #cmContainer{ position: relative;}
          .font-consolas{font-family: Consolas;}
         .list-group.has-sub-menu .list-group-submenu{border-left:5px solid #ddd;}
         .list-group.has-sub-menu .menu-ico-collapse {float: right;margin-left: 10px;}
@@ -16,17 +14,14 @@
     </style>
 }
 
-@section scripts{
-    
+@section scripts{    
     <script src="@Url.ComponentContent("~/js/bootstrap-toggle.min.js")"></script>
-    <script src="@Url.ComponentContent("~/js/componentManagement.js")"></script>  
-    
     <script>
-        $(function () {
-            
-        })
+        window.cmContext = {
+            rootUrl: '@Url.Action("GetAssemblies", "Home")'
+        }
     </script>
+    <script src="@Url.ComponentContent("~/js/componentManagement.js")"></script> 
 }
-
 
 @await Component.InvokeAsync(ViewContext.ResolveName("CoreManagement"))
