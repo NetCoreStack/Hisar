@@ -6,7 +6,8 @@ namespace NetCoreStack.Hisar
     public enum ComponentType
     {
         External = 0,
-        Hosting = 1
+        Hosting = 1,
+        Core = 2
     }
 
     public class RunningComponentDefinition
@@ -26,6 +27,8 @@ namespace NetCoreStack.Hisar
     {
         public bool IsExternalComponent { get; }
 
+        public bool IsCoreComponent { get; }
+
         public Type StartupType { get; }
 
         public string ComponentId { get; }
@@ -37,7 +40,10 @@ namespace NetCoreStack.Hisar
             ComponentTypeResolver = resolver;
             var definition = ResolveRunningComponent();
 
-            IsExternalComponent = definition.ComponentType == ComponentType.External;
+            IsExternalComponent = definition.ComponentType == ComponentType.External ||
+                definition.ComponentType == ComponentType.Core;
+
+            IsCoreComponent = definition.ComponentType == ComponentType.Core;
             StartupType = definition.StartupType;
             ComponentId = definition.ComponentId;
         }

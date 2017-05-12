@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -49,10 +50,10 @@ namespace NetCoreStack.Hisar
         }
 
         private static void TryLoadFromLocal(string externalComponentDirectory,
-    string targetFrameworkName,
-    IDictionary<string, string> dependencies,
-    string packageId,
-    string version)
+            string targetFrameworkName,
+            IDictionary<string, string> dependencies,
+            string packageId,
+            string version)
         {
             var assemblyFullName = Path.Combine(externalComponentDirectory, $"{packageId}.dll");
             try
@@ -76,9 +77,9 @@ namespace NetCoreStack.Hisar
         }
 
         private static void TryLoadFromNuget(string externalComponentDirectory,
-    string targetFrameworkName,
-    string packageId,
-    string version)
+            string targetFrameworkName,
+            string packageId,
+            string version)
         {
             _targetFrameworkMap.TryGetValue(targetFrameworkName, out List<string> candidateCompiledTarget);
             var extractFullPath = Path.Combine(externalComponentDirectory, $"{packageId}.{version}");
@@ -89,15 +90,23 @@ namespace NetCoreStack.Hisar
             }
 
             var requestUri = new Uri(string.Format(NugetDownloadPackageUriFormat, packageId, version));
-            var packageBytes = _client.GetByteArrayAsync(requestUri).GetAwaiter().GetResult();
-            var packageFullName = Path.Combine(externalComponentDirectory, $"{packageId}.{version}.nupkg");
-            File.WriteAllBytes(packageFullName, packageBytes);
+            var response = _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri)).GetAwaiter().GetResult();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var packageBytes = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                var packageFullName = Path.Combine(externalComponentDirectory, $"{packageId}.{version}.nupkg");
+                File.WriteAllBytes(packageFullName, packageBytes);
 
-            ZipArchive archive = new ZipArchive(new FileStream(packageFullName, FileMode.Open));
-            Directory.CreateDirectory(extractFullPath);
-            archive.ExtractToDirectory(extractFullPath);
+                ZipArchive archive = new ZipArchive(new FileStream(packageFullName, FileMode.Open));
+                Directory.CreateDirectory(extractFullPath);
+                archive.ExtractToDirectory(extractFullPath);
 
-            LoadCandidateAssembly(packageId, extractFullPath, candidateCompiledTarget);
+                LoadCandidateAssembly(packageId, extractFullPath, candidateCompiledTarget);
+            }
+            else
+            {
+                throw new FileNotFoundException($"{packageId}.{version} could not be loaded!");
+            }
         }
 
         internal static void ResolveAssemblies(string externalComponentsDirectory, Assembly assembly)

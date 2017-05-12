@@ -20,6 +20,15 @@ namespace NetCoreStack.Hisar
 {
     internal static class ServiceCollectionExtensions
     {
+        private static HisarAssemblyComponentsLoader CreateAssemblyLoader(IServiceCollection services, IHostingEnvironment env, IMvcBuilder builder)
+        {
+            var assemblyLoader = new HisarAssemblyComponentsLoader(services.BuildServiceProvider(), env);
+            assemblyLoader.LoadComponents(services, builder);
+            services.AddSingleton(assemblyLoader);
+
+            return assemblyLoader;
+        }
+
         internal static void AddHisar<TStartup>(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env) where TStartup : class
         {
             services.AddNetCoreStackMvc();
@@ -46,12 +55,17 @@ namespace NetCoreStack.Hisar
 
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
             bool isComponent = componentHelper.IsExternalComponent;
+            bool isCoreComponent = componentHelper.IsCoreComponent;
             IMvcBuilder builder = null;
             if (isComponent)
             {
                 builder = services.AddMvc(options =>
                 {
                     options.Filters.Add(new HisarExceptionFilter());
+                    if (isCoreComponent)
+                    {
+                        options.Conventions.Add(new NameSpaceRoutingConvention(componentHelper));
+                    }
                 });
             }
             else
@@ -60,7 +74,7 @@ namespace NetCoreStack.Hisar
 
                 builder = services.AddMvc(options => {
                     options.Filters.Add(new HisarExceptionFilter());
-                    options.Conventions.Add(new NameSpaceRoutingConvention());
+                    options.Conventions.Add(new NameSpaceRoutingConvention(componentHelper));
                 });
             }
 
@@ -74,8 +88,12 @@ namespace NetCoreStack.Hisar
 
             services.AddSingleton(componentHelper as RunningComponentHelper);
 
+            HisarAssemblyComponentsLoader assemblyLoader = null;
             if (isComponent)
             {
+                if (isCoreComponent)
+                    assemblyLoader = CreateAssemblyLoader(services, env, builder);
+
                 var defaultLayoutFileProvider = new DefaultProxyFileLocator();
                 services.TryAddSingleton<IDefaultProxyFileLocator>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
@@ -91,10 +109,7 @@ namespace NetCoreStack.Hisar
             }
             else
             {
-                var assemblyLoader = new HisarAssemblyComponentsLoader(services.BuildServiceProvider(), env);
-                assemblyLoader.LoadComponents(services, builder);
-                services.AddSingleton(assemblyLoader);
-
+                assemblyLoader = CreateAssemblyLoader(services, env, builder);
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
