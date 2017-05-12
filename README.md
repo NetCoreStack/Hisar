@@ -1,5 +1,5 @@
 ## Hisar
-Cross-Platform Modular Component Development Infrastructure
+Cross-Platform Modular Component Development Infrastructure 
 
 >[Latest release on Nuget](https://www.nuget.org/packages/NetCoreStack.Hisar/)
 
