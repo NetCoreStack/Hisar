@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7FD6AB70-993F-484A-B2DD-785854EAB1F5}"
 EndProject
@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStack.Hisar", "src\N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStack.Hisar.Server", "src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj", "{516CC571-5C36-4067-BCD2-7110DC7A2F18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.CommonLibrary", "test\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj", "{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.CommonLibrary", "test\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj", "{485B074A-E9AF-4D2C-AD3D-0EB18D1BE918}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{181B8C0C-9FAD-40C0-AE0A-257843CFF03C}"
 EndProject
@@ -26,13 +26,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Carousel", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Guideline", "test\components\Hisar.Component.Guideline\Hisar.Component.Guideline.csproj", "{7E260A2E-702A-46CA-9824-B9B843017FE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreStack.Hisar.Tests", "test\NetCoreStack.Hisar.Tests\NetCoreStack.Hisar.Tests.csproj", "{50963AE7-841E-4934-9ECF-1C1250B341FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreStack.Hisar.Tests", "test\NetCoreStack.Hisar.Tests\NetCoreStack.Hisar.Tests.csproj", "{50963AE7-841E-4934-9ECF-1C1250B341FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.Template", "test\components\Hisar.Component.Template\Hisar.Component.Template.csproj", "{EF6A7C42-C95B-4CA9-8C1F-B22485439696}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Landing.Hosting", "test\Landing.Hosting\Landing.Hosting.csproj", "{FF724659-E79D-465F-9E77-EAF3C1D59B6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Hosting", "test\Admin.Hosting\Admin.Hosting.csproj", "{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.CoreManagement", "test\components\Hisar.Component.CoreManagement\Hisar.Component.CoreManagement.csproj", "{15504075-7E8E-4E84-8F40-0655CAA539DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +78,10 @@ Global
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +97,6 @@ Global
 		{EF6A7C42-C95B-4CA9-8C1F-B22485439696} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 		{FF724659-E79D-465F-9E77-EAF3C1D59B6D} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
+		{15504075-7E8E-4E84-8F40-0655CAA539DD} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 	EndGlobalSection
 EndGlobal
