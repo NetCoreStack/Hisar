@@ -46,14 +46,12 @@
         self.selectedAssemblyDetails = ko.observable();
 
         self.selectedAssemblyItem = function (value) {
-            console.log(value);
             self.selectedAssemblyDetails(value);
             $('input:checkbox[data-toggle="toggle"]').bootstrapToggle();
         };
 
         self.fetchAssemblies = function () {
-            console.log("fetched");
-            var jqXHR = $.ajax({
+            $.ajax({
                 type: "GET",
                 cache: false,
                 url: window.cmContext.rootUrl,
@@ -64,15 +62,18 @@
                         self.selectedAssemblyItem(model);
                         return model;
                     }));
-                   
-                    console.log("success");
+
+                    console.log(data);
                 },
                 error: function (response) {
                     console.log(response);
                 }
             }).always = function (data, textStatus, jqXHR) {
-                console.log("always");
             };
+        }
+
+        self.compressComponentList = function() {
+            $("#cmSideBar").toggleClass("compressed");
         }
 
         self.initialize = function () {

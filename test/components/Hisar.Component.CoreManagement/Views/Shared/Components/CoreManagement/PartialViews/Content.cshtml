@@ -1,67 +1,131 @@
 ﻿<div id="cmContent" style="display: none;" data-bind="visible: selectedAssemblyDetails, with: selectedAssemblyDetails">
 
-    <div class="well well-sm">
+    <div class="cmComponentDetail panel  panel-default animated fadeIn">
 
-        <div class="media">
-            <div class="media-body">
-                <h4 class="media-heading" data-bind="text: PackageId">Carousel Component</h4>
-                <span data-bind="text: Description"></span>
+        <div class="panel-body">
+            @*<div class="media-left media-top" data-bind="visible: IconUrl">
+                    <img class="media-object img-thumbnail" data-bind="attr: { src: IconUrl}" />
+                </div>*@
+            <div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="pull-left" data-bind="text: PackageId"></h3>
+                        <span class="pull-right">
+                            <input type="checkbox" checked data-toggle="toggle" data-size="small" data-width="160" data-on="Deactivate Component" data-off="Activate Component" data-onstyle="success" data-offstyle="danger">
+                        </span>
+                    </div>
+                </div>
+
+                <p data-bind="text: Description"></p>
+
+                <table class="table table-bordered table-hover table-condensed font-consolas">
+                    <tr style="display: none;" data-bind="visible: PackageVersion">
+                        <th scope="row" class="active" style="width: 170px; text-align: right;">Package Version:</th>
+                        <td data-bind="text: PackageVersion"></td>
+                        <td rowspan="4" style="width: 75px; display: none;" data-bind="visible: IconUrl"><img class="pull-right" style="width: 75px;" data-bind="attr: { src: IconUrl}" /></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: Authors">
+                        <th scope="row" class="active" style="text-align: right;">Authors:</th>
+                        <td data-bind="text: Authors"></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: Company">
+                        <th scope="row" class="active" style="text-align: right;">Company:</th>
+                        <td data-bind="text: Company"></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: Product">
+                        <th scope="row" class="active" style="text-align: right;">Product:</th>
+                        <td data-bind="text: Product"></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: LicenceUrl">
+                        <th scope="row" class="active" style="text-align: right;">Licence Url:</th>
+                        <td colspan="2"><a data-bind="attr: {href: LicenceUrl}"><i class="fa fa-link" aria-hidden="true"></i> <span data-bind="text: LicenceUrl"></span></a></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: ProjectUrl">
+                        <th scope="row" class="active" style="text-align: right;">Project Url:</th>
+                        <td colspan="2"><a data-bind="attr: {href: ProjectUrl}"><i class="fa fa-link" aria-hidden="true"></i> <span data-bind="text: ProjectUrl"></span></a></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: RepositoryUrl">
+                        <th scope="row" class="active" style="text-align: right;">Repository Url:</th>
+                        <td colspan="2"><a data-bind="attr: {href: RepositoryUrl}"><i class="fa fa-link" aria-hidden="true"></i> <span data-bind="text: RepositoryUrl"></span></a></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: NeutrelLanguage">
+                        <th scope="row" class="active" style="text-align: right;">Neutrel Language:</th>
+                        <td data-bind="text: NeutrelLanguage" colspan="2"></td>
+                    </tr>
+                    <tr style="display: none;" data-bind="visible: Version">
+                        <th scope="row" class="active" style="text-align: right;">Version:</th>
+                        <td data-bind="text: Version" colspan="2"></td>
+                    </tr>
+                    <tr data-bind="visible: FileVersion">
+                        <th scope="row" class="active" style="text-align: right;">File Version:</th>
+                        <td data-bind="text: FileVersion" colspan="2"></td>
+                    </tr>
+                </table>
             </div>
 
-            <div class="media-right media-middle">
-                <input type="checkbox" checked data-toggle="toggle" data-size="small" data-width="170" data-on="Deactivate Component" data-off="Activate Component" data-onstyle="success" data-offstyle="danger">
-            </div>
+
         </div>
 
     </div>
 
-    <div class="panel-group" id="cmAccordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
+    <div class="cmComponentController" style="display: none;" data-bind="visible: Components, foreach: Components">
 
-            <div class="panel-heading" role="tab" id="cmAccordionH1">
-                <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseCmAccordionH1" aria-expanded="true" aria-controls="collapseOne">
-                        CarouselController
-                    </a>
-                </h4>
+        <div class="panel panel-default animated fadeIn">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <b><span data-bind="text: name"></span></b>  : <span data-bind="text: inherited"></span>
+                </span>
             </div>
-            <div id="collapseCmAccordionH1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="cmAccordionH1">
-                <div class="panel-body">
+            <div class="panel-body">
 
+                <div class="cmComponentControllerMethods" style="display: none;" data-bind="visible: componentMethods, foreach: componentMethods">
+                    <div class="panel panel-default animated fadeIn">
 
-                    <div class="panel-group" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <span data-bind="text: name">SliderList <small>(Carousel Slider)</small></span>
+                                <span class="pull-right">
+                                    <input type="checkbox" checked data-toggle="toggle" data-size="mini" data-width="100" data-on="Hide In Menu" data-off="Show In Menu" data-onstyle="success" data-offstyle="danger">
+                                </span>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
 
-                            <div class="panel-heading" role="tab" id="cmAccordionSubH1">
-                                <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseCmAccordionSubH1" aria-expanded="true" aria-controls="collapseOne">
-                                        SliderList <small>(Carousel Slider)</small>
-                                    </a>
-                                    <span class="pull-right">
-                                        <input type="checkbox" checked data-toggle="toggle" data-size="mini" data-width="100" data-on="Hide In Menu" data-off="Show In Menu" data-onstyle="success" data-offstyle="danger">
-                                    </span>
-                                </h4>
-                            </div>
-                            <div id="collapseCmAccordionSubH1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="cmAccordionSubH1">
-                                <div class="panel-body">
+                            <table class="table table-bordered table-hover font-consolas">
+                                <tr>
+                                    <th scope="row" class="active" style="width: 170px; text-align: right;">Display Name:</th>
+                                    <td data-bind="text: name"></td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="active" style="text-align: right;">Return Type:</th>
+                                    <td data-bind="text: returnType"></td>
+                                </tr>
+                                
+                                <tr style="display: none;" data-bind="visible: methodParameters != 0">
+                                    <th scope="row" class="active" style="text-align: right;">Method Parameters:</th>
+                                    <td>
+                                        (
+                                        <span class="methodParameters" data-bind="foreach: methodParameters">
+                                            <span class="label label-info" data-bind="text: parameterType"></span>
+                                            <span class="label label-default" data-bind="text: parameterName"></span>
+                                            <span class="parameterSplitter">,</span>
+                                        </span>
+                                        )
 
-                                    <table class="table table-hover font-consolas">
-                                        <tr>
-                                            <th scope="row" class="active" style="width: 140px; text-align:right;">Display Name:</th>
-                                            <td>Carousel Slider</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="active" style="text-align:right;">Return Type:</th>
-                                            <td>IActionResult</td>
-                                        </tr>
-                                    </table>
+                                    </td>
+                                </tr>
+                            </table>
 
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
             </div>
         </div>
+
     </div>
 </div>
