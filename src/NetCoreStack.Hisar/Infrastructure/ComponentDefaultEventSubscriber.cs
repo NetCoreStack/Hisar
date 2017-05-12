@@ -5,11 +5,11 @@ using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
-    public sealed class HisarDefaultEventSubscriber : IHisarEventSubscriber
+    public sealed class ComponentDefaultEventSubscriber : IComponentEventSubscriber
     {
         private readonly Dictionary<Type, Delegate> _handlers;
 
-        public HisarDefaultEventSubscriber(object instance, string methodName = "Handle", BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        public ComponentDefaultEventSubscriber(object instance, string methodName = "Handle", BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
         {
             if (instance == null)
             {

@@ -71,6 +71,10 @@ namespace NetCoreStack.Hisar
             var cacheItems = new List<HisarCacheAttribute>();
 
             var externalComponentsDirectory = Path.GetFullPath("ExternalComponents");
+            if (!Directory.Exists(externalComponentsDirectory))
+            {
+                Directory.CreateDirectory(externalComponentsDirectory);
+            }
             var files = Directory.GetFiles(externalComponentsDirectory);
             if (files != null && files.Any())
             {
