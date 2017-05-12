@@ -13,9 +13,11 @@
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="~/css/custom.css" rel="stylesheet">
-    @RenderSection("styles", false)
+    <link rel="stylesheet" href="http://cdn.netcorestack.com/css/efe.all.min.css">
+    @RenderSection("styles", required: false)
+    <script src="http://cdn.netcorestack.com/js/bundle.min.js"></script>
+    <script src="http://cdn.netcorestack.com/js/efe.all.min.js"></script>
 </head>
-
 <body class="nav-md">
     <div class="container body">
         <div class="main_container">
@@ -288,16 +290,10 @@
             <!-- /footer content -->
         </div>
     </div>
-
-    <!-- jQuery -->
-    <script src="~/js/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/js/bootstrap.min.js"></script>
     <!-- Skycons -->
     <script src="~/js/skycons.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/js/custom.js"></script>
-
     @RenderSection("scripts", false)
 </body>
 </html>
