@@ -43,6 +43,9 @@ namespace Hisar.Component.Guideline
 #if !RELEASE
             app.UseCliProxy();
 #endif
+
+            BsonDataInitializer.InitializeMusicStoreMongoDb(app.ApplicationServices);
+
             app.UseMvc(ConfigureRoutes);
         }
 
