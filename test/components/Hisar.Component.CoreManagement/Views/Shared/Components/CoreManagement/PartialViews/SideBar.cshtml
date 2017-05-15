@@ -20,13 +20,13 @@
                         <span class="pull-right badge" data-bind="text: Components.length"></span>
                     </h5>
                 </p>
-                <p class="small description" data-bind="text: Description"></p>
+                <p class="small description" data-bind="visibel: Description, text: Description"></p>
                 <div class="hashtags">
-                    <span class="label label-primary">
-                        v<span data-bind="text: Version"></span>
+                    <span class="label label-primary" data-bind="visible: PackageVersion">
+                        v<span data-bind="text: PackageVersion"></span>
                     </span>
 
-                    <span class="label label-default">
+                    <span class="label label-default" data-bind="visible: Authors">
                         <span data-bind="text: Authors"></span>
                     </span>
                 </div>

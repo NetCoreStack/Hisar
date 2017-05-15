@@ -114,7 +114,7 @@ namespace NetCoreStack.Hisar
                     }
                     else
                     {
-                        if (!file.Contains("NetCoreStack.Hisar"))
+                        if (!file.Contains("NetCoreStack.Hisar") && file.EndsWith(".dll"))
                         {
                             var fullPath = Path.GetFullPath(file);
                             AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
