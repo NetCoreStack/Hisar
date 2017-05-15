@@ -1,17 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Hisar.Component.CoreManagement.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using NetCoreStack.Hisar;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hisar.Component.CoreManagement.Models;
 
 namespace Hisar.Component.CoreManagement.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly HisarAssemblyComponentsLoader _assemblyLoader;
+        private readonly ApplicationPartManager _partManager;
+
+        public HomeController(HisarAssemblyComponentsLoader assemblyLoader, ApplicationPartManager partManager)
+        {
+            _assemblyLoader = assemblyLoader;
+            _partManager = partManager;
+        }
+
         public IActionResult Index()
         {
-
             return View();
         }
 
