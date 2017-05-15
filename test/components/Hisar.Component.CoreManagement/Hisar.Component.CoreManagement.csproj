@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Description>Hisar Core Component Management</Description>
+    <Copyright>NetCoreStack</Copyright>
+    <PackageProjectUrl>https://github.com/NetCoreStack/Hisar</PackageProjectUrl>
+    <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/tools-and-equipmen/64/anvil-128.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/NetCoreStack/Hisar</RepositoryUrl>
+    <PackageTags>NetCoreStack,Component,Management</PackageTags>
+    <Authors>Hisar.Component.CoreManagement</Authors>
   </PropertyGroup>
   
   <ItemGroup>

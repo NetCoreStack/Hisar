@@ -2,22 +2,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Hisar.Component.CoreManagement.Helpers;
 using Hisar.Component.CoreManagement.Models;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.Extensions.Options;
+using NetCoreStack.Hisar;
 
 namespace Hisar.Component.CoreManagement.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly HisarAssemblyComponentsLoader _assemblyLoader;
+        private readonly ApplicationPartManager _partManager;
+        private readonly List<IApplicationModelProvider> _providers;
+        private readonly ComponentModelBuilderHelper _componentModelBuilderHelper;
+
+        public HomeController(HisarAssemblyComponentsLoader assemblyLoader,
+            ApplicationPartManager partManager,
+            IEnumerable<IApplicationModelProvider> providers,
+            IActionDescriptorProvider actionDescriptorProvider)
+        {
+            _assemblyLoader = assemblyLoader;
+            _partManager = partManager;
+            _providers = providers.ToList();
+
+            _componentModelBuilderHelper = new ComponentModelBuilderHelper(partManager, _providers);
+        }
+
+
         public IActionResult Index()
         {
-
             return View();
         }
 
         [HttpGet]
         public IActionResult GetAssemblies()
         {
+            var assemblyLoader = _componentModelBuilderHelper.GetLoadedAssemblyInformation();
+
             var assemblyList = new List<AssemblyViewModel>()
             {
                 new AssemblyViewModel()
@@ -150,7 +178,25 @@ namespace Hisar.Component.CoreManagement.Controllers
                 }
             };
 
-            return Json(assemblyList);
+            return Json(assemblyLoader);
+        }
+
+        [HttpGet]
+        public IActionResult GetA(string a)
+        {
+            return new JsonResult("");
+        }
+
+        [HttpGet]
+        public IActionResult GetB(int a, int b)
+        {
+            return new JsonResult("");
+        }
+
+        [HttpPost]
+        public IActionResult GetC(ComponentViewModel componentViewModel)
+        {
+            return new JsonResult("");
         }
     }
 }
