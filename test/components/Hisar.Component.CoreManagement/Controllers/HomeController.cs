@@ -44,11 +44,11 @@ namespace Hisar.Component.CoreManagement.Controllers
         [HttpGet]
         public IActionResult GetAssemblies()
         {
-            var assemblyLoader = _componentModelBuilderHelper.GetLoadedAssemblyInformation();
-
-            var assemblyList = new List<AssemblyViewModel>()
+            #region SampleClass
+            /* Sample Class
+            var assemblyList = new List<AssemblyDescriptor>()
             {
-                new AssemblyViewModel()
+                new AssemblyDescriptor()
                 {
                     PackageId= "CarouselApp",
                     PackageVersion= "1.2.3.4",
@@ -62,21 +62,21 @@ namespace Hisar.Component.CoreManagement.Controllers
                     RepositoryUrl= "https://github.com/NetCoreStack/Hisar",
                     Tags= "Hisar,Carousel,Slider,Plugin",
                     ReleaseNotes= "<section><h2>Your placeholder text :</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ad rem redeamus; Sumenda potius quam expetenda. <mark>Maximus dolor, inquit, brevis est.</mark> Duo Reges: constructio interrete.</p><ol><li>Atque haec ita iustitiae propria sunt, ut sint virtutum reliquarum communia.</li><li>Hoc simile tandem est?</li><li>Ad eas enim res ab Epicuro praecepta dantur.</li><li>Ut in voluptate sit, qui epuletur, in dolore, qui torqueatur.</li></ol><pre> 	 Quae quod Aristoni et Pyrrhoni omnino visa sunt pro nihilo, 	 ut inter optime valere et gravissime aegrotare nihil prorsus 	 dicerent interesse, recte iam pridem contra eos desitum est 	 disputari. 	 Contineo me ab exemplis. 	 </pre></section>",
-                    Components = new List<ComponentViewModel>()
+                    Controllers = new List<ComponentControllerDescriptor>()
                     {
-                        new ComponentViewModel()
+                        new ComponentControllerDescriptor()
                         {
                             Inherited = "Controller",
                             Name = "CarouselController",
-                            ComponentMethods = new List<ComponentMethodViewModel>()
+                            ComponentMethods = new List<ComponentMethodDescriptor>()
                             {
-                                new ComponentMethodViewModel()
+                                new ComponentMethodDescriptor()
                                 {
                                     Name = "GetCarousel",
                                     ReturnType = "IActionResult",
-                                    MethodParameters = new List<ComponentMethodParameterViewModel>()
+                                    MethodParameters = new List<ComponentMethodParameterDescriptor>()
                                     {
-                                        new ComponentMethodParameterViewModel
+                                        new ComponentMethodParameterDescriptor
                                         {
                                             ParameterName = "categoryId",
                                             ParameterType = "long",
@@ -86,24 +86,24 @@ namespace Hisar.Component.CoreManagement.Controllers
                                 }
                             }
                         },
-                        new ComponentViewModel()
+                        new ComponentControllerDescriptor()
                         {
                             Inherited = "Controller",
                             Name = "SampleController",
-                            ComponentMethods = new List<ComponentMethodViewModel>()
+                            ComponentMethods = new List<ComponentMethodDescriptor>()
                             {
-                                new ComponentMethodViewModel()
+                                new ComponentMethodDescriptor()
                                 {
                                     Name = "GetSample",
                                     ReturnType = "IActionResult",
-                                    MethodParameters = new List<ComponentMethodParameterViewModel>()
+                                    MethodParameters = new List<ComponentMethodParameterDescriptor>()
                                     {
-                                        new ComponentMethodParameterViewModel
+                                        new ComponentMethodParameterDescriptor
                                         {
                                             ParameterName = "name",
                                             ParameterType = "string",
                                         },
-                                        new ComponentMethodParameterViewModel
+                                        new ComponentMethodParameterDescriptor
                                         {
                                             ParameterName = "id",
                                             ParameterType = "long",
@@ -115,7 +115,7 @@ namespace Hisar.Component.CoreManagement.Controllers
                     }
                 }
                 ,
-                new AssemblyViewModel()
+                new AssemblyDescriptor()
                 {
                     PackageId= "ComponentManagementApp",
                     PackageVersion= "1.2.3.4",
@@ -133,15 +133,15 @@ namespace Hisar.Component.CoreManagement.Controllers
                     NeutrelLanguage= "Tuskish,English",
                     Version= "2.0.0.0",
                     FileVersion= "3.0.0.0",
-                    Components = new List<ComponentViewModel>()
+                    Controllers = new List<ComponentControllerDescriptor>()
                     {
-                        new ComponentViewModel()
+                        new ComponentControllerDescriptor()
                         {
                             Inherited = "Controller",
                             Name = "HomeController",
-                            ComponentMethods = new List<ComponentMethodViewModel>()
+                            ComponentMethods = new List<ComponentMethodDescriptor>()
                             {
-                                new ComponentMethodViewModel()
+                                new ComponentMethodDescriptor()
                                 {
                                     Name = "GetAsseblies",
                                     ReturnType = "IActionResult"
@@ -151,7 +151,7 @@ namespace Hisar.Component.CoreManagement.Controllers
                     }
                 }
                 ,
-                new AssemblyViewModel()
+                new AssemblyDescriptor()
                 {
                     PackageId= "GuidelineApp",
                     PackageVersion= "1.2.3.4",
@@ -159,15 +159,15 @@ namespace Hisar.Component.CoreManagement.Controllers
                     Company= "Bilge Adam Bilişim Hiz. Ltd. Şti.",
                     Product= "Carousel",
                     Description= "NetcoreStack Hisar Guideline",
-                    Components = new List<ComponentViewModel>()
+                    Controllers = new List<ComponentControllerDescriptor>()
                     {
-                        new ComponentViewModel()
+                        new ComponentControllerDescriptor()
                         {
                             Inherited = "Controller",
                             Name = "GuidelineController",
-                            ComponentMethods = new List<ComponentMethodViewModel>()
+                            ComponentMethods = new List<ComponentMethodDescriptor>()
                             {
-                                new ComponentMethodViewModel()
+                                new ComponentMethodDescriptor()
                                 {
                                     Name = "GetGuideline",
                                     ReturnType = "IActionResult"
@@ -177,7 +177,11 @@ namespace Hisar.Component.CoreManagement.Controllers
                     }
                 }
             };
+            */
 
+            #endregion
+
+            var assemblyLoader = _componentModelBuilderHelper.GetLoadedAssemblyInformation();
             return Json(assemblyLoader);
         }
 
@@ -194,7 +198,7 @@ namespace Hisar.Component.CoreManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetC(ComponentViewModel componentViewModel)
+        public IActionResult GetC(ComponentControllerDescriptor componentViewModel)
         {
             return new JsonResult("");
         }

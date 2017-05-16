@@ -60,9 +60,9 @@
                         <th scope="row" class="active" style="text-align: right;">File Version:</th>
                         <td data-bind="text: FileVersion" colspan="2"></td>
                     </tr>
-                  
+
                 </table>
-               
+
             </div>
 
 
@@ -70,64 +70,85 @@
 
     </div>
 
-    <div class="cmComponentController" style="display: none;" data-bind="visible: Components, foreach: Components">
 
-        <div class="panel panel-default animated fadeIn">
-            <div class="panel-heading">
-                <span class="panel-title color-className font-consolas">
-                    <b><span data-bind="text: name"></span></b>Controller  : <span class="color-classInheritance" data-bind="text: inherited"></span>
-                </span>
+    <fieldset class="toggleFieldset">
+        <legend><i class="fa fa-minus-square" aria-hidden="true"></i> Assembly Components</legend>
+        <div class="toggleFieldsetHiders">
+
+            <div class="cmViewComponents" style="display: none;" data-bind="visible: ViewComponents, foreach: ViewComponents">
+                <h5><b><span data-bind="text: componentId"></span>.<span data-bind="text: name"></span></b></h5>
+                <pre><b>Usage:</b><code class="cs" onclick="selectText(this.id)" data-bind="uniqueId: true">@@await Component.InvokeAsync("<span data-bind="text: componentId"></span>.<span data-bind="text: name"></span>")</code></pre>
+                <hr />
             </div>
-            <div class="panel-body">
 
-                <div class="cmComponentControllerMethods" style="display: none;" data-bind="visible: componentMethods, foreach: componentMethods">
-                    <div class="panel panel-default animated fadeIn">
+        </div>
+    </fieldset>
 
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <span class="font-consolas" data-bind="text: name"></span>
-                                <span class="pull-right">
-                                    <input type="checkbox" checked data-toggle="toggle" data-size="mini" data-width="100" data-on="Hide In Menu" data-off="Show In Menu" data-onstyle="success" data-offstyle="danger">
-                                </span>
-                            </h4>
-                        </div>
-                        <div class="panel-body">
+    <br />
 
-                            <table class="table table-bordered table-hover font-consolas">
-                                <tr>
-                                    <th scope="row" class="active" style="width: 170px; text-align: right;">Display Name:</th>
-                                    <td data-bind="text: name"></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="active" style="text-align: right;">Return Type:</th>
-                                    <td data-bind="text: returnType"></td>
-                                </tr>
-                                
-                                <tr style="display: none;" data-bind="visible: methodParameters != 0">
-                                    <th scope="row" class="active" style="text-align: right;">Method Parameters:</th>
-                                    <td>
-                                        (
-                                        <span class="methodParameters" data-bind="foreach: methodParameters">
-                                            <span class="label label-info" data-bind="text: parameterType"></span>
-                                            <span class="label label-default" data-bind="text: parameterName"></span>
-                                            <span class="parameterSplitter">,</span>
+    <fieldset class="toggleFieldset">
+        <legend><i class="fa fa-minus-square" aria-hidden="true"></i> Assembly Controllers</legend>
+        <div class="toggleFieldsetHiders">
+
+            <div class="cmComponentController" style="display: none;" data-bind="visible: Controllers, foreach: Controllers">
+
+                <div class="panel panel-default animated fadeIn">
+                    <div class="panel-heading">
+                        <span class="panel-title color-className font-consolas">
+                            <b><span data-bind="text: name"></span></b>Controller : <span class="color-classInheritance" data-bind="text: inherited"></span>
+                        </span>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="cmComponentControllerMethods" style="display: none;" data-bind="visible: componentMethods, foreach: componentMethods">
+                            <div class="panel panel-default animated fadeIn">
+
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <span class="font-consolas" data-bind="text: name"></span>
+                                        <span class="pull-right">
+                                            <input type="checkbox" checked data-toggle="toggle" data-size="mini" data-width="100" data-on="Hide In Menu" data-off="Show In Menu" data-onstyle="success" data-offstyle="danger">
                                         </span>
-                                        )
+                                    </h4>
+                                </div>
+                                <div class="panel-body">
 
-                                    </td>
-                                </tr>
-                            </table>
+                                    <table class="table table-bordered table-hover font-consolas">
+                                        <tr>
+                                            <th scope="row" class="active" style="width: 170px; text-align: right;">Display Name:</th>
+                                            <td data-bind="text: name"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row" class="active" style="text-align: right;">Return Type:</th>
+                                            <td data-bind="text: returnType"></td>
+                                        </tr>
 
+                                        <tr style="display: none;" data-bind="visible: methodParameters != 0">
+                                            <th scope="row" class="active" style="text-align: right;">Method Parameters:</th>
+                                            <td>
+                                                (
+                                                <span class="methodParameters" data-bind="foreach: methodParameters">
+                                                    <span class="label label-info" data-bind="text: parameterType"></span>
+                                                    <span class="label label-default" data-bind="text: parameterName"></span>
+                                                    <span class="parameterSplitter">,</span>
+                                                </span>
+                                                )
+
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
-
-
-
-
             </div>
-        </div>
 
-    </div>
+        </div>
+    </fieldset>
+
+    <br />
 </div>

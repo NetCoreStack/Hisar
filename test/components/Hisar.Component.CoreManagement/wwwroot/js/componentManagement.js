@@ -1,5 +1,29 @@
-﻿(function ($, window, ko, undefined) {
+﻿function selectText(id) {
+    var sel, range;
+    var el = document.getElementById(id);
+    if (window.getSelection && document.createRange) {
+        sel = window.getSelection();
+        if (sel.toString() == '') { 
+            window.setTimeout(function () {
+                range = document.createRange();
+                range.selectNodeContents(el);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }, 1);
+        }
+    } else if (document.selection) {
+        sel = document.selection.createRange();
+        if (sel.text == '') { 
+            range = document.body.createTextRange();
+            range.moveToElementText(el);
+            range.select();
+        }
+    }
+}
+
+(function ($, window, ko, hljs, undefined) {
     'use strict';
+    
 
     ko.bindingHandlers.uniqueId = {
         init: function (element) {
@@ -36,7 +60,8 @@
         self.Version = item.version;
         self.FileVersion = item.fileVersion;
 
-        self.Components = item.components;
+        self.ViewComponents = item.viewComponents;
+        self.Controllers = item.controllers;
     };
 
     var CmComponentViewModel = function () {
@@ -48,6 +73,13 @@
         self.selectedAssemblyItem = function (value) {
             self.selectedAssemblyDetails(value);
             $('input:checkbox[data-toggle="toggle"]').bootstrapToggle();
+            $('code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+            $('.toggleFieldset legend').click(function () {
+                $(this).parent().find('legend .fa').toggleClass("fa-plus-square fa-minus-square");
+                $(this).parent().find('.toggleFieldsetHiders').toggleClass("hide");
+            });
         };
 
         self.fetchAssemblies = function () {
@@ -87,4 +119,4 @@
     ko.applyBindings(new CmComponentViewModel(), document.getElementById("cmContainer"));
 
 
-})($, window, ko, undefined);
+})($, window, ko, hljs, undefined);

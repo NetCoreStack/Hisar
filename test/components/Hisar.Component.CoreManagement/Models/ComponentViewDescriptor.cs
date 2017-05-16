@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Hisar.Component.CoreManagement.Models
 {
-    public class ComponentMethodParameterViewModel
+    public class ComponentViewDescriptor
     {
-        public string ParameterType { get; set; }
-        public string ParameterName { get; set; }
+        public string ComponentId { get; set; } 
+        public string Name { get; set; }
     }
 }

@@ -1,3 +1,53 @@
-﻿h2 {
-    text-decoration: underline;
+﻿#cmContainer{ position: relative;}
+#cmContainer .color-className{ color: #2b91bc;}
+#cmContainer .color-classInheritance{ font-size: 70%; color: #2b91ba;}
+#cmContainer .color-classParameterType{ color: #2b91bc;}
+
+
+#cmContainer .font-consolas{font-family: Consolas;}
+
+#cmContainer #cmSideBar .list-group .list-group-item i.fa{margin-right:5px;}
+#cmContainer #cmSideBar .list-group .componentList .list-group-item:first-child {border-top-right-radius: 0;border-top-left-radius: 0;}
+
+#cmContainer .hashtags span.label{ margin-right: 2px;}
+
+#cmContainer #cmSideBar.compressed .description,
+#cmContainer #cmSideBar.compressed .hashtags{ display: none;}
+
+#cmContainer #cmSideBar.compressed .fa.fa-compress:before {content:"\f065"}
+
+#cmContainer #cmSideBar .list-group-header{ padding: 0;}
+#cmContainer #cmSideBar .list-group-header h5{ padding: 5px 10px}
+
+#cmContainer #cmSideBar .formFilterComponentList{ margin: 2px;}
+#cmContainer #cmSideBar .formFilterComponentList input{border: 0!important; border-radius: 0!important; outline:0px !important; -webkit-appearance:none;box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
+#cmContainer #cmSideBar .formFilterComponentList input:focus{ outline:0px !important; -webkit-appearance:none;box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
+
+#cmContainer .cmComponentDetail h3{ margin-top: 0;}
+#cmContainer .cmComponentControllerMethods .methodParameters .parameterSplitter:last-child{ display: none;}
+
+#cmContainer .toggleFieldset legend{ cursor: pointer; margin-bottom: 5px;}
+
+#cmContainer fieldset.toggleFieldset 
+{
+    border: 1px solid #ddd !important;
+    margin: 0;
+    min-width: 0;
+    padding: 10px;       
+    position: relative;
+    border-radius:4px;
+    background-color:#fcfcfc;
+    padding-left:10px!important;
+}	
+	
+#cmContainer .toggleFieldset legend
+{
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom: 0px; 
+    width: 35%; 
+    border: 1px solid #ddd;
+    border-radius: 4px; 
+    padding: 5px 5px 5px 10px; 
+    background-color: #ffffff;
 }
