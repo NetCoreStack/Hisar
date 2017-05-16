@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Hisar.Component.CoreManagement.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
+using NetCoreStack.Hisar;
 
 namespace Hisar.Component.CoreManagement.Helpers
 {
@@ -14,6 +15,7 @@ namespace Hisar.Component.CoreManagement.Helpers
     {
         private readonly ApplicationPartManager _partManager;
         private readonly List<IApplicationModelProvider> _providers;
+
         public ComponentModelBuilderHelper(ApplicationPartManager partManager, IEnumerable<IApplicationModelProvider> providers)
         {
             _partManager = partManager;
@@ -33,90 +35,106 @@ namespace Hisar.Component.CoreManagement.Helpers
             var context = new ApplicationModelProviderContext(controllerTypes);
 
             for (var i = 0; i < _providers.Count; i++)
-            {
                 _providers[i].OnProvidersExecuting(context);
-            }
 
             for (var i = _providers.Count - 1; i >= 0; i--)
-            {
                 _providers[i].OnProvidersExecuted(context);
-            }
 
             return context.Result;
         }
 
-
-
-
-
-
-        public List<AssemblyViewModel> GetLoadedAssemblyInformation()
+        public List<AssemblyDescriptor> GetLoadedAssemblyInformation()
         {
-            var assemblyViewModels = new List<AssemblyViewModel>();
+            var assemblyViewModels = new List<AssemblyDescriptor>();
 
             var applicationModel = BuildApplicationModel();
             if (applicationModel != null && applicationModel.Controllers.Any())
-            {
-                
                 foreach (var controller in applicationModel.Controllers)
                 {
-                    //controller.ControllerType.Assembly;
-                    var assemblyInfo = new AssemblyInformationHelper(controller.ControllerType.Assembly);
-
-                    var avm = new AssemblyViewModel()
+                    var assembly = controller.ControllerType.Assembly;
+                    var assemblyInfo = new AssemblyInformationHelper(assembly);
+                    var viewComponents = GetViewComponents(assembly);
+                    var assemblyDescriptor = new AssemblyDescriptor
                     {
-                        PackageId = assemblyInfo.PackageId,
-                        PackageVersion = assemblyInfo.PackageVersion,
-                        Authors = assemblyInfo.Authors,
-                        Company = assemblyInfo.Company,
-                        Product = assemblyInfo.Product,
-                        Description = assemblyInfo.Description,
-                        Copyright = assemblyInfo.Copyright,
-                        LicenceUrl = assemblyInfo.LicenceUrl,
-                        ProjectUrl = assemblyInfo.ProjectUrl,
-                        IconUrl = assemblyInfo.IconUrl,
-                        RepositoryUrl = assemblyInfo.RepositoryUrl,
-                        Tags = assemblyInfo.Tags,
-                        ReleaseNotes = assemblyInfo.ReleaseNotes,
+                        ComponentId     = assemblyInfo.ComponentId,
+                        PackageId       = assemblyInfo.PackageId,
+                        PackageVersion  = assemblyInfo.PackageVersion,
+                        Authors         = assemblyInfo.Authors,
+                        Company         = assemblyInfo.Company,
+                        Product         = assemblyInfo.Product,
+                        Description     = assemblyInfo.Description,
+                        Copyright       = assemblyInfo.Copyright,
+                        LicenceUrl      = assemblyInfo.LicenceUrl,
+                        ProjectUrl      = assemblyInfo.ProjectUrl,
+                        IconUrl         = assemblyInfo.IconUrl,
+                        RepositoryUrl   = assemblyInfo.RepositoryUrl,
+                        Tags            = assemblyInfo.Tags,
+                        ReleaseNotes    = assemblyInfo.ReleaseNotes,
                         NeutrelLanguage = assemblyInfo.NeutrelLanguage,
-                        Version = assemblyInfo.Version,
-                        FileVersion = assemblyInfo.FileVersion
+                        Version         = assemblyInfo.Version,
+                        FileVersion     = assemblyInfo.FileVersion,
+                        ViewComponents  = viewComponents
                     };
-                    var avmComponent = new List<ComponentViewModel>(); // Controller
+                    var avmComponent = new List<ComponentControllerDescriptor>(); // Controller
 
                     GetAssemblyController(ref avmComponent, controller);
 
-                    avm.Components = avmComponent;
-                    assemblyViewModels.Add(avm);
+                    assemblyDescriptor.Controllers = avmComponent;
+                    assemblyViewModels.Add(assemblyDescriptor);
                 }
-
-            }
 
             return assemblyViewModels;
         }
 
-
-
-        private void GetAssemblyController(ref List<ComponentViewModel> componentViewModel, ControllerModel controllerModel)
+        private List<ComponentViewDescriptor> GetViewComponents(Assembly assembly)
         {
-            var controllerMethods = new List<ComponentMethodViewModel>();
+            var result = new List<ComponentViewDescriptor>();
+
+            var componentId = assembly.GetComponentId();
+
+            var assemblyTypes = assembly.GetTypes();
+            if (!assemblyTypes.Any())
+                return result;
+
+            foreach (var type in assemblyTypes)
+            {
+                var componentType = type.GetTypeInfo();
+                if (ViewComponentConventions.IsComponent(componentType))
+                {
+                    var attribute = componentType.GetCustomAttribute<ViewComponentAttribute>();
+                    var componentName = !string.IsNullOrEmpty(attribute?.Name) ? attribute.Name : ViewComponentConventions.GetComponentName(componentType);
+                    result.Add(new ComponentViewDescriptor()
+                    {
+                        Name = componentName,
+                        ComponentId = componentId
+                    });
+                }
+            }
+
+            return result;
+
+        }
+
+        private void GetAssemblyController(ref List<ComponentControllerDescriptor> assemblyDescriptors, ControllerModel controllerModel)
+        {
+            var controllerMethods = new List<ComponentMethodDescriptor>();
             GetAssemblyControllerActions(ref controllerMethods, controllerModel);
-            componentViewModel.Add(new ComponentViewModel()
+            assemblyDescriptors.Add(new ComponentControllerDescriptor
             {
                 Name = controllerModel.ControllerName,
-                Inherited = String.Join(", ", controllerModel.ControllerType.ImplementedInterfaces.Select(k => k.Name)),
+                Inherited = string.Join(", ", controllerModel.ControllerType.ImplementedInterfaces.Select(k => k.Name)),
                 ComponentMethods = controllerMethods
             });
         }
 
-        private void GetAssemblyControllerActions(ref List<ComponentMethodViewModel> componentMethodViewModel, ControllerModel controllerModel)
+        private void GetAssemblyControllerActions(ref List<ComponentMethodDescriptor> componentMethodDescriptors, ControllerModel controllerModel)
         {
             foreach (var controllerModelAction in controllerModel.Actions)
             {
-                var methodParameter = new List<ComponentMethodParameterViewModel>();
+                var methodParameter = new List<ComponentMethodParameterDescriptor>();
                 GetAssemblyControllerActionParameters(ref methodParameter, controllerModelAction);
 
-                componentMethodViewModel.Add(new ComponentMethodViewModel
+                componentMethodDescriptors.Add(new ComponentMethodDescriptor
                 {
                     Name = controllerModelAction.ActionName,
                     ReturnType = controllerModelAction.ActionMethod.ReturnType.Name,
@@ -125,17 +143,14 @@ namespace Hisar.Component.CoreManagement.Helpers
             }
         }
 
-        private void GetAssemblyControllerActionParameters(ref List<ComponentMethodParameterViewModel> componentMethodParameterViewModel, ActionModel actionModel)
+        private void GetAssemblyControllerActionParameters(ref List<ComponentMethodParameterDescriptor> componentMethodParameterDescriptors, ActionModel actionModel)
         {
             foreach (var actionModelParameter in actionModel.Parameters)
-            {
-                componentMethodParameterViewModel.Add(new ComponentMethodParameterViewModel
+                componentMethodParameterDescriptors.Add(new ComponentMethodParameterDescriptor
                 {
                     ParameterType = actionModelParameter.ParameterInfo.ParameterType.ToString(),
                     ParameterName = actionModelParameter.ParameterName
                 });
-            }
         }
-
     }
 }

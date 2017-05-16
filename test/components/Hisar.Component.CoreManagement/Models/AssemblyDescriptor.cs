@@ -2,12 +2,14 @@
 
 namespace Hisar.Component.CoreManagement.Models
 {
-    public class AssemblyViewModel
+    public class AssemblyDescriptor
     {
-        public AssemblyViewModel()
+        public AssemblyDescriptor()
         {
-            Components = new List<ComponentViewModel>();
+            Controllers = new List<ComponentControllerDescriptor>();
         }
+
+        public string ComponentId { get; set; }
         public string PackageId { get; set; }
         public string PackageVersion { get; set; }
         public string Authors { get; set; }
@@ -24,6 +26,7 @@ namespace Hisar.Component.CoreManagement.Models
         public string NeutrelLanguage { get; set; }
         public string Version { get; set; }
         public string FileVersion { get; set; }
-        public List<ComponentViewModel> Components { get; set; }
+        public List<ComponentControllerDescriptor> Controllers { get; set; }
+        public List<ComponentViewDescriptor> ViewComponents { get; set; }
     }
 }

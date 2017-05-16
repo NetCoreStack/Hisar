@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Threading.Tasks;
+using NetCoreStack.Hisar;
 
 namespace Hisar.Component.CoreManagement.Helpers
 {
@@ -22,7 +23,7 @@ namespace Hisar.Component.CoreManagement.Helpers
         }
 
         #region Properties
-
+        public string ComponentId => _assembly.GetComponentId();
         public string PackageId => _assembly.GetName()?.Name;
         public string PackageVersion => GetAssemblyAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
         public string Authors => "" /*FileVersionInfo.GetVersionInfo(_assembly.Location).CompanyName*/;
