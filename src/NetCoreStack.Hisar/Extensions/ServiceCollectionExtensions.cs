@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,15 +11,14 @@ using NetCoreStack.Mvc.Interfaces;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
 using System;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         private static HisarAssemblyComponentsLoader CreateAssemblyLoader(IServiceCollection services, IHostingEnvironment env, IMvcBuilder builder)
         {
@@ -29,7 +29,9 @@ namespace NetCoreStack.Hisar
             return assemblyLoader;
         }
 
-        internal static void AddHisar<TStartup>(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env) where TStartup : class
+        internal static void AddHisar<TStartup>(this IServiceCollection services, 
+            IConfigurationRoot configuration, 
+            IHostingEnvironment env) where TStartup : class
         {
             services.AddNetCoreStackMvc();
             services.AddSingleton<HisarMarkerService>();

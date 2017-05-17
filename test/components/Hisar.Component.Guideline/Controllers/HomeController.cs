@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Contracts;
 using NetCoreStack.Hisar.Server;
+using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Extensions;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,7 @@ namespace Hisar.Component.Guideline.Controllers
                     AlbumArtUrl = p.AlbumArtUrl,
                     Artist = p.Artist.Name,
                     Tags = p.Tags
-                }).ToCollectionResult(request);
+                }).ToCollectionResult(request, ControllerContext.TryGetComposerInvoker<AlbumViewModel>());
 
             return Json(query);
         }
