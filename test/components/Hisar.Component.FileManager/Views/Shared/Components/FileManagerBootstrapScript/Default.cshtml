@@ -1,0 +1,61 @@
+﻿<!--
+# Sample Code Block
+
+<div class="input-group efe-file-picker">
+    <input type="text" class="form-control efe-file-input" placeholder="Select file..">
+    <span class="input-group-btn">
+        <button class="btn btn-primary efe-file-button" type="button" data-toggle="modal" data-target="#fm-bs-modal">Select File</button>
+    </span>
+</div>
+-->
+<!-- Bootstrap ModalBox -->
+<div id="fm-bs-modal" class="modal fade">
+    <div class="modal-dialog" style="width: 1000px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">File Picker</h4>
+            </div>
+            <div class="modal-body" style="width: 100%; height: 600px; padding:0 ;">
+                <iframe width="100%" height="100%" src="" frameborder="0" style="margin:0; padding:0 ; overflow-x: hidden;" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(function () {
+
+        var bootstrapFileManagerUrl = '@Url.Action("Index", "Home")';
+
+         /*************************
+          *** Bootstrap ModalBox **
+          *************************/
+        $('#fm-bs-modal').on('show.bs.modal', function (event) {
+            var efeFilePickerContainerClass = '.efe-file-picker',
+                efeFilePickerInputClass = '.efe-file-input',
+                efeFilePickerButtonClass = '.efe-file-button';
+
+            var efeFilePickerButton = $(event.relatedTarget),
+                efeFilePickerContainer = efeFilePickerButton.closest(efeFilePickerContainerClass),
+                efeFilePickerInput = efeFilePickerContainer.find(efeFilePickerInputClass);
+
+            $(this).find('iframe').attr('src', bootstrapFileManagerUrl);
+
+            function handlePostMessage(e) {
+                var data = e.originalEvent.data;
+                if (data.source === 'richfilemanager') {
+                    efeFilePickerInput.val(data.preview_url);
+                    $('#fm-bs-modal').find('.close').click();
+
+                    // remove an event handler
+                    $(window).off('message', handlePostMessage);
+                }
+            }
+
+            $(window).on('message', handlePostMessage);
+        });
+    });
+</script>

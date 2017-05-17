@@ -18,7 +18,7 @@ $.richFilemanagerPlugin = function(element, pluginOptions)
 	 * Plugin's default options
 	 */
 	var defaults = {
-		baseUrl: '/filemanager',	// relative path to the FM plugin folder
+		baseUrl: '.',	// relative path to the FM plugin folder
 		config: {},		// configuration options
         callbacks: {
             beforeCreateImageUrl: function (resourceObject, url) {
