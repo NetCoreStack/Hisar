@@ -1,0 +1,47 @@
+﻿<!--
+# Sample Code Block
+
+<textarea name="tiny2" class="fmTinyMceEditor" rows="10" cols="80">
+	This is my textarea to be replaced with TinyMCE 4 editor. TEST 2
+</textarea>
+-->
+
+
+<script>
+    $(function () {
+        var tinyMceEditorFileManagerUrl = '@Url.Action("Index", "Home")';
+
+        /*************************
+          *** TinyMCE Editor **
+          *************************/
+        tinymce.init({
+            selector: '.fmTinyMceEditor',
+            plugins: 'advlist autolink link image lists charmap print preview',
+            file_browser_callback: function (field_name, url, type, win) {
+                // from http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript
+                var w = window,
+                    d = document,
+                    e = d.documentElement,
+                    g = d.getElementsByTagName('body')[0],
+                    x = w.innerWidth || e.clientWidth || g.clientWidth,
+                    y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+                var cmsURL = tinyMceEditorFileManagerUrl + '?&field_name=' + field_name/* + '&langCode=en'*/;
+
+                if (type == 'image') {
+                    cmsURL = cmsURL + "&type=images";
+                }
+
+                tinyMCE.activeEditor.windowManager.open({
+                    file: cmsURL,
+                    title: 'Filemanager',
+                    width: x * 0.8,
+                    height: y * 0.8,
+                    resizable: "yes",
+                    close_previous: "no"
+                });
+            }
+        });
+
+    });
+</script>

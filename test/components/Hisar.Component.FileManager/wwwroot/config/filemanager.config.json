@@ -50,7 +50,7 @@
     },
     "api": {
         "lang": "aspnetcore",
-        "connectorUrl": "filemanager/filemanager",
+        "connectorUrl": "filemanager",
         "requestParams": []
     },
     "upload": {

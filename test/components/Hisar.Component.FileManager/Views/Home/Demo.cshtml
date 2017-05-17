@@ -1,48 +1,290 @@
 ﻿@using Hisar.Component.FileManager.Controllers
 
-<div class="input-append">
-    <input id="fm-bs-modal-input" type="text" value="">
-    <a data-toggle="modal" data-target="#fm-bs-modal" class="btn" type="button">Select</a>
-</div>
+@section styles{
+    <style type="text/css">
+        .fm-modal {
+            z-index: 10011; /** Because CKEditor image dialog was at 10010 */
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border: 0;
+            position: fixed;
+            -moz-box-shadow: 0px 1px 5px 0px #656565;
+            -webkit-box-shadow: 0px 1px 5px 0px #656565;
+            -o-box-shadow: 0px 1px 5px 0px #656565;
+            box-shadow: 0px 1px 5px 0px #656565;
+            filter: progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=5);
+        }
+    </style>
+}
 
-<div id="fm-bs-modal" class="modal fade">
-    <div class="modal-dialog" style="width: 1000px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
+@section scripts{
+    <script type="text/javascript" src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script type="text/javascript" src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <h2>Test Page</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <label>Bootstrap Modal Box</label>
+                <div class="input-group efe-file-picker">
+                    <input type="text" class="form-control efe-file-input" placeholder="Select file..">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary efe-file-button" type="button" data-toggle="modal" data-target="#fm-bs-modal">Select File</button>
+                    </span>
+                </div>
+
             </div>
-            <div class="modal-body" style="width: 100%; height: 600px">
-                <iframe width="100%" height="100%" src="" frameborder="0"></iframe>
+
+            <div class="col-md-4">
+                <label>Window Popup</label>
+                <div class="input-group efe-file-picker-popup">
+                    <input type="text" class="form-control efe-file-input-popup" placeholder="Select file..">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary efe-file-button-popup" type="button">Select File</button>
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+        
+        <br /><br />
+
+
+        <h4>Ck Editor</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+
+                <label>Test 1</label>
+                <textarea name="ck1" class="fmCkEditor" rows="10" cols="80">
+			        This is my textarea to be replaced with CKEditor. TEST 1
+		        </textarea>
+
+            </div>
+            <div class="col-md-6">
+                <label>Test 2</label>
+                <textarea name="ck2" class="fmCkEditor" rows="10" cols="80">
+			        This is my textarea to be replaced with CKEditor. TEST 2
+		        </textarea>
             </div>
         </div>
+
+        
+        <br /><br />
+
+        
+        <h4>Tiny Mce</h4>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <label>Test 1</label>
+                <textarea name="tiny1" class="fmTinyMceEditor" rows="10" cols="80">
+			        This is my textarea to be replaced with TinyMCE 4 editor. TEST 1
+		        </textarea>
+
+            </div>
+            <div class="col-md-6">
+
+                <label>Test 2</label>
+                <textarea name="tiny2" class="fmTinyMceEditor" rows="10" cols="80">
+			        This is my textarea to be replaced with TinyMCE 4 editor. TEST 2
+		        </textarea>
+
+            </div>
+        </div>
+
     </div>
 </div>
 
-<script>
-    /*---------------------------------------------------------
-     Bootstrap 3 modal window with iframe example
-     ---------------------------------------------------------*/
-//            $('#fm-bs-modal').on('show.bs.modal', function() {
-//                $(this).find('iframe').attr('src', './../index.html?context=bootstrap');
-//            });
 
-    $('#fm-bs-modal').on('show.bs.modal', function () {
+<br /> <br />
+
+@*
+    ####   Script Register
+*@
+
+@await Component.InvokeAsync(ViewContext.ResolveName("FileManagerBootstrapScript"))
+
+@await Component.InvokeAsync(ViewContext.ResolveName("FileManagerWindowPopupScript"))
+
+@await Component.InvokeAsync(ViewContext.ResolveName("FileManagerCkEditorScript"))
+
+@await Component.InvokeAsync(ViewContext.ResolveName("FileManagerTinyMceScript"))
+
+
+
+
+
+
+
+<!-- Bootstrap ModalBox -->
+@*<div id="fm-bs-modal" class="modal fade">
+        <div class="modal-dialog" style="width: 1000px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">File Picker</h4>
+                </div>
+                <div class="modal-body" style="width: 100%; height: 600px; padding:0 ;">
+                    <iframe width="100%" height="100%" src="" frameborder="0" style="margin:0; padding:0 ; overflow-x: hidden;" scrolling="no"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
         var fileManagerUrl = '@Url.Action("Index", "Home")';
-        $(this).find('iframe').attr('src', fileManagerUrl);
 
-        function handlePostMessage(e) {
-            var data = e.originalEvent.data;
-            if (data.source === 'richfilemanager') {
-                $('#fm-bs-modal-input').val(data.preview_url);
-                $('#fm-bs-modal').find('.close').click();
+        $(function () {
 
-                // remove an event handler
-                $(window).off('message', handlePostMessage);
-            }
-        }
+             /*************************
+              *** Bootstrap ModalBox **
+              *************************/
+            $('#fm-bs-modal').on('show.bs.modal', function (event) {
+                var efeFilePickerContainerClass = '.efe-file-picker',
+                    efeFilePickerInputClass = '.efe-file-input',
+                    efeFilePickerButtonClass = '.efe-file-button';
 
-        $(window).on('message', handlePostMessage);
-    });
+                var efeFilePickerButton = $(event.relatedTarget),
+                    efeFilePickerContainer = efeFilePickerButton.closest(efeFilePickerContainerClass),
+                    efeFilePickerInput = efeFilePickerContainer.find(efeFilePickerInputClass);
 
-</script>
+                $(this).find('iframe').attr('src', fileManagerUrl);
+
+                function handlePostMessage(e) {
+                    var data = e.originalEvent.data;
+                    if (data.source === 'richfilemanager') {
+                        efeFilePickerInput.val(data.preview_url);
+                        $('#fm-bs-modal').find('.close').click();
+
+                        // remove an event handler
+                        $(window).off('message', handlePostMessage);
+                    }
+                }
+
+                $(window).on('message', handlePostMessage);
+            });
+
+
+            /*************************
+              *** Windows Popup **
+              *************************/
+            $('.efe-file-button-popup').on('click', function () {
+                var efeFilePickerContainerClass = '.efe-file-picker-popup',
+                    efeFilePickerInputClass = '.efe-file-input-popup',
+                    efeFilePickerButtonClass = '.efe-file-button-popup';
+
+                var efeFilePickerButton = $(this),
+                    efeFilePickerContainer = efeFilePickerButton.closest(efeFilePickerContainerClass),
+                    efeFilePickerInput = efeFilePickerContainer.find(efeFilePickerInputClass);
+
+                var opener = window.open(fileManagerUrl, 'targetWindow',
+                    'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=860, height=640');
+
+                function handlePostMessage(e) {
+                    var data = e.originalEvent.data;
+                    if (data.source === 'richfilemanager') {
+                        efeFilePickerInput.val(data.preview_url);
+                        opener.close();
+                    }
+
+                    // remove an event handler
+                    $(window).off('message', handlePostMessage);
+                }
+
+                $(window).on('message', handlePostMessage);
+            });
+
+        });
+
+        $(function () {
+
+            /*************************
+              *** CK Editor **
+              *************************/
+            CKEDITOR.replaceAll('fmCkEditor');
+            CKEDITOR.on('dialogDefinition', function (event) {
+                var editor = event.editor;
+                var dialogDefinition = event.data.definition;
+                var dialogName = event.data.name;
+
+                var cleanUpFuncRef = CKEDITOR.tools.addFunction(function () {
+                    // Do the clean-up of filemanager here (called when an image was selected or cancel was clicked)
+                    $('#fm-iframe').remove();
+                    $("body").css("overflow-y", "scroll");
+                });
+
+                var tabCount = dialogDefinition.contents.length;
+                for (var i = 0; i < tabCount; i++) {
+                    var browseButton = dialogDefinition.contents[i].get('browse');
+
+                    if (browseButton !== null) {
+                        browseButton.hidden = false;
+                        browseButton.onClick = function (dialog, i) {
+                            editor._.filebrowserSe = this;
+                            var iframe = $("<iframe id='fm-iframe' class='fm-modal'/>").attr({
+                                src: fileManagerUrl + // Change it to wherever  Filemanager is stored.
+                                '?CKEditorFuncNum=' + CKEDITOR.instances[event.editor.name]._.filebrowserFn +
+                                '&CKEditorCleanUpFuncNum=' + cleanUpFuncRef +
+                                '&langCode=en' +
+                                '&CKEditor=' + event.editor.name
+                            });
+
+                            $("body").append(iframe);
+                            $("body").css("overflow-y", "hidden");  // Get rid of possible scrollbars in containing document
+                        }
+                    }
+                }
+            });
+
+        });
+
+
+        $(function () {
+
+            /*************************
+              *** TinyMCE Editor **
+              *************************/
+            tinymce.init({
+                selector: '.fmTinyMceEditor',
+                plugins: 'advlist autolink link image lists charmap print preview',
+                file_browser_callback: function (field_name, url, type, win) {
+                    // from http://andylangton.co.uk/blog/development/get-viewport-size-width-and-height-javascript
+                    var w = window,
+                        d = document,
+                        e = d.documentElement,
+                        g = d.getElementsByTagName('body')[0],
+                        x = w.innerWidth || e.clientWidth || g.clientWidth,
+                        y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+                    var cmsURL = fileManagerUrl + '?&field_name=' + field_name + '&langCode=en';
+
+                    if (type == 'image') {
+                        cmsURL = cmsURL + "&type=images";
+                    }
+
+                    tinyMCE.activeEditor.windowManager.open({
+                        file: cmsURL,
+                        title: 'Filemanager',
+                        width: x * 0.8,
+                        height: y * 0.8,
+                        resizable: "yes",
+                        close_previous: "no"
+                    });
+                }
+            });
+
+        });
+
+    </script>*@
