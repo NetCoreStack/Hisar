@@ -1,0 +1,39 @@
+.fm-container div, .fm-container span, .fm-container applet, .fm-container object, .fm-container iframe, .fm-container h1, .fm-container h2, .fm-container h3, .fm-container h4, .fm-container h5, .fm-container h6, .fm-container p, .fm-container blockquote, .fm-container pre, .fm-container a, .fm-container abbr, .fm-container acronym, .fm-container address, .fm-container big, .fm-container cite, .fm-container code, .fm-container del, .fm-container dfn, .fm-container em, .fm-container font, .fm-container img, .fm-container ins, .fm-container kbd, .fm-container q, .fm-container s, .fm-container samp, .fm-container small, .fm-container strike, .fm-container strong, .fm-container sub, .fm-container sup, .fm-container tt, .fm-container var, .fm-container b, .fm-container u, .fm-container i, .fm-container center, .fm-container dl, .fm-container dt, .fm-container dd, .fm-container ol, .fm-container ul, .fm-container li, .fm-container fieldset, .fm-container form, .fm-container label, .fm-container legend, .fm-container table, .fm-container caption, .fm-container tbody, .fm-container tfoot, .fm-container thead, .fm-container tr, .fm-container th, .fm-container td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+.fm-container ol, .fm-container ul {
+	list-style: none;
+}
+
+.fm-container blockquote, .fm-container q {
+	quotes: none;
+}
+
+.fm-container blockquote:before, .fm-container blockquote:after, .fm-container q:before, .fm-container q:after {
+	content: '';
+	content: none;
+}
+
+.fm-container :focus {
+	outline: 0;
+}
+
+.fm-container ins {
+	text-decoration: none;
+}
+
+.fm-container del {
+	text-decoration: line-through;
+}
+
+.fm-container table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}

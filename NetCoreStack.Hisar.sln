@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7FD6AB70-993F-484A-B2DD-785854EAB1F5}"
 EndProject
@@ -35,6 +35,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Hosting", "test\Admin.Hosting\Admin.Hosting.csproj", "{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.CoreManagement", "test\components\Hisar.Component.CoreManagement\Hisar.Component.CoreManagement.csproj", "{15504075-7E8E-4E84-8F40-0655CAA539DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.FileManager", "test\components\Hisar.Component.FileManager\Hisar.Component.FileManager.csproj", "{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,6 +84,10 @@ Global
 		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15504075-7E8E-4E84-8F40-0655CAA539DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,5 +104,6 @@ Global
 		{FF724659-E79D-465F-9E77-EAF3C1D59B6D} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{15504075-7E8E-4E84-8F40-0655CAA539DD} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
+		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 	EndGlobalSection
 EndGlobal
