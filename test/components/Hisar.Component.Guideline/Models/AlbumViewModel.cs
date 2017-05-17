@@ -12,7 +12,7 @@ namespace Hisar.Component.Guideline.Models
 
         public string Genre { get; set; }
 
-        [PropertyDescriptor(EnableFilter = true, IsSelectable = true, DataSourceUrl = "/home/getartistlist")]
+        [PropertyDescriptor(EnableFilter = true, IsSelectable = true)]
         [Required]
         public long ArtistId { get; set; }
 
@@ -31,6 +31,9 @@ namespace Hisar.Component.Guideline.Models
         public string AlbumArtUrl { get; set; }
 
         public string ProtectedUrl { get; set; }
+
+        [PropertyDescriptor(EnableFilter = false, IsSelectable = true, DataSourceUrl = "/home/tags")]
+        public string[] Tags { get; set; }
 
         [PropertyDescriptor(EnableFilter = false)]
         public DateTime Date { get; set; }

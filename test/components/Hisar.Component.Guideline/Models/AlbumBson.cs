@@ -1,5 +1,6 @@
 ﻿using NetCoreStack.Contracts;
 using NetCoreStack.Data.Contracts;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hisar.Component.Guideline.Models
@@ -19,6 +20,10 @@ namespace Hisar.Component.Guideline.Models
         [Display(Name = "Album Art URL")]
         [StringLength(1024)]
         public string AlbumArtUrl { get; set; }
+
+        public DateTime? UpdatedDate { get; set; }
+
+        public string[] Tags { get; set; }
 
         public virtual GenreBson Genre { get; set; }
 

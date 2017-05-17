@@ -9,6 +9,7 @@ using NetCoreStack.Mvc.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline.Controllers
 {
@@ -68,10 +69,70 @@ namespace Hisar.Component.Guideline.Controllers
                     Genre = p.Genre.Name,
                     Price = p.Price,
                     Title = p.Title,
-                    Artist = p.Artist.Name
+                    AlbumArtUrl = p.AlbumArtUrl,
+                    Artist = p.Artist.Name,
+                    Tags = p.Tags
                 }).ToCollectionResult(request);
 
             return Json(query);
+        }
+
+        [HttpPost(nameof(SaveAlbum))]
+        public async Task<AlbumViewModel> SaveAlbum([FromBody]AlbumViewModel model)
+        {
+            await Task.CompletedTask;
+
+            string id = string.Empty;
+            var objectState = ObjectState.Added;
+            if (!model.IsNew)
+            {
+                id = model.Id;
+                objectState = ObjectState.Modified;
+            }
+
+            var album = new AlbumBson
+            {
+                AlbumArtUrl = model.AlbumArtUrl,
+                Id = id,
+                ObjectState = objectState,
+                Price = model.Price,
+                Title = model.Title,
+                UpdatedDate = model.UpdatedDate
+            };
+
+            if (!model.IsNew)
+                UnitOfWork.Repository<AlbumBson>().Update(album);
+            else
+                UnitOfWork.Repository<AlbumBson>().Insert(album);
+            
+            return model;
+        }
+
+        public IActionResult Tags(AutoCompleteRequest request)
+        {
+            var items = new List<IdTextPair>
+            {
+                new IdTextPair
+                {
+                    Id = "1",
+                    Text = "Brand New"
+                },
+
+                new IdTextPair
+                {
+                    Id = "2",
+                    Text = "Millennium"
+                },
+            };
+
+            return Json(items.ToCollectionResult(request));
+        }
+
+        [HttpPut(nameof(UpdateAlbum))]
+        public async Task<AlbumViewModel> UpdateAlbum(long id, [FromBody]AlbumViewModel model)
+        {
+            await Task.CompletedTask;
+            return model;
         }
 
         public IActionResult Registration()
