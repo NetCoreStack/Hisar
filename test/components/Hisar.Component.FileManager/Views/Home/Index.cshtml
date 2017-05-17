@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    Layout = null;
+}
+
+
+    <link href="@Url.ComponentContent("~/styles/reset.css")" rel="stylesheet" />
+    <link href="@Url.ComponentContent("~/styles/filemanager.css")" rel="stylesheet" />
+    <link href="@Url.ComponentContent("~/styles/jquery.contextMenu.min.css")" rel="stylesheet" />
+    <link href="@Url.ComponentContent("~/styles/jquery.mCustomScrollbar.css")" rel="stylesheet" />
+    <link href="@Url.ComponentContent("~/styles/alertify.css")" rel="stylesheet" />
+
+    <!--[if IE 9]>
+        <link rel="stylesheet" type="text/css" href="@Url.ComponentContent("~/styles/ie9.css")" />
+    <![endif]-->
+
+    <style type="text/css">
+        .fm-container .fm-loading-wrap {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+            display: block;
+            background: white url(@Url.ComponentContent("~/images/spinner.gif")) no-repeat center center;
+            z-index: 999;
+        }
+    </style>
+
+
+@await Component.InvokeAsync(ViewContext.ResolveName("FileManager"))
+
+    <script src="http://cdn.netcorestack.com/js/bundle.min.js"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/jquery-browser.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/jquery.mousewheel.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/jquery-splitter.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/jquery.contextMenu.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/alertify.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/ZeroClipboard.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/jquery.fileDownload.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/tmpl.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/toast.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/purl.min.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/filemanager.js")"></script>
+    <script type="text/javascript" src="@Url.ComponentContent("~/scripts/filemanager.init.js")"></script>
+
+    <script type="application/javascript">
+        $(function() {
+            $('.fm-container').richFilemanager({
+                baseUrl: '@Url.ComponentContent("~/")'
+            });
+        });
+    </script>
+
+
