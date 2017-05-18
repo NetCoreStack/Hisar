@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdn.netcorestack.com/css/efe.all.min.css">
 
@@ -47,10 +48,25 @@
 <script type="text/javascript" src="@Url.ComponentContent("~/scripts/filemanager.js")"></script>
 <script type="text/javascript" src="@Url.ComponentContent("~/scripts/filemanager.init.js")"></script>
 
-<script type="application/javascript">
+
+
+<script type="text/javascript">
+
         $(function() {
+            var baseUrl = '@Url.ComponentContent("~/")';
+            var isExternalComponent = @Json.Serialize(@ComponentHelperBase.GetComponentHelper(ViewContext).IsExternalComponent);
+            var currentPageUrl = window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/';
+
+            if(isExternalComponent){
+                var standaloneParameter = "config=filemanager.config.standalone.json";
+                if(window.location.href.indexOf(standaloneParameter) < 0){
+                    currentPageUrl += (window.location.href.indexOf("?") > -1 ? window.location.search + "&" : "?") + standaloneParameter,
+                    window.location.href = currentPageUrl;
+                }
+            }
+            var fmBaseUrl = baseUrl.substring(baseUrl.length, baseUrl.length - 1) === '/' ? baseUrl.slice(0, -1) : baseUrl;
             $('.fm-container').richFilemanager({
-                baseUrl: '@Url.ComponentContent("~/")'
+                baseUrl: fmBaseUrl
             });
         });
 </script>

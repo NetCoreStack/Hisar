@@ -1,10 +1,10 @@
-﻿using Hisar.Component.FileManager.Types;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NetCoreStack.Contracts;
 using NetCoreStack.Hisar;
 
 namespace Hisar.Component.FileManager
@@ -26,7 +26,7 @@ namespace Hisar.Component.FileManager
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<FileManagerAppSettings>(Configuration.GetSection("FileManagerAppSettings"));
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
 #if !RELEASE
             services.AddCliSocket<Startup>();

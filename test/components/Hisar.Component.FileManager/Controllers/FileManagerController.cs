@@ -10,6 +10,7 @@ using Hisar.Component.FileManager.Types;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using NetCoreStack.Contracts;
 
 namespace Hisar.Component.FileManager.Controllers
 {
@@ -18,12 +19,12 @@ namespace Hisar.Component.FileManager.Controllers
         private readonly string _webRootPath;
         private readonly string _webPath;
         private readonly List<string> _allowedExtensions;
-        private readonly FileManagerAppSettings _fmSettings;
+        private readonly AppSettings _appSettings;
 
-        public FileManagerController(IHostingEnvironment env, IOptions<FileManagerAppSettings> fmSettings)
+        public FileManagerController(IHostingEnvironment env, IOptions<AppSettings> appSettings)
         {
-            _fmSettings = fmSettings.Value;
-            _webPath = _fmSettings.FileManagerPath;
+            _appSettings = appSettings.Value;
+            _webPath = _appSettings.UploadRootPath;
             _webRootPath = Path.Combine(env.WebRootPath, _webPath);
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
 
