@@ -17,7 +17,7 @@ namespace NetCoreStack.Hisar
             _builders = builders;
         }
 
-        public virtual IDictionary<ComponentPair, IEnumerable<IMenuItem>> PopulateMenuItems(ActionContext context)
+        public virtual IDictionary<ComponentPair, IEnumerable<IMenuItem>> PopulateMenuItems(IUrlHelper urlHelper)
         {
             var dictionary = new Dictionary<ComponentPair, IEnumerable<IMenuItem>>();
             List<IMenuItem> menuItems = new List<IMenuItem>();
@@ -25,17 +25,17 @@ namespace NetCoreStack.Hisar
             {
                 var componentPair = new ComponentPair(builder.Component.ComponentId, builder.Component.ComponentType);
                 if (dictionary.ContainsKey(componentPair))
-                    dictionary[componentPair] = builder.Build(context);
+                    dictionary[componentPair] = builder.Build(urlHelper);
                 else
-                    dictionary.Add(componentPair, builder.Build(context));
+                    dictionary.Add(componentPair, builder.Build(urlHelper));
             }
 
             return dictionary;
         }
 
-        public virtual IHtmlContent Render(ActionContext context, Action<IDictionary<ComponentPair, IEnumerable<IMenuItem>>> filter = null)
+        public virtual IHtmlContent Render(IUrlHelper urlHelper, Action<IDictionary<ComponentPair, IEnumerable<IMenuItem>>> filter = null)
         {
-            IDictionary<ComponentPair, IEnumerable<IMenuItem>> menuItems = PopulateMenuItems(context);
+            IDictionary<ComponentPair, IEnumerable<IMenuItem>> menuItems = PopulateMenuItems(urlHelper);
             filter?.Invoke(menuItems);
 
             using (var writer = new StringWriter())

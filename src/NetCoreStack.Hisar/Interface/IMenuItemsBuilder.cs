@@ -6,6 +6,7 @@ namespace NetCoreStack.Hisar
     public interface IMenuItemsBuilder
     {
         RunningComponentHelper Component { get; }
-        IEnumerable<IMenuItem> Build(ActionContext context);
+        string ResolvePath(IUrlHelper urlHelper, string path);
+        IEnumerable<IMenuItem> Build(IUrlHelper urlHelper);
     }
 }

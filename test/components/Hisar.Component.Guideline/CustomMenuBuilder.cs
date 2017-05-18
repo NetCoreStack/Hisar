@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using NetCoreStack.Hisar;
 using System.Collections.Generic;
 
@@ -7,22 +6,20 @@ namespace Hisar.Component.Guideline
 {
     public class CustomMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public CustomMenuBuilder(IUrlHelperFactory urlHelperFactory, IComponentTypeResolver componentTypeResolver)
-            : base(urlHelperFactory, componentTypeResolver)
+        public CustomMenuBuilder(IComponentTypeResolver componentTypeResolver)
+            : base(componentTypeResolver)
         {
         }
 
-        public override IEnumerable<IMenuItem> Build(ActionContext context)
+        public override IEnumerable<IMenuItem> Build(IUrlHelper urlHelper)
         {
-            var urlHelper = UrlHelperFactory.GetUrlHelper(context);
-
             var items = new List<IMenuItem>
             {
                 new DefaultMenuItem
                 {
                     Icon = FontAwesomeIcon.Home,
                     Order = 1,
-                    Path = urlHelper.ComponentContent("~/"),
+                    Path = ResolvePath(urlHelper, "~/"),
                     ShowInMenu = true,
                     Text = "Home Page"
                 },
@@ -30,7 +27,7 @@ namespace Hisar.Component.Guideline
                 {
                     Icon = FontAwesomeIcon.Home,
                     Order = 1,
-                    Path = urlHelper.ComponentContent("~/Home/Albums"),
+                    Path = ResolvePath(urlHelper, "~/Home/Albums"),
                     ShowInMenu = true,
                     Text = "Albums"
                 }

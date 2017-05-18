@@ -7,8 +7,8 @@ namespace NetCoreStack.Hisar
 {
     public interface IMenuItemsRenderer
     {
-        IDictionary<ComponentPair, IEnumerable<IMenuItem>> PopulateMenuItems(ActionContext context);
+        IDictionary<ComponentPair, IEnumerable<IMenuItem>> PopulateMenuItems(IUrlHelper urlHelper);
 
-        IHtmlContent Render(ActionContext context, Action<IDictionary<ComponentPair, IEnumerable<IMenuItem>>> filter = null);
+        IHtmlContent Render(IUrlHelper urlHelper, Action<IDictionary<ComponentPair, IEnumerable<IMenuItem>>> filter = null);
     }
 }

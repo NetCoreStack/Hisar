@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using NetCoreStack.Hisar;
 using System.Collections.Generic;
 
@@ -7,14 +6,14 @@ namespace Hisar.Component.Carousel
 {
     public class CarouselMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public CarouselMenuBuilder(IUrlHelperFactory urlHelperFactory, IComponentTypeResolver componentTypeResolver) 
-            : base(urlHelperFactory, componentTypeResolver)
+        public CarouselMenuBuilder(IComponentTypeResolver componentTypeResolver) 
+            : base(componentTypeResolver)
         {
         }
 
-        public override IEnumerable<IMenuItem> Build(ActionContext context)
+        public override IEnumerable<IMenuItem> Build(IUrlHelper urlHelper)
         {
-            return base.Build(context);
+            return base.Build(urlHelper);
         }
     }
 }

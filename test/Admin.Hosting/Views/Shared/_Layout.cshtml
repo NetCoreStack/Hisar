@@ -1,6 +1,4 @@
 ﻿@using NetCoreStack.Hisar
-@inject IMenuItemsRenderer Menu
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +48,7 @@
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                @(Menu.Render(ViewContext))
+                                @(Html.RenderMenu())
                             </ul>
                         </div>
                     </div>
