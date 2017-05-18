@@ -29,11 +29,6 @@ namespace Hisar.Component.Carousel
             services.AddCliSocket<Startup>();
 #endif
 
-            services.AddMenuItems<Startup>(setup =>
-            {
-                setup.Builder<CarouselMenuBuilder>();
-            });
-
             services.AddMvc();
         }
 

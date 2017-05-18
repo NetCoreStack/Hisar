@@ -2,11 +2,11 @@
 using NetCoreStack.Hisar;
 using System.Collections.Generic;
 
-namespace Hisar.Component.Carousel
+namespace Hisar.Component.FileManager
 {
-    public class CarouselMenuBuilder : DefaultMenuItemsBuilder<Startup>
+    public class CustomMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public CarouselMenuBuilder(IComponentTypeResolver componentTypeResolver) 
+        public CustomMenuBuilder(IComponentTypeResolver componentTypeResolver) 
             : base(componentTypeResolver)
         {
         }
@@ -17,7 +17,7 @@ namespace Hisar.Component.Carousel
             {
                 new DefaultMenuItem
                 {
-                    Text = "Test",
+                    Text = "Manage Files",
                     Path = ResolvePath(urlHelper, "~/"),
                     ShowInMenu = true
                 }

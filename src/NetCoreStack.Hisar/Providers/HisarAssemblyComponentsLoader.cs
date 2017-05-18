@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -102,10 +103,17 @@ namespace NetCoreStack.Hisar
                                 var startup = StartupTypeLoader.CreateHisarConventionBasedStartup(startupType, _serviceProvider, _env);
                                 StartupLookup.Add(componentId, startup);
                                 startup.ConfigureServices(services);
+
+                                var menuBuilder = startupType.GetTypeInfo().Assembly.GetTypes()
+                                    .FirstOrDefault(x => typeof(IMenuItemsBuilder).IsAssignableFrom(x));
+
+                                if (menuBuilder != null)
+                                    services.AddScoped(typeof(IMenuItemsBuilder), menuBuilder);
                             }
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
                         var components = assembly.GetTypes().ToArray();

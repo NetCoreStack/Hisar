@@ -14,11 +14,13 @@ namespace Hisar.Component.Guideline
 
         public static bool CollectionExists(IMongoDatabase database, string collectionName)
         {
-            var filter = new BsonDocument("name", collectionName);
+            // var filter = new BsonDocument("name", collectionName);
             //filter by collection name
-            var collections = database.ListCollections(new ListCollectionsOptions { Filter = filter });
+            // var collections = database.ListCollections(new ListCollectionsOptions { Filter = filter });
             //check for existence
-            return collections.Any();
+            // return collections.Any();
+
+            return true;
         }
 
         public static void InitializeMusicStoreMongoDb(IServiceProvider serviceProvider)

@@ -2,11 +2,11 @@
 using NetCoreStack.Hisar;
 using System.Collections.Generic;
 
-namespace Hisar.Component.Carousel
+namespace Hisar.Component.Template
 {
-    public class CarouselMenuBuilder : DefaultMenuItemsBuilder<Startup>
+    public class CustomMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public CarouselMenuBuilder(IComponentTypeResolver componentTypeResolver) 
+        public CustomMenuBuilder(IComponentTypeResolver componentTypeResolver) 
             : base(componentTypeResolver)
         {
         }
@@ -17,8 +17,8 @@ namespace Hisar.Component.Carousel
             {
                 new DefaultMenuItem
                 {
-                    Text = "Test",
-                    Path = ResolvePath(urlHelper, "~/"),
+                    Text = "Registration",
+                    Path = ResolvePath(urlHelper, "~/Home/Registration"),
                     ShowInMenu = true
                 }
             };

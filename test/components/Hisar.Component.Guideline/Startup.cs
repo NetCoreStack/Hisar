@@ -10,6 +10,7 @@ using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
 using NetCoreStack.Mvc;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline
 {
@@ -41,11 +42,6 @@ namespace Hisar.Component.Guideline
                 options.CreateMap<GenreViewModel, AnotherComposer>();
             });
 
-            services.AddMenuItems<Startup>(setup =>
-            {
-                setup.Builder<CustomMenuBuilder>();
-            });
-
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddAutoMapper();
             services.AddMvc();
@@ -57,7 +53,7 @@ namespace Hisar.Component.Guideline
             app.UseCliProxy();
 #endif
 
-            BsonDataInitializer.InitializeMusicStoreMongoDb(app.ApplicationServices);
+            Task.Run(() => BsonDataInitializer.InitializeMusicStoreMongoDb(app.ApplicationServices));
 
             app.UseMvc(ConfigureRoutes);
         }

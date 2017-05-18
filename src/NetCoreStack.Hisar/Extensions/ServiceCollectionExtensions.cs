@@ -135,17 +135,6 @@ namespace NetCoreStack.Hisar
 
             services.AddSingleton(_ => services);
         }
-
-        public static void AddMenuItems<TStartup>(this IServiceCollection services, Action<MenuRegistrar<TStartup>> setup) where TStartup : class
-        {
-            if (setup == null)
-            {
-                throw new ArgumentNullException(nameof(setup));
-            }
-
-            var registrar = new MenuRegistrar<TStartup>(services);
-            setup.Invoke(registrar);
-        }
     }
 
     public static class ServiceCollectionExtensionsProxy
