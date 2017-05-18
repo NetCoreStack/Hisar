@@ -28,6 +28,7 @@
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Landing.Hosting\ExternalComponents" />
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Admin.Hosting\ExternalComponents" />
     <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\components\Hisar.Component.CoreManagement\ExternalComponents" />
     <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Landing.Hosting/ExternalComponents" />
   </Target>

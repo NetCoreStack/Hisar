@@ -41,6 +41,11 @@ namespace Hisar.Component.Guideline
                 options.CreateMap<GenreViewModel, AnotherComposer>();
             });
 
+            services.AddMenuItems<Startup>(setup =>
+            {
+                setup.Builder<CustomMenuBuilder>();
+            });
+
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddAutoMapper();
             services.AddMvc();

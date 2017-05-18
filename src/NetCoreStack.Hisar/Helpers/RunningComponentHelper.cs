@@ -33,6 +33,8 @@ namespace NetCoreStack.Hisar
 
         public string ComponentId { get; }
 
+        public ComponentType ComponentType { get; }
+
         public IComponentTypeResolver ComponentTypeResolver { get; }
 
         public RunningComponentHelper(IComponentTypeResolver resolver)
@@ -44,6 +46,7 @@ namespace NetCoreStack.Hisar
                 definition.ComponentType == ComponentType.Core;
 
             IsCoreComponent = definition.ComponentType == ComponentType.Core;
+            ComponentType = definition.ComponentType;
             StartupType = definition.StartupType;
             ComponentId = definition.ComponentId;
         }

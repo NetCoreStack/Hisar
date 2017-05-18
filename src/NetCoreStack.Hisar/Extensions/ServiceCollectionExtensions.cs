@@ -29,6 +29,12 @@ namespace NetCoreStack.Hisar
             return assemblyLoader;
         }
 
+        private static RunningComponentHelperOfT<TStartup> CreateComponentHelper<TStartup>(IServiceCollection services)
+        {
+            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
+            return new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
+        }
+
         internal static void AddHisar<TStartup>(this IServiceCollection services, 
             IConfigurationRoot configuration, 
             IHostingEnvironment env) where TStartup : class
@@ -47,15 +53,18 @@ namespace NetCoreStack.Hisar
 
             // Per request services
             services.TryAddScoped<IUrlGeneratorHelper, UrlGeneratorHelper>();
+            services.TryAddScoped<IMenuItemsRenderer, DefaultMenuItemsRenderer>();
 
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            
             services.TryAddTransient<IHisarCacheValueProvider, HisarDefaultCacheValueProvider>();
 
-            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
-            var componentHelper = new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
-
+            var componentHelper = CreateComponentHelper<TStartup>(services);
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
+
+            services.TryAddScoped<IMenuItemsBuilder, DefaultMenuItemsBuilder<TStartup>>();
+
+
             bool isComponent = componentHelper.IsExternalComponent;
             bool isCoreComponent = componentHelper.IsCoreComponent;
             IMvcBuilder builder = null;
@@ -125,6 +134,17 @@ namespace NetCoreStack.Hisar
             }
 
             services.AddSingleton(_ => services);
+        }
+
+        public static void AddMenuItems<TStartup>(this IServiceCollection services, Action<MenuRegistrar<TStartup>> setup) where TStartup : class
+        {
+            if (setup == null)
+            {
+                throw new ArgumentNullException(nameof(setup));
+            }
+
+            var registrar = new MenuRegistrar<TStartup>(services);
+            setup.Invoke(registrar);
         }
     }
 
