@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using NetCoreStack.Hisar.Providers;
 using NetCoreStack.WebSockets.ProxyClient;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace NetCoreStack.Hisar
                     var assemblyName = lookup.Value.GetName().Name;
                     app.UseStaticFiles(new StaticFileOptions()
                     {
-                        FileProvider = new EmbeddedFileProvider(lookup.Value, assemblyName + ".wwwroot"),
+                        FileProvider = new DirectoryFriendlyEmbeddedFileProvider(lookup.Value, assemblyName + ".wwwroot"),
                         RequestPath = $"/{lookup.Key}"
                     });
                 }
