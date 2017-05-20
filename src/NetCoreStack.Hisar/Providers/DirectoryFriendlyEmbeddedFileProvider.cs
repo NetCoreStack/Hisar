@@ -8,7 +8,7 @@ using Microsoft.Extensions.FileProviders.Embedded;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Extensions.FileProviders;
 
-namespace NetCoreStack.Hisar.Providers
+namespace NetCoreStack.Hisar
 {
 
     /// <summary>

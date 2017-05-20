@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Text;
-using Hisar.Component.FileManager.Types;
+﻿using Hisar.Component.FileManager.Types;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NetCoreStack.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Hisar.Component.FileManager.Controllers
 {
@@ -38,8 +38,10 @@ namespace Hisar.Component.FileManager.Controllers
 
         }
 
-        public IActionResult Index(string mode, string path, string name, List<IFormFile> files, string old, string @new, string source, string target, string content, bool thumbnail)
+        public async Task<IActionResult> Index(string mode, string path, string name, List<IFormFile> files, string old, string @new, string source, string target, string content, bool thumbnail)
         {
+            await Task.CompletedTask;
+
             if (!string.IsNullOrWhiteSpace(path) && path.StartsWith("/"))
                 path = path.Substring(1);
             if (!string.IsNullOrWhiteSpace(source) && source.StartsWith("/"))
@@ -90,7 +92,7 @@ namespace Hisar.Component.FileManager.Controllers
             throw new Exception("Unknown Request!");
         }
 
-        private dynamic Initiate()
+        private object Initiate()
         {
             var result = new
             {
@@ -120,7 +122,7 @@ namespace Hisar.Component.FileManager.Controllers
 
         }
 
-        private dynamic GetFolder(string path)
+        private object GetFolder(string path)
         {
 
 
@@ -131,7 +133,7 @@ namespace Hisar.Component.FileManager.Controllers
             var rootDirectory = new DirectoryInfo(rootpath);
 
 
-            var data = new List<dynamic>();
+            var data = new List<object>();
 
             foreach (var directory in rootDirectory.GetDirectories())
             {
@@ -186,7 +188,7 @@ namespace Hisar.Component.FileManager.Controllers
             return result;
         }
 
-        private dynamic AddFolder(string path, string name)
+        private object AddFolder(string path, string name)
         {
             var newDirectoryPath = Path.Combine(_webRootPath, path, name);
 
@@ -194,7 +196,7 @@ namespace Hisar.Component.FileManager.Controllers
 
             if (directoryExist)
             {
-                var errorResult = new { Errors = new List<dynamic>() };
+                var errorResult = new { Errors = new List<object>() };
 
                 errorResult.Errors.Add(new
                 {
@@ -234,11 +236,11 @@ namespace Hisar.Component.FileManager.Controllers
             return result;
         }
 
-        private async Task<dynamic> Upload(string path, IEnumerable<IFormFile> files)
+        private async Task<object> Upload(string path, IEnumerable<IFormFile> files)
         {
             // UNDONE Aynı isimde ve uzantıda dosya var mı diye kontrol edilecek.
 
-            var result = new { Data = new List<dynamic>() };
+            var result = new { Data = new List<object>() };
 
             foreach (var file in files)
             {
@@ -271,7 +273,7 @@ namespace Hisar.Component.FileManager.Controllers
             return result;
         }
 
-        private dynamic Rename(string old, string @new)
+        private object Rename(string old, string @new)
         {
             var oldPath = Path.Combine(_webRootPath, old);
 
@@ -287,7 +289,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (directoryExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -335,7 +337,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (fileExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -374,7 +376,7 @@ namespace Hisar.Component.FileManager.Controllers
             }
         }
 
-        private dynamic Move(string old, string @new)
+        private object Move(string old, string @new)
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, old));
 
@@ -390,7 +392,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (directoryExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -441,7 +443,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (fileExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -480,7 +482,7 @@ namespace Hisar.Component.FileManager.Controllers
             }
         }
 
-        private dynamic Copy(string source, string target)
+        private object Copy(string source, string target)
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, source));
 
@@ -496,7 +498,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (directoryExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -543,7 +545,7 @@ namespace Hisar.Component.FileManager.Controllers
 
                 if (fileExist)
                 {
-                    var errorResult = new { Errors = new List<dynamic>() };
+                    var errorResult = new { Errors = new List<object>() };
 
                     errorResult.Errors.Add(new
                     {
@@ -583,7 +585,7 @@ namespace Hisar.Component.FileManager.Controllers
             }
         }
 
-        private dynamic EditFile(string path)
+        private object EditFile(string path)
         {
             var fileName = Path.GetFileName(path);
             var fileExtension = Path.GetExtension(path).Replace(".", "");
@@ -613,7 +615,7 @@ namespace Hisar.Component.FileManager.Controllers
             return result;
         }
 
-        private dynamic SaveFile(string path, string content)
+        private object SaveFile(string path, string content)
         {
             var filePath = Path.Combine(_webRootPath, path);
 
@@ -642,7 +644,7 @@ namespace Hisar.Component.FileManager.Controllers
             return result;
         }
 
-        private dynamic Delete(string path)
+        private object Delete(string path)
         {
             var fileAttributes = System.IO.File.GetAttributes(Path.Combine(_webRootPath, path));
 
@@ -702,7 +704,7 @@ namespace Hisar.Component.FileManager.Controllers
             }
         }
 
-        private dynamic Download(string path)
+        private object Download(string path)
         {
             var fileName = Path.GetFileName(Path.Combine(_webRootPath, path));
             var fileExtension = Path.GetExtension(fileName).Replace(".", "");
@@ -732,13 +734,13 @@ namespace Hisar.Component.FileManager.Controllers
 
         }
 
-        private dynamic DownloadFile(string path)
+        private DownloadFileDefinition DownloadFile(string path)
         {
             var filepath = Path.Combine(_webRootPath, path);
             var fileName = Path.GetFileName(filepath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(filepath);
 
-            var file = new
+            var file = new DownloadFileDefinition
             {
                 FileName = fileName,
                 FileBytes = fileBytes
@@ -756,7 +758,7 @@ namespace Hisar.Component.FileManager.Controllers
             return File(fileBytes, "application/x-msdownload", fileName);
         }
 
-        private dynamic Summarize()
+        private object Summarize()
         {
             var directories = Directory.GetDirectories(_webRootPath, "*", SearchOption.AllDirectories).Length;
 

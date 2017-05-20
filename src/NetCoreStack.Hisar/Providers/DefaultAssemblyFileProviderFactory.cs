@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.FileProviders;
-using NetCoreStack.Hisar.Providers;
 using System.Reflection;
 
 namespace NetCoreStack.Hisar
