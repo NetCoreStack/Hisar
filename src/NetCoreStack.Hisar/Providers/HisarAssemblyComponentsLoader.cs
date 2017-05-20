@@ -78,11 +78,6 @@ namespace NetCoreStack.Hisar
             }
 
             var externalComponentsRefDirectory = Path.Combine(externalComponentsDirectory, "refs");
-            if (!Directory.Exists(externalComponentsRefDirectory))
-            {
-                Directory.CreateDirectory(externalComponentsRefDirectory);
-            }
-
             PathUtility.CopyToFiles(externalComponentsDirectory, externalComponentsRefDirectory);
 
             var files = Directory.GetFiles(externalComponentsRefDirectory);
