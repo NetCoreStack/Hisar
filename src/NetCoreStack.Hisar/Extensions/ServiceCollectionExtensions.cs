@@ -29,7 +29,7 @@ namespace NetCoreStack.Hisar
             return assemblyLoader;
         }
 
-        private static RunningComponentHelperOfT<TStartup> CreateComponentHelper<TStartup>(IServiceCollection services)
+        internal static RunningComponentHelperOfT<TStartup> CreateComponentHelper<TStartup>(this IServiceCollection services)
         {
             var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
             return new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
@@ -141,14 +141,18 @@ namespace NetCoreStack.Hisar
     {
         public static void AddCliSocket<TStartup>(this IServiceCollection services)
         {
-            var assembly = typeof(TStartup).GetTypeInfo().Assembly;
-            var componentId =  assembly.GetComponentId();
+            var executingAssembly = Assembly.GetEntryAssembly();
+            var componentHelper = services.CreateComponentHelper<TStartup>();
+            if (!executingAssembly.EnsureIsHosting()) // Running as standalone not part of any Hosting
+            {
+                services.AddSingleton<CliUsageMarkerService>();
 
-            services.AddProxyWebSockets(options => {
-                options.ConnectorName = $"{nameof(componentId)}-Component";
-                options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
-                options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
-            });
+                services.AddProxyWebSockets(options => {
+                    options.ConnectorName = $"{nameof(componentHelper.ComponentId)}-Component";
+                    options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
+                    options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
+                });
+            }
         }
     }
 }
