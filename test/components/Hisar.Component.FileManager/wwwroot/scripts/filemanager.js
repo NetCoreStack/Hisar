@@ -29,7 +29,9 @@
                 beforeSelectItem: function (resourceObject, url) {
                     return url;
                 },
-                afterSelectItem: function (resourceObject, url, contextWindow) { }
+                afterSelectItem: function (resourceObject, url, contextWindow) {
+                    return url;
+                }
             }
         };
 
@@ -2979,6 +2981,9 @@
         var createPreviewUrl = function (resourceObject, encode) {
             var previewUrl,
                 objectPath = resourceObject.attributes.path;
+
+            if (typeof (objectPath) === "undefined") //@Taha Bugfix: upload sonrasý seçilen dosyanýn Path'i yok. 
+                objectPath = '/' + resourceObject.id;
 
             if (config.viewer.absolutePath && objectPath) {
                 if (encode) {
