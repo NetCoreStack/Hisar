@@ -14,7 +14,7 @@ namespace Hisar.Component.Guideline
         public override void Invoke(AlbumViewModel model)
         {
             _someDependency.Invoke();
-            model.Price = 1.00M;
+            model.Price = 2.00M;
         }
     }
 

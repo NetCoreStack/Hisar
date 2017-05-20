@@ -76,7 +76,16 @@ namespace NetCoreStack.Hisar
             {
                 Directory.CreateDirectory(externalComponentsDirectory);
             }
-            var files = Directory.GetFiles(externalComponentsDirectory);
+
+            var externalComponentsRefDirectory = Path.Combine(externalComponentsDirectory, "refs");
+            if (!Directory.Exists(externalComponentsRefDirectory))
+            {
+                Directory.CreateDirectory(externalComponentsRefDirectory);
+            }
+
+            PathUtility.CopyToFiles(externalComponentsDirectory, externalComponentsRefDirectory);
+
+            var files = Directory.GetFiles(externalComponentsRefDirectory);
             if (files != null && files.Any())
             {
                 foreach (var file in files)
@@ -89,7 +98,7 @@ namespace NetCoreStack.Hisar
 
                         // AssemblyLoadContext.Default.Resolving += ReferencedAssembliesResolver.Resolving;
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
-                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsDirectory, assembly);
+                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsRefDirectory, assembly);
                         var assemblyName = assembly.GetName().Name;
                         var componentId = assembly.GetComponentId();
                         ComponentAssemblyLookup.Add(componentId, assembly);

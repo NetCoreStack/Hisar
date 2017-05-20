@@ -47,6 +47,7 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<IJsonSerializer, JsonSerializer>();
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
             services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
+            services.TryAddSingleton<IAssemblyFileProviderFactory, DefaultAssemblyFileProviderFactory>();
 
             // Custom view component helper
             services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
