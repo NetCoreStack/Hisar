@@ -31,8 +31,4 @@
     <ProjectReference Include="..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ExternalComponents\" />
-  </ItemGroup>
-
 </Project>
