@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Hisar.Component.Guideline.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -7,7 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Data.Context;
 using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
+using NetCoreStack.Mvc;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline
 {
@@ -31,10 +34,16 @@ namespace Hisar.Component.Guideline
 #if !RELEASE
             services.AddCliSocket<Startup>();
 #endif
+            services.AddSingleton<SampleService>();
+
+            services.AddComposers(options =>
+            {
+                options.CreateMap<AlbumViewModel, AlbumViewModelComposer>();
+                options.CreateMap<GenreViewModel, AnotherComposer>();
+            });
+
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
-
             services.AddAutoMapper();
-
             services.AddMvc();
         }
         
@@ -43,6 +52,9 @@ namespace Hisar.Component.Guideline
 #if !RELEASE
             app.UseCliProxy();
 #endif
+
+            Task.Run(() => BsonDataInitializer.InitializeMusicStoreMongoDb(app.ApplicationServices));
+
             app.UseMvc(ConfigureRoutes);
         }
 

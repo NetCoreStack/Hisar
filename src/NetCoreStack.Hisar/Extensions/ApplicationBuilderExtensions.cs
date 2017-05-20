@@ -21,7 +21,7 @@ namespace NetCoreStack.Hisar
         {
             ThrowIfServiceNotRegistered(app.ApplicationServices);
             app.UseStaticFiles();
-
+            
             var componentHelper = GetComponentHelper(app.ApplicationServices);
             bool isExternalComponent = componentHelper.IsExternalComponent;
             if (isExternalComponent)
@@ -35,12 +35,13 @@ namespace NetCoreStack.Hisar
             {
                 // for registered components
                 var assemblyLoader = app.ApplicationServices.GetRequiredService<HisarAssemblyComponentsLoader>();
+                var assemblyFileProviderFactory = app.ApplicationServices.GetRequiredService<IAssemblyFileProviderFactory>();
                 foreach (var lookup in assemblyLoader.ComponentAssemblyLookup)
                 {
                     var assemblyName = lookup.Value.GetName().Name;
                     app.UseStaticFiles(new StaticFileOptions()
                     {
-                        FileProvider = new DirectoryFriendlyEmbeddedFileProvider(lookup.Value, assemblyName + ".wwwroot"),
+                        FileProvider = assemblyFileProviderFactory.CreateFileProvider(lookup.Value),
                         RequestPath = $"/{lookup.Key}"
                     });
                 }
@@ -72,7 +73,7 @@ namespace NetCoreStack.Hisar
                     configureRoutes?.Invoke(null, new object[] { routes });
                 });
             }
-
+            
             return app;
         }
 
@@ -126,7 +127,8 @@ namespace NetCoreStack.Hisar
     {
         public static void UseCliProxy(this IApplicationBuilder app)
         {
-            app.UseProxyWebSockets();
+            if (app.ApplicationServices.GetService<CliUsageMarkerService>() != null)
+                app.UseProxyWebSockets();
         }
     }
 }
