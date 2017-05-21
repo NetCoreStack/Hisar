@@ -136,7 +136,7 @@ namespace NetCoreStack.Hisar
             services.AddSingleton(_ => services);
         }
 
-        public static void AddMenuRenderer<TRenderer>(IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer
+        public static void AddMenuRenderer<TRenderer>(this IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer
         {
             services.AddScoped<IMenuItemsRenderer, TRenderer>();
         }
