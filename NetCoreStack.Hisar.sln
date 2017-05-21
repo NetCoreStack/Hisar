@@ -38,6 +38,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.CoreManagem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.FileManager", "test\components\Hisar.Component.FileManager\Hisar.Component.FileManager.csproj", "{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{78342CF0-FAFF-4FC8-A126-10B5610E441A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Library", "test\shared\Shared.Library\Shared.Library.csproj", "{F975485D-47C8-47B6-AC21-E0A494F5559F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +92,10 @@ Global
 		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,5 +113,7 @@ Global
 		{4F58F7DE-D21E-4688-9D36-C026D9F75B1C} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{15504075-7E8E-4E84-8F40-0655CAA539DD} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
+		{78342CF0-FAFF-4FC8-A126-10B5610E441A} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
+		{F975485D-47C8-47B6-AC21-E0A494F5559F} = {78342CF0-FAFF-4FC8-A126-10B5610E441A}
 	EndGlobalSection
 EndGlobal

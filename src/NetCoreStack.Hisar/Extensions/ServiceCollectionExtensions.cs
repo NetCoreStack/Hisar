@@ -11,7 +11,6 @@ using NetCoreStack.Mvc.Interfaces;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -135,6 +134,11 @@ namespace NetCoreStack.Hisar
             }
 
             services.AddSingleton(_ => services);
+        }
+
+        public static void AddMenuRenderer<TRenderer>(IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer
+        {
+            services.AddScoped<IMenuItemsRenderer, TRenderer>();
         }
     }
 
