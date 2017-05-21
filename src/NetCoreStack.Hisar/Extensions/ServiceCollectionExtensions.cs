@@ -11,6 +11,7 @@ using NetCoreStack.Mvc.Interfaces;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -105,6 +106,8 @@ namespace NetCoreStack.Hisar
                 if (isCoreComponent)
                     assemblyLoader = CreateAssemblyLoader(services, env, builder);
 
+                services.AddMenuBuilders<TStartup>();
+
                 var defaultLayoutFileProvider = new DefaultProxyFileLocator();
                 services.TryAddSingleton<IDefaultProxyFileLocator>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
@@ -134,6 +137,21 @@ namespace NetCoreStack.Hisar
             }
 
             services.AddSingleton(_ => services);
+        }
+
+        internal static void AddMenuBuilders<TStartup>(this IServiceCollection services)
+        {
+            var startupType = typeof(TStartup);
+            AddMenuBuilders(services, startupType);
+        }
+
+        internal static void AddMenuBuilders(this IServiceCollection services, Type startupType)
+        {
+            var menuBuilder = startupType.GetTypeInfo().Assembly.GetTypes()
+                                    .FirstOrDefault(x => typeof(IMenuItemsBuilder).IsAssignableFrom(x));
+
+            if (menuBuilder != null)
+                services.AddScoped(typeof(IMenuItemsBuilder), menuBuilder);
         }
 
         public static void AddMenuRenderer<TRenderer>(this IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer

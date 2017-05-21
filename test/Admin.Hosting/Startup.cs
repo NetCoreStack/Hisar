@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NetCoreStack.Hisar;
+using Shared.Library;
 
 namespace Admin.Hosting
 {
@@ -23,6 +25,7 @@ namespace Admin.Hosting
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddMvc();
         }
 

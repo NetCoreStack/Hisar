@@ -108,11 +108,7 @@ namespace NetCoreStack.Hisar
                                 StartupLookup.Add(componentId, startup);
                                 startup.ConfigureServices(services);
 
-                                var menuBuilder = startupType.GetTypeInfo().Assembly.GetTypes()
-                                    .FirstOrDefault(x => typeof(IMenuItemsBuilder).IsAssignableFrom(x));
-
-                                if (menuBuilder != null)
-                                    services.AddScoped(typeof(IMenuItemsBuilder), menuBuilder);
+                                services.AddMenuBuilders(startupType);
                             }
                         }
                         catch (Exception ex)

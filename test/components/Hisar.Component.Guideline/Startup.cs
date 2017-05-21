@@ -9,6 +9,7 @@ using NetCoreStack.Data.Context;
 using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
 using NetCoreStack.Mvc;
+using Shared.Library;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -44,6 +45,9 @@ namespace Hisar.Component.Guideline
 
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddAutoMapper();
+
+            services.AddMenuRenderer<SharedMenuItemsRenderer>();
+
             services.AddMvc();
         }
         

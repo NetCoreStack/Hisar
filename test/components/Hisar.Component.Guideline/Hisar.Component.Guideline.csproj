@@ -61,6 +61,7 @@
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj" />
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
     <ProjectReference Include="..\..\Hisar.CommonLibrary\Hisar.CommonLibrary.csproj" />
+    <ProjectReference Include="..\..\shared\Shared.Library\Shared.Library.csproj" />
   </ItemGroup>
 
 </Project>

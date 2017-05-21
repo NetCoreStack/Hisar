@@ -4,4 +4,8 @@
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
+  </ItemGroup>
+
 </Project>
