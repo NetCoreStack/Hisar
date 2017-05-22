@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -21,6 +20,11 @@ namespace NetCoreStack.Hisar
         private readonly IHostingEnvironment _env;
         public IDictionary<string, Assembly> ComponentAssemblyLookup { get; set; }
         public IDictionary<string, HisarConventionBasedStartup> StartupLookup { get; set; }
+
+        private IAssemblyProviderResolveCallback GetResolveCallback()
+        {
+            return ServiceProviderServiceExtensions.GetService<IAssemblyProviderResolveCallback>(_serviceProvider);
+        }
 
         public HisarAssemblyComponentsLoader(IServiceProvider serviceProvider, IHostingEnvironment env)
         {
@@ -80,20 +84,20 @@ namespace NetCoreStack.Hisar
             var externalComponentsRefDirectory = Path.Combine(externalComponentsDirectory, "refs");
             PathUtility.CopyToFiles(externalComponentsDirectory, externalComponentsRefDirectory);
 
-            var files = Directory.GetFiles(externalComponentsRefDirectory);
-            if (files != null && files.Any())
+            var fileFullPaths = Directory.GetFiles(externalComponentsRefDirectory);
+            if (fileFullPaths != null && fileFullPaths.Any())
             {
-                foreach (var file in files)
+                foreach (var fileFullPath in fileFullPaths)
                 {
-                    var fileName = Path.GetFileName(file);
+                    var fileName = Path.GetFileName(fileFullPath);
                     if (fileName.StartsWith(ComponentConventionBaseNamespace, StringComparison.OrdinalIgnoreCase) &&
                         Path.GetExtension(fileName) == ".dll")
                     {
-                        var fullPath = Path.GetFullPath(file);
+                        var fullPath = Path.GetFullPath(fileFullPath);
 
                         // AssemblyLoadContext.Default.Resolving += ReferencedAssembliesResolver.Resolving;
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
-                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsRefDirectory, assembly);
+                        ReferencedAssembliesResolver.ResolveAssemblies(GetResolveCallback(), externalComponentsRefDirectory, assembly);
                         var assemblyName = assembly.GetName().Name;
                         var componentId = assembly.GetComponentId();
                         ComponentAssemblyLookup.Add(componentId, assembly);
@@ -122,10 +126,26 @@ namespace NetCoreStack.Hisar
                     }
                     else
                     {
-                        if (!file.Contains("NetCoreStack.Hisar") && file.EndsWith(".dll"))
+                        var filename = Path.GetFileName(fileFullPath);
+                        if (!filename.Contains("NetCoreStack.Hisar") && filename.EndsWith(".dll"))
                         {
-                            var fullPath = Path.GetFullPath(file);
-                            AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                            var fullPath = Path.GetFullPath(fileFullPath);
+                            var entryAssembly = Assembly.GetEntryAssembly();
+
+                            var assemblyName = Path.GetFileNameWithoutExtension(filename);
+                            if (entryAssembly.GetReferencedAssemblies().Any(x => x.Name == assemblyName))
+                                continue;
+
+                            try
+                            {
+                                AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                            }
+                            catch (Exception ex)
+                            {
+                                var resolved = GetResolveCallback().TryLoad(AssemblyLoadContext.Default, entryAssembly, fullPath, ex);
+                                if (!resolved)
+                                    throw new FileLoadException($"{fullPath} could not be loaded! [Nuget Source]");
+                            }
                         }
                     }
                 }

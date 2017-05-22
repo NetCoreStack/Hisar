@@ -22,11 +22,6 @@ namespace NetCoreStack.Hisar
         private static string NugetDownloadPackageUriFormat = "https://www.nuget.org/api/v2/package/{0}/{1}";
         private static HttpClient _client = new HttpClient();
 
-        internal static Assembly Resolving(AssemblyLoadContext context, AssemblyName assemblyName)
-        {
-            return null;
-        }
-
         private static void LoadCandidateAssembly(string packageId, string extractFullPath, List<string> candidateCompiledTarget)
         {
             if (candidateCompiledTarget != null && candidateCompiledTarget.Any())
@@ -49,7 +44,8 @@ namespace NetCoreStack.Hisar
             }
         }
 
-        private static void TryLoadFromLocal(string externalComponentDirectory,
+        private static void TryLoadFromLocal(IAssemblyProviderResolveCallback resolveCallback, 
+            string externalComponentDirectory,
             string targetFrameworkName,
             IDictionary<string, string> dependencies,
             string packageId,
@@ -69,9 +65,12 @@ namespace NetCoreStack.Hisar
 
                     TryLoadFromNuget(externalComponentDirectory, targetFrameworkName, packageId, version);
                 }
-                catch
+                catch(Exception ex)
                 {
-                    throw new FileNotFoundException($"{packageId}.{version} could not be loaded!");
+                    var entryAssembly = Assembly.GetEntryAssembly();
+                    var resolved = resolveCallback.TryLoad(AssemblyLoadContext.Default, entryAssembly, targetFrameworkName, ex);
+                    if (!resolved)
+                        throw new FileLoadException($"{packageId}.{version} could not be loaded! [Local Source]");
                 }
             }
         }
@@ -105,11 +104,11 @@ namespace NetCoreStack.Hisar
             }
             else
             {
-                throw new FileNotFoundException($"{packageId}.{version} could not be loaded!");
+                throw new FileLoadException($"{packageId}.{version} could not be loaded! [Nuget Source]");
             }
         }
 
-        internal static void ResolveAssemblies(string externalComponentsDirectory, Assembly assembly)
+        internal static void ResolveAssemblies(IAssemblyProviderResolveCallback resolveCallback, string externalComponentsDirectory, Assembly assembly)
         {
             var assemblyTargetFramework = assembly.GetCustomAttribute<TargetFrameworkAttribute>();
             var targetFrameworkName = assemblyTargetFramework.FrameworkName.Split(',').First().Substring(1);
@@ -146,7 +145,8 @@ namespace NetCoreStack.Hisar
                 }
                 catch (Exception ex)
                 {
-                    TryLoadFromLocal(externalComponentsDirectory,
+                    TryLoadFromLocal(resolveCallback, 
+                        externalComponentsDirectory,
                         targetFrameworkName,
                         dependencies,
                         reference.Name,

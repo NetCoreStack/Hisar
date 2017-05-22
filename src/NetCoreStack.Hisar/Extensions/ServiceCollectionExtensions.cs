@@ -48,6 +48,7 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
             services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
             services.TryAddSingleton<IAssemblyFileProviderFactory, DefaultAssemblyFileProviderFactory>();
+            services.TryAddSingleton<IAssemblyProviderResolveCallback, DefaultIAssemblyProviderCompilationCallback>();
 
             // Custom view component helper
             services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
