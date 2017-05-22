@@ -71,7 +71,7 @@ namespace NetCoreStack.Hisar
                     configureRoutes?.Invoke(null, new object[] { routes });
                 });
             }
-            
+
             return app;
         }
 

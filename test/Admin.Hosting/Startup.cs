@@ -18,6 +18,7 @@ namespace Admin.Hosting
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -26,6 +27,7 @@ namespace Admin.Hosting
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
+            services.AddSingleton<IAssemblyProviderResolveCallback, CustomAssemblyResolveCallback>();
             services.AddMvc();
         }
 

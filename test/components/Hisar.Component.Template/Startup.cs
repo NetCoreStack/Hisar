@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Hisar;
 using System.IO;
+using Shared.Library;
 
 namespace Hisar.Component.Template
 {
@@ -28,6 +29,7 @@ namespace Hisar.Component.Template
 #if !RELEASE
             services.AddCliSocket<Startup>();
 #endif
+            services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddMvc();
         }
         

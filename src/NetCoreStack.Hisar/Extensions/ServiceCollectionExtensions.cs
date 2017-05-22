@@ -20,8 +20,20 @@ namespace NetCoreStack.Hisar
 {
     public static class ServiceCollectionExtensions
     {
-        private static HisarAssemblyComponentsLoader CreateAssemblyLoader(IServiceCollection services, IHostingEnvironment env, IMvcBuilder builder)
+        private static HisarAssemblyComponentsLoader CreateAssemblyLoader<TStartup>(IServiceCollection services, 
+            IHostingEnvironment env, 
+            IMvcBuilder builder) where TStartup : class
         {
+            var assembly = typeof(TStartup).GetTypeInfo().Assembly;
+            if (assembly.EnsureIsHosting())
+            {
+                var assemblyResolveCallback = assembly.GetTypes().FirstOrDefault(a => typeof(IAssemblyProviderResolveCallback).IsAssignableFrom(a));
+                if (assemblyResolveCallback != null)
+                {
+                    services.AddAssemblyResolver(assemblyResolveCallback);
+                }
+            }
+
             var assemblyLoader = new HisarAssemblyComponentsLoader(services.BuildServiceProvider(), env);
             assemblyLoader.LoadComponents(services, builder);
             services.AddSingleton(assemblyLoader);
@@ -105,7 +117,7 @@ namespace NetCoreStack.Hisar
             if (isComponent)
             {
                 if (isCoreComponent)
-                    assemblyLoader = CreateAssemblyLoader(services, env, builder);
+                    assemblyLoader = CreateAssemblyLoader<TStartup>(services, env, builder);
 
                 services.AddMenuBuilders<TStartup>();
 
@@ -124,7 +136,7 @@ namespace NetCoreStack.Hisar
             }
             else
             {
-                assemblyLoader = CreateAssemblyLoader(services, env, builder);
+                assemblyLoader = CreateAssemblyLoader<TStartup>(services, env, builder);
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
@@ -153,6 +165,11 @@ namespace NetCoreStack.Hisar
 
             if (menuBuilder != null)
                 services.AddScoped(typeof(IMenuItemsBuilder), menuBuilder);
+        }
+
+        internal static void AddAssemblyResolver(this IServiceCollection services, Type implementationType)
+        {
+            services.AddSingleton(typeof(IAssemblyProviderResolveCallback), implementationType);
         }
 
         public static void AddMenuRenderer<TRenderer>(this IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer

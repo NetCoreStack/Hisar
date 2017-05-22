@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetCoreStack.Hisar;
+using Shared.Library;
 
 namespace Hisar.Component.CoreManagement
 {
@@ -29,6 +30,7 @@ namespace Hisar.Component.CoreManagement
             services.AddCliSocket<Startup>();
 #endif
 
+            services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddMvc();
         }
 

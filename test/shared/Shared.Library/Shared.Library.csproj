@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
+    <PackageReference Include="NetCoreStack.Hisar" Version="1.0.0-preview-293" />
   </ItemGroup>
 
 </Project>

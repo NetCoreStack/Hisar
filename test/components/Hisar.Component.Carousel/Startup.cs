@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Hisar;
+using Shared.Library;
 using System.IO;
 
 namespace Hisar.Component.Carousel
@@ -29,6 +30,7 @@ namespace Hisar.Component.Carousel
             services.AddCliSocket<Startup>();
 #endif
 
+            services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddMvc();
         }
 
@@ -37,6 +39,7 @@ namespace Hisar.Component.Carousel
 #if !RELEASE
             app.UseCliProxy();
 #endif
+
             app.UseMvc(ConfigureRoutes);
         }
 

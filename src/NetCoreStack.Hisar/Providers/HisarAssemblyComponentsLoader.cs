@@ -16,19 +16,19 @@ namespace NetCoreStack.Hisar
         public static readonly string ComponentConventionBaseNamespace = "Hisar.Component";
         private const string ControllerTypeNameSuffix = "Controller";
 
-        private readonly IServiceProvider _serviceProvider;
         private readonly IHostingEnvironment _env;
         public IDictionary<string, Assembly> ComponentAssemblyLookup { get; set; }
         public IDictionary<string, HisarConventionBasedStartup> StartupLookup { get; set; }
+        protected IServiceProvider ServiceProvider { get; }
 
         private IAssemblyProviderResolveCallback GetResolveCallback()
         {
-            return ServiceProviderServiceExtensions.GetService<IAssemblyProviderResolveCallback>(_serviceProvider);
+            return ServiceProviderServiceExtensions.GetService<IAssemblyProviderResolveCallback>(ServiceProvider);
         }
 
         public HisarAssemblyComponentsLoader(IServiceProvider serviceProvider, IHostingEnvironment env)
         {
-            _serviceProvider = serviceProvider;
+            ServiceProvider = serviceProvider;
             _env = env;
             ComponentAssemblyLookup = new Dictionary<string, Assembly>(StringComparer.OrdinalIgnoreCase);
             StartupLookup = new Dictionary<string, HisarConventionBasedStartup>();
@@ -108,7 +108,7 @@ namespace NetCoreStack.Hisar
                             var startupType = StartupLoader.FindStartupType(assemblyName, _env.EnvironmentName);
                             if (startupType != null)
                             {
-                                var startup = StartupTypeLoader.CreateHisarConventionBasedStartup(startupType, _serviceProvider, _env);
+                                var startup = StartupTypeLoader.CreateHisarConventionBasedStartup(startupType, ServiceProvider, _env);
                                 StartupLookup.Add(componentId, startup);
                                 startup.ConfigureServices(services);
 
