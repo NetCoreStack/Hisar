@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Data.Interfaces;
+using NetCoreStack.Mvc.Types;
 
 namespace NetCoreStack.Hisar.Server
 {

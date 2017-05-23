@@ -3,9 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Views\**\*.cshtml" />
+  </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetCoreStack.Hisar" Version="1.0.0-preview-293" />
+    <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
   </ItemGroup>
 
 </Project>

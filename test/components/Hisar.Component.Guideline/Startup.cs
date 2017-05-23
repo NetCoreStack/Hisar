@@ -48,7 +48,11 @@ namespace Hisar.Component.Guideline
 
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
 
-            services.AddMvc();
+            services.AddSharedFeatures();
+
+            services.AddMvc(options => {
+                options.Filters.Add(new GuidelineExceptionFilter());
+            });
         }
         
         public void Configure(IApplicationBuilder app)

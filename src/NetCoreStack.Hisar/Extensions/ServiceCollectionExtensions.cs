@@ -68,6 +68,7 @@ namespace NetCoreStack.Hisar
             // Per request services
             services.TryAddScoped<IUrlGeneratorHelper, UrlGeneratorHelper>();
             services.TryAddScoped<IMenuItemsRenderer, DefaultMenuItemsRenderer>();
+            services.TryAddScoped<IUsernamePasswordValidator, DefaultUsernamePasswordValidator>();
 
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            

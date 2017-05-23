@@ -13,6 +13,7 @@ using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Exceptions;
 using NetCoreStack.Mvc.Extensions;
 using NetCoreStack.Mvc.Interfaces;
+using NetCoreStack.Mvc.Types;
 using System;
 using System.IO;
 
