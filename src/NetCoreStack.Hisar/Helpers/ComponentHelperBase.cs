@@ -16,7 +16,23 @@ namespace NetCoreStack.Hisar
             return ServiceProviderServiceExtensions.GetService<RunningComponentHelper>(context.HttpContext.RequestServices);
         }
 
+        public static RunningComponentHelper GetComponentHelper(ControllerContext context)
+        {
+            return ServiceProviderServiceExtensions.GetService<RunningComponentHelper>(context.HttpContext.RequestServices);
+        }
+
         public static bool IsExternalComponent(ActionContext context)
+        {
+            var componentHelper = GetComponentHelper(context);
+            if (componentHelper != null)
+            {
+                return componentHelper.IsExternalComponent;
+            }
+
+            return false;
+        }
+
+        public static bool IsExternalComponent(ControllerContext context)
         {
             var componentHelper = GetComponentHelper(context);
             if (componentHelper != null)
@@ -50,6 +66,18 @@ namespace NetCoreStack.Hisar
 
             contentPath = contentPath.Insert(0, string.Format(_prefixFormat, componentId.ToLowerInvariant()));
             return urlHelper.Content(contentPath);
+        }
+
+        public static string ResolveViewName<TController>(this ActionContext context, string name) where TController : Controller
+        {
+            if (IsExternalComponent(context))
+            {
+                return name;
+            }
+
+            var assembly = typeof(TController).GetTypeInfo().Assembly;
+            var componentId = assembly.GetComponentId();
+            return $"{componentId}.{name}";
         }
 
         public static string ResolveViewComponentName(ViewContext context, string assemblyName, string name)
