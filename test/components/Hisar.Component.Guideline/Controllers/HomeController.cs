@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Contracts;
+using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Extensions;
@@ -28,6 +29,13 @@ namespace Hisar.Component.Guideline.Controllers
 
     public class HomeController : HisarControllerServerBase
     {
+        private readonly IUsernamePasswordValidator _validator;
+        public HomeController(IUsernamePasswordValidator validator)
+        {
+            _validator = validator;
+            _validator.Validate("foo", "bar");
+        }
+
         public IActionResult Index()
         {
             var externalLibrary = new ExternalLibrary();
