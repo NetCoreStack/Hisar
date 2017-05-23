@@ -71,7 +71,19 @@ namespace NetCoreStack.Hisar
             return urlHelper.Content(contentPath);
         }
 
-        public static string ResolveViewName<TController>(this ActionContext context, string name) where TController : Controller
+        internal static string ResolveViewName(this ActionContext context, Type controllerType, string name)
+        {
+            if (IsExternalComponent(context))
+            {
+                return name;
+            }
+
+            var assembly = controllerType.GetTypeInfo().Assembly;
+            var componentId = assembly.GetComponentId();
+            return $"{componentId}.{name}";
+        }
+
+        internal static string ResolveViewName<TController>(this ActionContext context, string name) where TController : Controller
         {
             if (IsExternalComponent(context))
             {
