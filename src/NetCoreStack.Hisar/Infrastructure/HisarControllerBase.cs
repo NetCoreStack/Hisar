@@ -34,6 +34,7 @@ namespace NetCoreStack.Hisar
             return Json(webResult);
         }
 
+        [NonAction]
         public virtual string ResolveViewName(string name)
         {
             var type = this.GetType();
