@@ -46,7 +46,7 @@ namespace NetCoreStack.Hisar
             return Resolver.GetService<TInstance>();
         }
 
-        protected virtual JsonResult CreateWebResult(ResultState state, params string[] validations)
+        protected virtual JsonResult CreateWebResult(ResultState state, string redirectUrl = "", params string[] validations)
         {
             if (validations != null && validations.Any())
             {
@@ -57,7 +57,13 @@ namespace NetCoreStack.Hisar
                 return Json(new WebResult(resultState: state, validations: new List<ModelValidationResult> { result }));
             }
 
-            return Json(new WebResult(resultState: state));
+            var webResult = new WebResult(resultState: state);
+            if (!string.IsNullOrEmpty(redirectUrl))
+            {
+                webResult.RedirectUrl = redirectUrl;
+            }
+
+            return Json(webResult);
         }
     }
 }

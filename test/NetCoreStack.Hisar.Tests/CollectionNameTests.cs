@@ -32,7 +32,7 @@ namespace NetCoreStack.Hisar.Tests
         {
             HisarCollectionNameSelector selector = new HisarCollectionNameSelector();
             var collectionName = selector.GetCollectionName<GuidelineEntityActive>();
-            Assert.True(collectionName == nameof(GuidelineEntityActive));
+            Assert.True(collectionName == "Tests." + nameof(GuidelineEntityActive));
         }
     }
 }
