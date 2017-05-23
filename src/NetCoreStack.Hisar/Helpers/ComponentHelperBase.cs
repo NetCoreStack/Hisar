@@ -11,6 +11,8 @@ namespace NetCoreStack.Hisar
     {
         private static string _prefixFormat = "~/{0}/";
 
+        private static bool? isExternalComponent = null;
+
         public static RunningComponentHelper GetComponentHelper(ActionContext context)
         {
             return ServiceProviderServiceExtensions.GetService<RunningComponentHelper>(context.HttpContext.RequestServices);
@@ -23,13 +25,14 @@ namespace NetCoreStack.Hisar
 
         public static bool IsExternalComponent(ActionContext context)
         {
-            var componentHelper = GetComponentHelper(context);
-            if (componentHelper != null)
+            if (isExternalComponent.HasValue)
             {
-                return componentHelper.IsExternalComponent;
+                return isExternalComponent.Value;
             }
 
-            return false;
+            var componentHelper = GetComponentHelper(context);
+            isExternalComponent = componentHelper.IsExternalComponent;
+            return isExternalComponent.Value;
         }
 
         public static bool IsExternalComponent(ControllerContext context)
