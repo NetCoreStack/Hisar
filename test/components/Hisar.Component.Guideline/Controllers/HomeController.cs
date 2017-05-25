@@ -81,7 +81,7 @@ namespace Hisar.Component.Guideline.Controllers
                     AlbumArtUrl = p.AlbumArtUrl,
                     Artist = p.Artist.Name,
                     Tags = p.Tags
-                }).ToCollectionResult(request, ControllerContext.TryGetComposerInvoker<AlbumViewModel>());
+                }).ToCollectionResult(request, TryGetComposer<AlbumViewModel>());
 
             return Json(query);
         }

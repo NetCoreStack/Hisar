@@ -34,6 +34,11 @@ namespace NetCoreStack.Hisar
             return Json(webResult);
         }
 
+        protected Action<TModel> TryGetComposer<TModel>()
+        {
+            return ControllerContext.TryGetComposerInvoker<TModel>();
+        }
+
         [NonAction]
         public virtual string ResolveViewName(string name)
         {
