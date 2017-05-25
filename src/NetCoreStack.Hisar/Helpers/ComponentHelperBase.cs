@@ -48,14 +48,19 @@ namespace NetCoreStack.Hisar
 
         public static string ResolveContentPath(IUrlHelper urlHelper, string componentId, string contentPath)
         {
-            if (IsExternalComponent(urlHelper.ActionContext))
+            if (string.IsNullOrEmpty(contentPath))
+            {
+                throw new ArgumentNullException(nameof(contentPath));
+            }
+
+            if (componentId.EnsureIsHosting())
             {
                 return urlHelper.Content(contentPath);
             }
 
-            if (string.IsNullOrEmpty(contentPath))
+            if (IsExternalComponent(urlHelper.ActionContext))
             {
-                throw new ArgumentNullException(nameof(contentPath));
+                return urlHelper.Content(contentPath);
             }
 
             if (contentPath.StartsWith("/"))

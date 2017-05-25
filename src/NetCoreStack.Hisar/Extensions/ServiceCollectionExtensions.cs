@@ -114,13 +114,13 @@ namespace NetCoreStack.Hisar
 
             services.AddSingleton(componentHelper as RunningComponentHelper);
 
+            services.AddMenuBuilders<TStartup>();
+
             HisarAssemblyComponentsLoader assemblyLoader = null;
             if (isComponent)
             {
                 if (isCoreComponent)
                     assemblyLoader = CreateAssemblyLoader<TStartup>(services, env, builder);
-
-                services.AddMenuBuilders<TStartup>();
 
                 var defaultLayoutFileProvider = new DefaultProxyFileLocator();
                 services.TryAddSingleton<IDefaultProxyFileLocator>(_ => defaultLayoutFileProvider);

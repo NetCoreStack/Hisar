@@ -20,7 +20,6 @@ namespace NetCoreStack.Hisar
         public virtual IDictionary<ComponentPair, IEnumerable<IMenuItem>> PopulateMenuItems(IUrlHelper urlHelper)
         {
             var dictionary = new Dictionary<ComponentPair, IEnumerable<IMenuItem>>();
-            List<IMenuItem> menuItems = new List<IMenuItem>();
             foreach (var builder in _builders)
             {
                 var componentPair = new ComponentPair(builder.Component.ComponentId, builder.Component.ComponentType);

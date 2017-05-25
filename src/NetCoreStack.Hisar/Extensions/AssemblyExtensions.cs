@@ -22,6 +22,16 @@ namespace NetCoreStack.Hisar
             return false;
         }
 
+        internal static bool EnsureIsHosting(this string componentId)
+        {
+            if (componentId.Equals(EngineConstants.HostingComponentName, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         internal static ComponentPartDefinition EnsureIsComponentPart(this HisarAssemblyComponentsLoader lookup, string componentName)
         {
             if (lookup == null)
