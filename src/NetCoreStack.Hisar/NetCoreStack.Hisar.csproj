@@ -15,6 +15,7 @@
     <PackageLicenseUrl>https://github.com/NetCoreStack/Hisar/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/NetCoreStack/Hisar</PackageProjectUrl>
     <RepositoryUrl>https://github.com/NetCoreStack/Hisar</RepositoryUrl>
+    <PackageIconUrl>http://cdn.netcorestack.com/img/netcorestack.png</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>dotnet,mvc,application-framework,cross-platform,cms-framework,extensibiliy</PackageTags>
   </PropertyGroup>

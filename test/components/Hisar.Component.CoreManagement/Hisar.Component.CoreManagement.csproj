@@ -4,11 +4,15 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <Description>Hisar Core Component Management</Description>
     <Copyright>NetCoreStack</Copyright>
+    <PackageId>Hisar.Component.CoreManagement</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <PackageProjectUrl>https://github.com/NetCoreStack/Hisar</PackageProjectUrl>
-    <PackageIconUrl>https://cdn1.iconfinder.com/data/icons/tools-and-equipmen/64/anvil-128.png</PackageIconUrl>
+    <PackageIconUrl>http://cdn.netcorestack.com/img/netcorestack.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/NetCoreStack/Hisar</RepositoryUrl>
     <PackageTags>NetCoreStack,Component,Management</PackageTags>
-    <Authors>Hisar.Component.CoreManagement</Authors>
+    <Authors>NetCoreStack</Authors>
   </PropertyGroup>
 
   <PropertyGroup>
