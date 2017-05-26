@@ -6,8 +6,6 @@ namespace NetCoreStack.Hisar
 {
     public interface ICommonCacheProvider
     {
-        void SetItem<TModel, TKey>(TModel value, CacheProviderOptions options) where TModel : IModelKey<TKey>;
-
         void Remove(params string[] keys);
 
         void Remove<TModel>(string id) where TModel : IModelKey<string>;

@@ -4,7 +4,7 @@ namespace NetCoreStack.Hisar
 {
     internal class DefaultCacheValueProvider : ICacheValueProvider
     {
-        public object TryGetValue<TModel>(object id, DateTimeOffset? absoluteExpiration = default(DateTimeOffset?))
+        public object TryGetValue<TModel>(object id, CacheItem key)
         {
             return default(TModel);
         }

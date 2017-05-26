@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Hisar.Component.Guideline.Models
 {
     [CollectionName("Albums")]
-    public class AlbumBson : EntityIdentityBson, IModel
+    public class AlbumBson : EntityIdentityBson
     {
         [Required]
         [StringLength(160, MinimumLength = 2)]

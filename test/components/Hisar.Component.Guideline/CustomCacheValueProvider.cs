@@ -6,11 +6,6 @@ using System.Linq;
 
 namespace Hisar.Component.Guideline
 {
-    public interface IModel
-    {
-
-    }
-
     public class CustomCacheValueProvider : ICacheValueProvider
     {
         private readonly IMongoUnitOfWork _unitOfWork;
@@ -19,11 +14,12 @@ namespace Hisar.Component.Guideline
             _unitOfWork = unitOfWork;
         }
 
-        public object TryGetValue<TModel>(object id, DateTimeOffset? absoluteExpiration = default(DateTimeOffset?))
+        public object TryGetValue<TModel>(object id, CacheItem key)
         {
             if (typeof(TModel).Name == nameof(AlbumBson))
             {
                 var idStr = id.ToString();
+                key.AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddSeconds(20));
                 return _unitOfWork.Repository<AlbumBson>().FirstOrDefault(x => x.Id == idStr);
             }
 

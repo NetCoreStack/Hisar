@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Contracts;
-using NetCoreStack.Mvc.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +10,11 @@ namespace NetCoreStack.Hisar
     {
         private static object _lockObject = new object();
 
-        private readonly IDictionary<string, IModelKey<string>> LookupOne 
-            = new Dictionary<string, IModelKey<string>>();
+        private readonly IDictionary<CacheItem, IModelKey<string>> LookupOne 
+            = new Dictionary<CacheItem, IModelKey<string>>();
 
-        private readonly IDictionary<string, IModelKey<long>> LookupTwo 
-            = new Dictionary<string, IModelKey<long>>();
+        private readonly IDictionary<CacheItem, IModelKey<long>> LookupTwo 
+            = new Dictionary<CacheItem, IModelKey<long>>();
 
         private readonly IDictionary<string, object> Lookup = new Dictionary<string, object>();
 
@@ -29,24 +28,26 @@ namespace NetCoreStack.Hisar
             _serviceProvider = serviceProvider;
         }
         
-        private TModel TryGetValue<TModel, TKey>(TKey id, string key) where TModel : IModelKey<TKey>
+        private TModel TryGetValue<TModel, TKey>(TKey id, CacheItem key) where TModel : IModelKey<TKey>
         {
             var valueProviders = _serviceProvider.GetServices<ICacheValueProvider>();
             if (valueProviders != null)
             {
                 foreach (var provider in valueProviders)
                 {
-                    var instance = provider.TryGetValue<TModel>(id);
+                    var instance = provider.TryGetValue<TModel>(id, key);
                     if (instance != null)
                     {
                         if (instance is IModelKey<string>)
                         {
+                            LookupOne.Remove(key);
                             LookupOne.Add(key, (IModelKey<string>)instance);
                             return (TModel)instance;
                         }
 
                         if (instance is IModelKey<long>)
                         {
+                            LookupOne.Remove(key);
                             LookupTwo.Add(key, (IModelKey<long>)instance);
                             return (TModel)instance;
                         }
@@ -62,16 +63,17 @@ namespace NetCoreStack.Hisar
         public IEnumerable<TModel> GetList<TModel>() where TModel : IModelKey<string>
         {
             var itemKey = _keyGenerator.CreateKey<TModel>();
-            List<string> keys = new List<string>();
-            keys = LookupOne.Keys.Where(x => x.StartsWith(itemKey)).ToList();
-            var values = keys.Select(x => (TModel)LookupOne[x]).ToList();
+            var cacheItem = new CacheItem(itemKey);
+            List<CacheItem> lookupKeys = new List<CacheItem>();
+            lookupKeys = LookupOne.Keys.Where(x => x.Key.StartsWith(itemKey)).ToList();
+            var values = lookupKeys.Select(x => (TModel)LookupOne[x]).ToList();
             return values;
         }
 
         public TModel GetItem<TModel>(string id) where TModel : IModelKey<string>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupOne.TryGetValue(itemKey, out IModelKey<string> item))
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item))
                 return (TModel)item;
 
             return default(TModel);
@@ -79,8 +81,8 @@ namespace NetCoreStack.Hisar
 
         public TModel GetItem<TModel>(long id) where TModel : IModelKey<long>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupTwo.TryGetValue(itemKey, out IModelKey<long> item))
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item))
                 return (TModel)item;
 
             return default(TModel);
@@ -88,86 +90,74 @@ namespace NetCoreStack.Hisar
 
         public TModel GetOrCreate<TModel>(long id) where TModel : IModelKey<long>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupTwo.TryGetValue(itemKey, out IModelKey<long> item))
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item))
                 return (TModel)item;
 
             lock (_lockObject)
             {
                 // cache was empty before we got the lock, check again inside the lock
-                if (LookupTwo.TryGetValue(itemKey, out IModelKey<long> item2))
+                if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item2))
                     return (TModel)item2;
 
-                return TryGetValue<TModel, long>(id, itemKey);
+                return TryGetValue<TModel, long>(id, cacheItem);
             }
         }
 
         public TModel GetOrCreate<TModel>(string id) where TModel : IModelKey<string>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupOne.TryGetValue(itemKey, out IModelKey<string> item))
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item))
+            {
+                cacheItem = LookupOne.Keys.FirstOrDefault(x => x == cacheItem);
+                if (cacheItem.AbsoluteExpiration.HasValue)
+                {
+                    if (cacheItem.AbsoluteExpiration.Value < DateTime.Now)
+                    {
+                        lock (_lockObject)
+                        {
+                            return TryGetValue<TModel, string>(id, cacheItem);
+                        }
+                    }
+                }
+
                 return (TModel)item;
+            }
 
             lock (_lockObject)
             {
                 // cache was empty before we got the lock, check again inside the lock
-                if (LookupOne.TryGetValue(itemKey, out IModelKey<string> item2))
+                if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item2))
                     return (TModel)item2;
 
-                return TryGetValue<TModel, string>(id, itemKey);
+                return TryGetValue<TModel, string>(id, cacheItem);
             }
-        }
-
-        public void SetItem<TModel, TKey>(TModel value, CacheProviderOptions options) where TModel : IModelKey<TKey>
-        {
-            if (value == null)
-                return;
-
-            if (typeof(TModel) is IModelKey<string>)
-            {
-                var item = (IModelKey<string>)value;
-                var itemKey = _keyGenerator.CreateKey<IModelKey<string>>(item.Id);
-                if (LookupOne.ContainsKey(itemKey))
-                    LookupOne[itemKey] = item;
-                else
-                    LookupOne.Add(itemKey, item);
-            }
-            else if (typeof(TModel) is IModelKey<long>)
-            {
-                var item = (IModelKey<long>)value;
-                var itemKey = _keyGenerator.CreateKey<IModelKey<long>>(item.Id);
-                if (LookupTwo.ContainsKey(itemKey))
-                    LookupTwo[itemKey] = item;
-                else
-                    LookupTwo.Add(itemKey, item);
-            }
-
-            throw new NotSupportedException(nameof(TModel));
         }
 
         public void Remove<TModel>(string id) where TModel : IModelKey<string>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupOne.ContainsKey(itemKey))
-                LookupOne.Remove(itemKey);
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupOne.ContainsKey(cacheItem))
+                LookupOne.Remove(cacheItem);
         }
 
         public void Remove<TModel>(long id) where TModel : IModelKey<long>
         {
-            var itemKey = _keyGenerator.CreateKey<TModel>(id);
-            if (LookupTwo.ContainsKey(itemKey))
-                LookupTwo.Remove(itemKey);
+            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
+            if (LookupTwo.ContainsKey(cacheItem))
+                LookupTwo.Remove(cacheItem);
         }
 
         public void Remove(params string[] keys)
         {
             foreach (var key in keys)
             {
-                if (LookupOne.ContainsKey(key))
-                    LookupOne.Remove(key);
+                var cacheItem = new CacheItem(key);
+                if (LookupOne.ContainsKey(cacheItem))
+                    LookupOne.Remove(cacheItem);
 
-                if (LookupTwo.ContainsKey(key))
-                    LookupTwo.Remove(key);
+                if (LookupTwo.ContainsKey(cacheItem))
+                    LookupTwo.Remove(cacheItem);
             }
         }
     }
