@@ -82,7 +82,6 @@ namespace NetCoreStack.Hisar
 
             services.TryAddScoped<IMenuItemsBuilder, DefaultMenuItemsBuilder<TStartup>>();
 
-
             bool isComponent = componentHelper.IsExternalComponent;
             bool isCoreComponent = componentHelper.IsCoreComponent;
             IMvcBuilder builder = null;

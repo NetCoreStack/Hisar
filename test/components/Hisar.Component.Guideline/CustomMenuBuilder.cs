@@ -6,11 +6,6 @@ namespace Hisar.Component.Guideline
 {
     public class CustomMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public CustomMenuBuilder(IComponentTypeResolver componentTypeResolver)
-            : base(componentTypeResolver)
-        {
-        }
-
         public override IEnumerable<IMenuItem> Build(IUrlHelper urlHelper)
         {
             var items = new List<IMenuItem>

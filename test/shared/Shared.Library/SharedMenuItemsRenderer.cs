@@ -27,13 +27,13 @@ namespace Shared.Library
                 foreach (KeyValuePair<ComponentPair, IEnumerable<IMenuItem>> entry in menuItems)
                 {
                     ComponentType componentType = entry.Key.ComponentType;
-                    string componentId = entry.Key.ComponentId;
+                    string title = entry.Key.Title;
 
                     var parentTag = new TagBuilder("li");
 
                     var anchorTag = new TagBuilder("a");
                     anchorTag.Attributes.Add("href", "#");
-                    anchorTag.InnerHtml.Append(entry.Key.ComponentId);
+                    anchorTag.InnerHtml.Append(title);
 
                     var spanTag = new TagBuilder("span");
                     spanTag.Attributes.Add("class", "fa fa-chevron-down");

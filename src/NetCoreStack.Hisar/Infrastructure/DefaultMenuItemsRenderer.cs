@@ -22,7 +22,7 @@ namespace NetCoreStack.Hisar
             var dictionary = new Dictionary<ComponentPair, IEnumerable<IMenuItem>>();
             foreach (var builder in _builders)
             {
-                var componentPair = new ComponentPair(builder.Component.ComponentId, builder.Component.ComponentType);
+                var componentPair = new ComponentPair(builder.Component.ComponentId, builder.Component.Title, builder.Component.ComponentType);
                 if (dictionary.ContainsKey(componentPair))
                     dictionary[componentPair] = builder.Build(urlHelper);
                 else
@@ -42,13 +42,13 @@ namespace NetCoreStack.Hisar
                 foreach (KeyValuePair<ComponentPair, IEnumerable<IMenuItem>> entry in menuItems)
                 {
                     ComponentType componentType = entry.Key.ComponentType;
-                    string componentId = entry.Key.ComponentId;
+                    string title = entry.Key.Title;
 
                     var parentTag = new TagBuilder("li");
 
                     var anchorTag = new TagBuilder("a");
                     anchorTag.Attributes.Add("href", "#");
-                    anchorTag.InnerHtml.Append(entry.Key.ComponentId);
+                    anchorTag.InnerHtml.Append(title);
 
                     var spanTag = new TagBuilder("span");
                     spanTag.Attributes.Add("class", "fa fa-chevron-down");

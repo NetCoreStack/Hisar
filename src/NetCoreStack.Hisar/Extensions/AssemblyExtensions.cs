@@ -22,6 +22,19 @@ namespace NetCoreStack.Hisar
             return false;
         }
 
+        public static string TryGetAssemblyTitle(this Assembly assembly)
+        {
+            var titleAttribute = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+            if (titleAttribute != null)
+            {
+                var title = titleAttribute.Title;
+                if (title.IndexOf('.') < 0)
+                    return title;
+            }   
+
+            return assembly.GetComponentId();
+        }
+
         internal static bool EnsureIsHosting(this string componentId)
         {
             if (componentId.Equals(EngineConstants.HostingComponentName, StringComparison.OrdinalIgnoreCase))

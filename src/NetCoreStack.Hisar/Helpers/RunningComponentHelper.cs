@@ -15,9 +15,11 @@ namespace NetCoreStack.Hisar
         public Type StartupType { get; }
         public ComponentType ComponentType { get; }
         public string ComponentId { get; }
-        public RunningComponentDefinition(string componentId, Type startupType, ComponentType componentType)
+        public string Title { get; }
+        public RunningComponentDefinition(string componentId, string title, Type startupType, ComponentType componentType)
         {
             ComponentId = componentId;
+            Title = title;
             StartupType = startupType;
             ComponentType = componentType;
         }
@@ -31,6 +33,7 @@ namespace NetCoreStack.Hisar
 
         public Type StartupType { get; }
 
+        public string Title { get; }
         public string ComponentId { get; }
 
         public ComponentType ComponentType { get; }
@@ -49,6 +52,7 @@ namespace NetCoreStack.Hisar
             ComponentType = definition.ComponentType;
             StartupType = definition.StartupType;
             ComponentId = definition.ComponentId;
+            Title = definition.Title;
         }
 
         protected abstract RunningComponentDefinition ResolveRunningComponent();
@@ -66,9 +70,10 @@ namespace NetCoreStack.Hisar
             var startupType = typeof(TStartup);
             var assembly = startupType.GetTypeInfo().Assembly;
             var componentId = assembly.GetComponentId();
+            var title = assembly.TryGetAssemblyTitle();
             var componentType = ComponentTypeResolver.Resolve(componentId);
 
-            return new RunningComponentDefinition(componentId, startupType, componentType);
+            return new RunningComponentDefinition(componentId, title, startupType, componentType);
         }
     }
 }

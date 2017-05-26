@@ -12,12 +12,14 @@ namespace NetCoreStack.Hisar
 
     public sealed class ComponentPair : IEquatable<ComponentPair>
     {
+        public string Title { get; }
         public string ComponentId { get; }
         public ComponentType ComponentType { get; }
 
-        public ComponentPair(string componentId, ComponentType componentType)
+        public ComponentPair(string componentId, string title, ComponentType componentType)
         {
             ComponentId = componentId;
+            Title = title;
             ComponentType = componentType;
         }
 

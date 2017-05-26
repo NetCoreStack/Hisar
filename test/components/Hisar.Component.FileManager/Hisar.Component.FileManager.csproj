@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PackageId>Hisar.Component.FileManager</PackageId>
+    <AssemblyTitle>File Manager</AssemblyTitle>
+    <Product>File Manager</Product>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -11,6 +13,7 @@
 
   <PropertyGroup>
     <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\..\</SolutionDir>
+    <Authors>NetCoreStack</Authors>
   </PropertyGroup>
 
   <ItemGroup>

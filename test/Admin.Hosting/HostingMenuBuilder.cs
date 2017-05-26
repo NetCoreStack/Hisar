@@ -6,11 +6,6 @@ namespace Admin.Hosting
 {
     public class HostingMenuBuilder : DefaultMenuItemsBuilder<Startup>
     {
-        public HostingMenuBuilder(IComponentTypeResolver componentTypeResolver)
-            : base(componentTypeResolver)
-        {
-        }
-
         public override IEnumerable<IMenuItem> Build(IUrlHelper urlHelper)
         {
             var items = new List<IMenuItem>

@@ -1,24 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
     public class DefaultMenuItemsBuilder<TStartup> : IMenuItemsBuilder
     {
-        public RunningComponentHelper Component => new RunningComponentHelperOfT<TStartup>(ComponentTypeResolver);
-        public string ComponentId => typeof(TStartup).GetTypeInfo().Assembly.GetComponentId();
-        
-        public IComponentTypeResolver ComponentTypeResolver { get; }
+        public RunningComponentHelper Component { get; }
 
-        public DefaultMenuItemsBuilder(IComponentTypeResolver componentTypeResolver)
+        public DefaultMenuItemsBuilder()
         {
-            ComponentTypeResolver = componentTypeResolver;
+            Component = new RunningComponentHelperOfT<TStartup>(new DefaultComponentTypeResolver());
         }
 
         public string ResolvePath(IUrlHelper urlHelper, string path)
         {
-            return ComponentHelperBase.ResolveContentPath(urlHelper, ComponentId, path);
+            return ComponentHelperBase.ResolveContentPath(urlHelper, Component.ComponentId, path);
         }
 
         public virtual IEnumerable<IMenuItem> Build(IUrlHelper urlHelper)
