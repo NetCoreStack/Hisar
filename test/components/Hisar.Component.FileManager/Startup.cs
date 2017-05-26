@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetCoreStack.Contracts;
 using NetCoreStack.Hisar;
-using Shared.Library;
 
 namespace Hisar.Component.FileManager
 {
@@ -32,8 +31,7 @@ namespace Hisar.Component.FileManager
 #if !RELEASE
             services.AddCliSocket<Startup>();
 #endif
-
-            services.AddMenuRenderer<SharedMenuItemsRenderer>();
+            
             services.AddMvc();
         }
 
