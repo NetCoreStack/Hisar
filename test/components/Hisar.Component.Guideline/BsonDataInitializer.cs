@@ -12,29 +12,15 @@ namespace Hisar.Component.Guideline
     {
         const string imgUrl = "http://placehold.it/200x100";
 
-        public static bool CollectionExists(IMongoDatabase database, string collectionName)
-        {
-            // var filter = new BsonDocument("name", collectionName);
-            //filter by collection name
-            // var collections = database.ListCollections(new ListCollectionsOptions { Filter = filter });
-            //check for existence
-            // return collections.Any();
-
-            return true;
-        }
-
         public static void InitializeMusicStoreMongoDb(IServiceProvider serviceProvider)
         {
             if (NetworkHelper.ConnectionCheck(27017))
             {
                 using (var db = serviceProvider.GetService<IMongoDbDataContext>())
                 {
-                    if (!CollectionExists(db.MongoDatabase, db.CollectionNameSelector.GetCollectionName<AlbumBson>()))
-                    {
-                        // db.MongoDatabase.DropCollection(db.CollectionNameSelector.GetCollectionName<AlbumBson>());
-                        var albums = BsonSampleData.GetAlbums(imgUrl, BsonSampleData.Genres, BsonSampleData.Artists);
-                        db.Collection<AlbumBson>().InsertMany(albums);
-                    }
+                    db.MongoDatabase.DropCollection(db.CollectionNameSelector.GetCollectionName<AlbumBson>());
+                    var albums = BsonSampleData.GetAlbums(imgUrl, BsonSampleData.Genres, BsonSampleData.Artists);
+                    db.Collection<AlbumBson>().InsertMany(albums);
                 }
             }
         }

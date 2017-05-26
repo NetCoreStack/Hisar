@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Contracts;
 using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
-using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Extensions;
 using System;
 using System.Collections.Generic;
@@ -68,6 +67,14 @@ namespace Hisar.Component.Guideline.Controllers
         public IActionResult Albums()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetCachedAlbum(string id)
+        {
+            var cachedAlbum = CacheProvider.GetOrCreate<AlbumBson>(id);
+            cachedAlbum = CacheProvider.GetOrCreate<AlbumBson>(id);
+            return Json(cachedAlbum);
         }
 
         public IActionResult GetAlbums(CollectionRequest request)

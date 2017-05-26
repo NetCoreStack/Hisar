@@ -43,6 +43,8 @@ namespace Hisar.Component.Guideline
                 options.CreateMap<GenreViewModel, AnotherComposer>();
             });
 
+            services.AddScoped<ICacheValueProvider, CustomCacheValueProvider>();
+
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddAutoMapper();
 

@@ -4,10 +4,10 @@ using NetCoreStack.Mvc.Extensions;
 
 namespace NetCoreStack.Hisar
 {
-    public class HisarDataProtectorProvider : IDataProtectorProvider
+    public class DefaultDataProtectorProvider : IDataProtectorProvider
     {
         private readonly IDataProtector _protector;
-        public HisarDataProtectorProvider(IDataProtectionProvider provider)
+        public DefaultDataProtectorProvider(IDataProtectionProvider provider)
         {
             _protector = provider.CreateProtector("hisar");
         }

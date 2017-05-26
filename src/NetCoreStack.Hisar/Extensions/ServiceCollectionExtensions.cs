@@ -53,11 +53,12 @@ namespace NetCoreStack.Hisar
         {
             services.AddNetCoreStackMvc();
             services.AddSingleton<HisarMarkerService>();
+            services.AddSingleton<IModelKeyGenerator, DefaultModelKeyGenerator>();
 
             // Singletons
             services.TryAddSingleton<ICommonCacheProvider, InMemoryCacheProvider>();
             services.TryAddSingleton<IJsonSerializer, JsonSerializer>();
-            services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
+            services.TryAddSingleton<IDataProtectorProvider, DefaultDataProtectorProvider>();
             services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
             services.TryAddSingleton<IAssemblyFileProviderFactory, DefaultAssemblyFileProviderFactory>();
             services.TryAddSingleton<IAssemblyProviderResolveCallback, DefaultIAssemblyProviderCompilationCallback>();
@@ -71,8 +72,10 @@ namespace NetCoreStack.Hisar
             services.TryAddScoped<IUsernamePasswordValidator, DefaultUsernamePasswordValidator>();
 
             // New instances
-            services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            
-            services.TryAddTransient<IHisarCacheValueProvider, HisarDefaultCacheValueProvider>();
+            services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();
+
+            // Per Request
+            services.TryAddScoped<ICacheValueProvider, DefaultCacheValueProvider>();
 
             var componentHelper = CreateComponentHelper<TStartup>(services);
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;

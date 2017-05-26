@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
-using NetCoreStack.Mvc.Types;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NetCoreStack.Hisar
 {
@@ -15,17 +11,7 @@ namespace NetCoreStack.Hisar
 
         public HisarCacheInValidatorAttribute(params string[] keys)
         {
-            if (keys == null)
-            {
-                throw new ArgumentNullException($"Cache keys could not be null, parameter: {nameof(keys)}");
-            }
-
-            Keys = keys;
-        }
-
-        public IEnumerable<IHisarCacheValueProvider> GetCacheValueProviders(ActionContext context)
-        {
-            return context.HttpContext.RequestServices.GetServices<IHisarCacheValueProvider>();
+            Keys = keys ?? throw new ArgumentNullException($"Cache keys could not be null, parameter: {nameof(keys)}");
         }
 
         public ICommonCacheProvider GetCacheProvider(ActionContext context)
@@ -37,30 +23,8 @@ namespace NetCoreStack.Hisar
         {
             if (context.Exception == null)
             {
-                var cacheValueProviders = GetCacheValueProviders(context).ToList();
-                foreach (var valueProvider in cacheValueProviders)
-                {
-                    foreach (var key in Keys)
-                    {
-                        DateTimeOffset? absoluteExpiration = null;
-
-                        var value = valueProvider.GetValueSetter(key, ref absoluteExpiration);
-                        if (value != null)
-                        {
-                            var cacheProvider = GetCacheProvider(context);
-                            if (cacheProvider != null)
-                            {
-                                cacheProvider.SetItem(key, value, new CacheProviderOptions
-                                {
-                                    Priority = CacheItemPriority.NeverRemove,
-                                    AbsoluteExpiration = absoluteExpiration
-                                });
-                            }
-
-                            break;
-                        }
-                    }
-                }
+                var cacheProvider = GetCacheProvider(context);
+                cacheProvider.Remove(Keys);
             }
         }
     }

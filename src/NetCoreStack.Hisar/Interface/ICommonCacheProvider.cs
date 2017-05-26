@@ -1,24 +1,27 @@
 ﻿using NetCoreStack.Contracts;
 using NetCoreStack.Mvc.Types;
-using System;
 using System.Collections.Generic;
 
 namespace NetCoreStack.Hisar
 {
     public interface ICommonCacheProvider
     {
-        List<TEntity> GetList<TEntity>();
+        void SetItem<TModel, TKey>(TModel value, CacheProviderOptions options) where TModel : IModelKey<TKey>;
 
-        object GetItem(string key);
+        void Remove(params string[] keys);
 
-        object SetItem(string key, object value, CacheProviderOptions options);
+        void Remove<TModel>(string id) where TModel : IModelKey<string>;
 
-        void Remove(string key);
+        void Remove<TModel>(long id) where TModel : IModelKey<long>;
 
-        TEntity GetItem<TEntity>(Func<TEntity, bool> idSelector);
-        
-        TEntity GetItem<TEntity>(string id) where TEntity : IEntityIdentity<string>;
+        IEnumerable<TModel> GetList<TModel>() where TModel : IModelKey<string>;
 
-        TEntity GetItem<TEntity, TKey>(TKey id) where TEntity : IEntityIdentity<TKey> where TKey : class;
+        TModel GetOrCreate<TModel>(long id) where TModel : IModelKey<long>;
+
+        TModel GetOrCreate<TModel>(string id) where TModel : IModelKey<string>;
+
+        TModel GetItem<TModel>(string id) where TModel : IModelKey<string>;
+
+        TModel GetItem<TModel>(long id) where TModel : IModelKey<long>;
     }
 }
