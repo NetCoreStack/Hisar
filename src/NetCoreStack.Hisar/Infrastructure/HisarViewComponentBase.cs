@@ -57,6 +57,11 @@ namespace NetCoreStack.Hisar
             ExecutionComponentId = componentType.Assembly.GetComponentId();
         }
 
+        protected virtual TInstance GetService<TInstance>()
+        {
+            return Resolver.GetService<TInstance>();
+        }
+
         public new ViewViewComponentResult View()
         {
             if (ComponentHelper.IsExternalComponent)

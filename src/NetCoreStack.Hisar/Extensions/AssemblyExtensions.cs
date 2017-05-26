@@ -11,6 +11,17 @@ namespace NetCoreStack.Hisar
             return componentAssembly.GetName().Name.Split('.').Last();
         }
 
+        public static bool EnsureIsHosting(this Assembly assembly)
+        {
+            var componentId = assembly.GetComponentId();
+            if (componentId.Equals(EngineConstants.HostingComponentName, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         internal static ComponentPartDefinition EnsureIsComponentPart(this HisarAssemblyComponentsLoader lookup, string componentName)
         {
             if (lookup == null)

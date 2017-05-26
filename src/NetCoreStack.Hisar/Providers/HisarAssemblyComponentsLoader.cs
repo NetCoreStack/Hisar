@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -75,7 +76,11 @@ namespace NetCoreStack.Hisar
             {
                 Directory.CreateDirectory(externalComponentsDirectory);
             }
-            var files = Directory.GetFiles(externalComponentsDirectory);
+
+            var externalComponentsRefDirectory = Path.Combine(externalComponentsDirectory, "refs");
+            PathUtility.CopyToFiles(externalComponentsDirectory, externalComponentsRefDirectory);
+
+            var files = Directory.GetFiles(externalComponentsRefDirectory);
             if (files != null && files.Any())
             {
                 foreach (var file in files)
@@ -88,7 +93,7 @@ namespace NetCoreStack.Hisar
 
                         // AssemblyLoadContext.Default.Resolving += ReferencedAssembliesResolver.Resolving;
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
-                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsDirectory, assembly);
+                        ReferencedAssembliesResolver.ResolveAssemblies(externalComponentsRefDirectory, assembly);
                         var assemblyName = assembly.GetName().Name;
                         var componentId = assembly.GetComponentId();
                         ComponentAssemblyLookup.Add(componentId, assembly);
@@ -102,10 +107,17 @@ namespace NetCoreStack.Hisar
                                 var startup = StartupTypeLoader.CreateHisarConventionBasedStartup(startupType, _serviceProvider, _env);
                                 StartupLookup.Add(componentId, startup);
                                 startup.ConfigureServices(services);
+
+                                var menuBuilder = startupType.GetTypeInfo().Assembly.GetTypes()
+                                    .FirstOrDefault(x => typeof(IMenuItemsBuilder).IsAssignableFrom(x));
+
+                                if (menuBuilder != null)
+                                    services.AddScoped(typeof(IMenuItemsBuilder), menuBuilder);
                             }
                         }
                         catch (Exception ex)
                         {
+                            throw ex;
                         }
 
                         var components = assembly.GetTypes().ToArray();

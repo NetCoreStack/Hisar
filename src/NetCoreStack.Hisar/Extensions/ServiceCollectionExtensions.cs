@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,15 +11,14 @@ using NetCoreStack.Mvc.Interfaces;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
 using System;
-using Microsoft.AspNetCore.Mvc.ViewComponents;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace NetCoreStack.Hisar
 {
-    internal static class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         private static HisarAssemblyComponentsLoader CreateAssemblyLoader(IServiceCollection services, IHostingEnvironment env, IMvcBuilder builder)
         {
@@ -29,7 +29,15 @@ namespace NetCoreStack.Hisar
             return assemblyLoader;
         }
 
-        internal static void AddHisar<TStartup>(this IServiceCollection services, IConfigurationRoot configuration, IHostingEnvironment env) where TStartup : class
+        internal static RunningComponentHelperOfT<TStartup> CreateComponentHelper<TStartup>(this IServiceCollection services)
+        {
+            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
+            return new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
+        }
+
+        internal static void AddHisar<TStartup>(this IServiceCollection services, 
+            IConfigurationRoot configuration, 
+            IHostingEnvironment env) where TStartup : class
         {
             services.AddNetCoreStackMvc();
             services.AddSingleton<HisarMarkerService>();
@@ -39,21 +47,25 @@ namespace NetCoreStack.Hisar
             services.TryAddSingleton<IJsonSerializer, JsonSerializer>();
             services.TryAddSingleton<IDataProtectorProvider, HisarDataProtectorProvider>();
             services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
+            services.TryAddSingleton<IAssemblyFileProviderFactory, DefaultAssemblyFileProviderFactory>();
 
             // Custom view component helper
             services.AddTransient<IViewComponentHelper, HisarDefaultViewComponentHelper>();
 
             // Per request services
             services.TryAddScoped<IUrlGeneratorHelper, UrlGeneratorHelper>();
+            services.TryAddScoped<IMenuItemsRenderer, DefaultMenuItemsRenderer>();
 
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();            
             services.TryAddTransient<IHisarCacheValueProvider, HisarDefaultCacheValueProvider>();
 
-            var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
-            var componentHelper = new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
-
+            var componentHelper = CreateComponentHelper<TStartup>(services);
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
+
+            services.TryAddScoped<IMenuItemsBuilder, DefaultMenuItemsBuilder<TStartup>>();
+
+
             bool isComponent = componentHelper.IsExternalComponent;
             bool isCoreComponent = componentHelper.IsCoreComponent;
             IMvcBuilder builder = null;
@@ -130,14 +142,18 @@ namespace NetCoreStack.Hisar
     {
         public static void AddCliSocket<TStartup>(this IServiceCollection services)
         {
-            var assembly = typeof(TStartup).GetTypeInfo().Assembly;
-            var componentId =  assembly.GetComponentId();
+            var executingAssembly = Assembly.GetEntryAssembly();
+            var componentHelper = services.CreateComponentHelper<TStartup>();
+            if (!executingAssembly.EnsureIsHosting()) // Running as standalone not part of any Hosting
+            {
+                services.AddSingleton<CliUsageMarkerService>();
 
-            services.AddProxyWebSockets(options => {
-                options.ConnectorName = $"{nameof(componentId)}-Component";
-                options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
-                options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
-            });
+                services.AddProxyWebSockets(options => {
+                    options.ConnectorName = $"{nameof(componentHelper.ComponentId)}-Component";
+                    options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
+                    options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
+                });
+            }
         }
     }
 }

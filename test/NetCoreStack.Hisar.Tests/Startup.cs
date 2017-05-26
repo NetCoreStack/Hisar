@@ -14,10 +14,12 @@ namespace NetCoreStack.Hisar.Tests
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseMvc();
         }
 
         public static void ConfigureRoutes(IRouteBuilder routes)
