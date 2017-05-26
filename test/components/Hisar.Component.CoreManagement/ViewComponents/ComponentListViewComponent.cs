@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hisar.Component.CoreManagement
+namespace Hisar.Component.CoreManagement.ViewComponents
 {
-    public class CoreManagementViewComponent : HisarViewComponent
+    public class ComponentListViewComponent : HisarViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
