@@ -41,6 +41,11 @@ namespace Hisar.Component.CoreManagement.Controllers
             return View();
         }
 
+        public IActionResult ComponentList()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult GetAssemblies()
         {

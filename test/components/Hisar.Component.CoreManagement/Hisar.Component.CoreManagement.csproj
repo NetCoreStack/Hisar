@@ -49,7 +49,11 @@
     <EmbeddedResource Include="wwwroot\**\*.*" />
     <Content Remove="wwwroot/js\knockout-3.2.0.debug.js" />
     <Content Remove="wwwroot/js\knockout-min.js" />
+    <EmbeddedResource Remove="wwwroot\css\componentList.css" />
+    <EmbeddedResource Remove="wwwroot\js\componentList.js" />
     <EmbeddedResource Remove="wwwroot\js\knockout-3 - Copy.4.2.js" />
+    <Content Include="wwwroot\css\componentList.css" />
+    <Content Include="wwwroot\js\componentList.js" />
     <None Update="wwwroot\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>

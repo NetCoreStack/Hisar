@@ -1,0 +1,31 @@
+﻿<div id="cmListContainer">
+
+    <div class="cmListContainerList row" style="display: none;" data-bind="visible: assemblies, foreach: assemblies">
+        <div class="col-xs-12 col-md-6 col-lg-4">
+            <div class="panel panel-default cmComponentProject animated fadeIn">
+                <div class="panel-body">
+                    <div class="cmComponentCount" data-bind="text: Controllers.length"></div>
+                    <p><h4><b><span data-bind="text: PackageName"></span></b></h4></p>
+                    <p><h6><b><span data-bind="text: PackageId"></span></b></h6></p>
+                    <p class="small description" data-bind="visibel: Description, text: Description"></p>
+                    <div class="hashtags">
+                        <span class="label label-warning" data-bind="visible: PackageVersion">
+                            v<span data-bind="text: PackageVersion"></span>
+                        </span>
+
+                        <span class="label label-default" data-bind="visible: Authors">
+                            <span data-bind="text: Authors"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
