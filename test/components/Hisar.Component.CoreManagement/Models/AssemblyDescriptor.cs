@@ -10,6 +10,7 @@ namespace Hisar.Component.CoreManagement.Models
         }
 
         public string ComponentId { get; set; }
+        public string Title { get; set; }
         public string PackageId { get; set; }
         public string PackageVersion { get; set; }
         public string Authors { get; set; }

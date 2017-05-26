@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCoreStack.Hisar;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hisar.Component.CoreManagement.ViewComponents

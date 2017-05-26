@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NetCoreStack.Hisar;
+using System;
 using System.Reflection;
 using System.Resources;
-using System.Threading.Tasks;
-using NetCoreStack.Hisar;
 
 namespace Hisar.Component.CoreManagement.Helpers
 {
@@ -31,6 +28,7 @@ namespace Hisar.Component.CoreManagement.Helpers
         public string Product => GetAssemblyAttribute<AssemblyProductAttribute>()?.Product;
         public string Description => GetAssemblyAttribute<AssemblyDescriptionAttribute>()?.Description;
         public string Copyright => GetAssemblyAttribute<AssemblyCopyrightAttribute>()?.Copyright;
+        public string Title => GetAssemblyAttribute<AssemblyTitleAttribute>()?.Title;
         public string LicenceUrl => "";
         public string ProjectUrl => "";
         public string IconUrl => "";

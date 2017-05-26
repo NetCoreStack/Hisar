@@ -57,6 +57,7 @@ namespace Hisar.Component.CoreManagement.Helpers
                     var assemblyDescriptor = new AssemblyDescriptor
                     {
                         ComponentId     = assemblyInfo.ComponentId,
+                        Title           = assemblyInfo.Title,
                         PackageId       = assemblyInfo.PackageId,
                         PackageVersion  = assemblyInfo.PackageVersion,
                         Authors         = assemblyInfo.Authors,

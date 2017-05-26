@@ -4,6 +4,8 @@
     var CmAssemblyModel = function (item) {
         var self = this;
         self.PackageId = item.packageId;
+        self.Title = item.title;
+        self.ComponentId = item.ComponentId;
         self.PackageVersion = item.packageVersion;
         self.Authors = item.authors;
         self.Company = item.company;
@@ -24,10 +26,7 @@
         self.Controllers = item.controllers;
 
         self.PackageName = ko.computed(function () {
-            var str = self.PackageId ? self.PackageId.toString() : '';
-            var nw = str.replace('Hisar.Component.', '');
-            console.log(nw);
-            return nw;
+            return self.Title ? self.Title : self.ComponentId;
         }, this);
     };
 
