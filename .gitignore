@@ -32,7 +32,7 @@ bld/
 [Oo]bj/
 **/ExternalComponents/*
 **/hisar-upload/*
-!**/ExternalComponents/_placeholder
+!**/ExternalComponents/components.json
 
 # Visual Studo 2015 cache/options directory
 .vs/
