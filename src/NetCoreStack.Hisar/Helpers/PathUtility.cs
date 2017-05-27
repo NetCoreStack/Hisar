@@ -15,5 +15,17 @@ namespace NetCoreStack.Hisar
                 File.Copy(newPath, newPath.Replace(source, destination), true);
             }
         }
+
+        public static string TryGetComponentsJson(string externalComponentsDirectory)
+        {
+            var componentsJsonfile = Path.Combine(externalComponentsDirectory, "components.json");
+            var fullPath = Path.GetFullPath(componentsJsonfile);
+            if (File.Exists(fullPath))
+            {
+                return fullPath;
+            }
+
+            return string.Empty;
+        }
     }
 }

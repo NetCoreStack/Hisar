@@ -11,6 +11,11 @@ namespace NetCoreStack.Hisar
             return componentAssembly.GetName().Name.Split('.').Last();
         }
 
+        internal static string GetComponentId(this string packageId)
+        {
+            return packageId.Split('.').Last();
+        }
+
         public static bool EnsureIsHosting(this Assembly assembly)
         {
             var componentId = assembly.GetComponentId();
