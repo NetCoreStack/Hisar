@@ -1,15 +1,2 @@
-﻿@section styles{
-    <link href="@Url.ComponentContent("~/css/componentList.css")" rel="stylesheet" />
-}
-
-@section scripts{    
-    <script>
-        window.cmContext = {
-            componentListRootUrl: '@Url.Action("GetAssemblies", "Home")'
-        }
-        
-    </script>
-    <script src="@Url.ComponentContent("~/js/componentList.js")"></script> 
-}
-
+﻿
 @await Component.InvokeAsync(ViewContext.ResolveName("ComponentList"))

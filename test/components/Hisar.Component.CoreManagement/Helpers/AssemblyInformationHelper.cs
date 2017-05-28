@@ -20,6 +20,7 @@ namespace Hisar.Component.CoreManagement.Helpers
         }
 
         #region Properties
+        public bool IsHosting => _assembly.EnsureIsHosting();
         public string ComponentId => _assembly.GetComponentId();
         public string PackageId => _assembly.GetName()?.Name;
         public string PackageVersion => GetAssemblyAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;

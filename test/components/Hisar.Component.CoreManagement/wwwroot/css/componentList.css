@@ -1,5 +1,6 @@
 ﻿#cmListContainer{}
-
+#cmListContainer .no-margin{margin:0;}
+#cmListContainer .font-consolas{font-family: Consolas;}
 #cmListContainer .cmListContainerList .cmComponentProject{background:#fbfbfb;}
 #cmListContainer .cmListContainerList .cmComponentProject:hover{color:#fff; border-color: #213F50;background: #213F50;}
 #cmListContainer .cmListContainerList .cmComponentProject:hover > div::after{background-image: none;}
@@ -11,9 +12,9 @@
     display:block;
     content: "";
     top: 10px;
-    right:20px;
+    right:25px;
 }
 #cmListContainer .cmListContainerList .cmComponentProject .cmComponentCount::before{content: "#"; }
 #cmListContainer .cmListContainerList .cmComponentProject .cmComponentCount::after{content: "component"; font-size: 10px;position: absolute;height: 24px;width: 64px;text-align: center;display: block; left: 0;line-height: 10px;bottom: -10px;}
-#cmListContainer .cmListContainerList .cmComponentProject .cmComponentCount{display:none; font-size:24px; width: 64px; position: absolute; top: 10px;right:20px;height: 64px;background: #fbfbfb;color: #213F50;line-height: 64px;text-align: center;border-radius: 5px;}
+#cmListContainer .cmListContainerList .cmComponentProject .cmComponentCount{display:none; font-size:24px; width: 64px; position: absolute; top: 10px;right:25px;height: 64px;background: #fbfbfb;color: #213F50;line-height: 64px;text-align: center;border-radius: 5px;}
 #cmListContainer .cmListContainerList .cmComponentProject:hover .cmComponentCount{display: block;}

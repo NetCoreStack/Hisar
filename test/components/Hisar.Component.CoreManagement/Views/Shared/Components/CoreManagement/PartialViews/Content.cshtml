@@ -7,10 +7,13 @@
                     <img class="media-object img-thumbnail" data-bind="attr: { src: IconUrl}" />
                 </div>*@
             <div>
-                <div class="row">
+                <div class="row cmComponentNameSpace page-header ">
                     <div class="col-md-12">
-                        <h3 class="pull-left" data-bind="text: PackageId"></h3>
-                        <span class="pull-right">
+                        <div class="pull-left ">
+                            <div class="h3" data-bind="text: PackageName"></div>
+                            <div class="h6" data-bind="text: PackageId"></div>
+                        </div>
+                        <span class="pull-right"  data-bind="ifnot: IsHosting">
                             <input type="checkbox" checked data-toggle="toggle" data-size="small" data-width="160" data-on="Deactivate Component" data-off="Activate Component" data-onstyle="success" data-offstyle="danger">
                         </span>
                     </div>
@@ -71,11 +74,11 @@
     </div>
 
 
-    <fieldset class="toggleFieldset">
+    <fieldset class="toggleFieldset animated fadeIn">
         <legend><i class="fa fa-minus-square" aria-hidden="true"></i> Assembly Components</legend>
         <div class="toggleFieldsetHiders">
 
-            <div class="cmViewComponents" style="display: none;" data-bind="visible: ViewComponents, foreach: ViewComponents">
+            <div class="cmViewComponents animated fadeIn" style="display: none;" data-bind="visible: ViewComponents, foreach: ViewComponents">
                 <h5><b><span data-bind="text: componentId"></span>.<span data-bind="text: name"></span></b></h5>
                 <pre><b>Usage:</b><code class="cs" onclick="selectText(this.id)" data-bind="uniqueId: true">@@await Component.InvokeAsync("<span data-bind="text: componentId"></span>.<span data-bind="text: name"></span>")</code></pre>
                 <hr />
@@ -86,7 +89,7 @@
 
     <br />
 
-    <fieldset class="toggleFieldset">
+    <fieldset class="toggleFieldset animated fadeIn">
         <legend><i class="fa fa-minus-square" aria-hidden="true"></i> Assembly Controllers</legend>
         <div class="toggleFieldsetHiders">
 

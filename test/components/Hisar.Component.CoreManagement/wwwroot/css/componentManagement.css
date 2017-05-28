@@ -23,7 +23,9 @@
 #cmContainer #cmSideBar .formFilterComponentList input{border: 0!important; border-radius: 0!important; outline:0px !important; -webkit-appearance:none;box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
 #cmContainer #cmSideBar .formFilterComponentList input:focus{ outline:0px !important; -webkit-appearance:none;box-shadow: none; -moz-box-shadow: none; -webkit-box-shadow: none;}
 
-#cmContainer .cmComponentDetail h3{ margin-top: 0;}
+#cmContainer .cmComponentDetail .cmComponentNameSpace.page-header,
+#cmContainer .cmComponentDetail .cmComponentNameSpace .h3,
+#cmContainer .cmComponentDetail .cmComponentNameSpace .h6{ margin-top: 0;}
 #cmContainer .cmComponentControllerMethods .methodParameters .parameterSplitter:last-child{ display: none;}
 
 #cmContainer .toggleFieldset legend{ cursor: pointer; margin-bottom: 5px;}

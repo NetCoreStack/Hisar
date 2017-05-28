@@ -9,6 +9,7 @@ namespace Hisar.Component.CoreManagement.Models
             Controllers = new List<ComponentControllerDescriptor>();
         }
 
+        public bool IsHosting { get; set; }
         public string ComponentId { get; set; }
         public string Title { get; set; }
         public string PackageId { get; set; }
