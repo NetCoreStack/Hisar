@@ -17,7 +17,7 @@ namespace Hisar.Component.CoreManagement
             ComponentId = typeInfo.Assembly.GetComponentId();
             _assemblyName = typeInfo.Assembly.GetName().Name;
         }
-
+        
         public static string ComponentContent(this IUrlHelper urlHelper, string contentPath)
         {
             return ComponentHelperBase.ResolveContentPath(urlHelper, ComponentId, contentPath);
@@ -27,7 +27,7 @@ namespace Hisar.Component.CoreManagement
         {
             return ComponentHelperBase.ResolveViewComponentName(context, _assemblyName, name);
         }
-
+        
         public static string ResolveName<TComponent>(this ViewContext context)
         {
             return ComponentHelperBase.ResolveViewComponentName<TComponent>(context, _assemblyName);

@@ -1,5 +1,6 @@
-﻿<div id="cmListContainer">
-
+﻿@using static Hisar.Component.CoreManagement.ComponentHelper
+<link href="@Url.ComponentContent("~/css/componentList.css")" rel="stylesheet" />
+<div id="cmListContainer">
     <div class="cmListContainerList row" style="display: none;" data-bind="visible: assemblies, foreach: assemblies">
         <div class="col-xs-12 col-md-6 col-lg-4">
             <div class="panel panel-default cmComponentProject animated fadeIn">
@@ -20,24 +21,14 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 </div>
-
-@section styles{
-    <link href="@Url.ComponentContent("~/css/componentList.css")" rel="stylesheet" />
-}
-
-@section scripts{
-    <script>
+<script>
         window.cmContext = {
-            componentListRootUrl: '@Url.Action("GetAssemblies", "Home")'
+            componentListRootUrl: '@Url.ComponentContent("~/home/getassemblies")'
         }
-
-    </script>
-    <script src="@Url.ComponentContent("~/js/componentList.js")"></script>
-}
+</script>
+<script src="@Url.ComponentContent("~/js/componentList.js")"></script>
 
 
 
