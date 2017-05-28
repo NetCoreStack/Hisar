@@ -3,9 +3,10 @@
 
     var CmAssemblyModel = function (item) {
         var self = this;
+        self.IsHosting = item.isHosting;
         self.PackageId = item.packageId;
         self.Title = item.title;
-        self.ComponentId = item.ComponentId;
+        self.ComponentId = item.componentId;
         self.PackageVersion = item.packageVersion;
         self.Authors = item.authors;
         self.Company = item.company;
@@ -27,6 +28,10 @@
 
         self.PackageName = ko.computed(function () {
             return self.Title ? self.Title : self.ComponentId;
+        }, this);
+
+        self.PackageIdBolder = ko.computed(function () {
+            return self.PackageId.replace(self.ComponentId, "") + "<b>" + self.ComponentId + "</b>";
         }, this);
     };
 

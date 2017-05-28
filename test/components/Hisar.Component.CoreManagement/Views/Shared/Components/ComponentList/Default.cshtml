@@ -4,9 +4,9 @@
         <div class="col-xs-12 col-md-6 col-lg-4">
             <div class="panel panel-default cmComponentProject animated fadeIn">
                 <div class="panel-body">
-                    <div class="cmComponentCount" data-bind="text: Controllers.length"></div>
-                    <p><h4><b><span data-bind="text: PackageName"></span></b></h4></p>
-                    <p><h6><b><span data-bind="text: PackageId"></span></b></h6></p>
+                    <div class="cmComponentCount" data-bind="text: ViewComponents.length"></div>
+                    <h4 class="no-margin"><b><span data-bind="text: PackageName"></span></b></h4>
+                    <h6 class="font-consolas"><span data-bind="html: PackageIdBolder"></span></h6>
                     <p class="small description" data-bind="visibel: Description, text: Description"></p>
                     <div class="hashtags">
                         <span class="label label-warning" data-bind="visible: PackageVersion">
@@ -23,9 +23,21 @@
 
     </div>
 
-
-
 </div>
+
+@section styles{
+    <link href="@Url.ComponentContent("~/css/componentList.css")" rel="stylesheet" />
+}
+
+@section scripts{
+    <script>
+        window.cmContext = {
+            componentListRootUrl: '@Url.Action("GetAssemblies", "Home")'
+        }
+
+    </script>
+    <script src="@Url.ComponentContent("~/js/componentList.js")"></script>
+}
 
 
 

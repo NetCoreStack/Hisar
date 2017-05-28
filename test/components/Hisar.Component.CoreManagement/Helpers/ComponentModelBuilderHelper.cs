@@ -45,17 +45,21 @@ namespace Hisar.Component.CoreManagement.Helpers
 
         public List<AssemblyDescriptor> GetLoadedAssemblyInformation()
         {
-            var assemblyViewModels = new List<AssemblyDescriptor>();
+            var assemblyDescriptors = new List<AssemblyDescriptor>();
 
             var applicationModel = BuildApplicationModel();
             if (applicationModel != null && applicationModel.Controllers.Any())
                 foreach (var controller in applicationModel.Controllers)
                 {
                     var assembly = controller.ControllerType.Assembly;
+                    if (assemblyDescriptors.Any(k => k.ComponentId == assembly.GetComponentId()))
+                        continue;
+
                     var assemblyInfo = new AssemblyInformationHelper(assembly);
                     var viewComponents = GetViewComponents(assembly);
                     var assemblyDescriptor = new AssemblyDescriptor
                     {
+                        IsHosting       = assemblyInfo.IsHosting,
                         ComponentId     = assemblyInfo.ComponentId,
                         Title           = assemblyInfo.Title,
                         PackageId       = assemblyInfo.PackageId,
@@ -81,10 +85,10 @@ namespace Hisar.Component.CoreManagement.Helpers
                     GetAssemblyController(ref avmComponent, controller);
 
                     assemblyDescriptor.Controllers = avmComponent;
-                    assemblyViewModels.Add(assemblyDescriptor);
+                    assemblyDescriptors.Add(assemblyDescriptor);
                 }
 
-            return assemblyViewModels;
+            return assemblyDescriptors;
         }
 
         private List<ComponentViewDescriptor> GetViewComponents(Assembly assembly)

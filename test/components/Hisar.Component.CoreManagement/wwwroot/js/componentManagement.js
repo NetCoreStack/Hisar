@@ -42,8 +42,10 @@
 
     var CmAssemblyModel = function (item) {
         var self = this;
-        self.Id = ko.bindingHandlers.uniqueId;
+        self.IsHosting = item.isHosting;
         self.PackageId = item.packageId;
+        self.Title = item.title;
+        self.ComponentId = item.componentId;
         self.PackageVersion = item.packageVersion;
         self.Authors = item.authors;
         self.Company = item.company;
@@ -62,6 +64,10 @@
 
         self.ViewComponents = item.viewComponents;
         self.Controllers = item.controllers;
+
+        self.PackageName = ko.computed(function () {
+            return self.Title ? self.Title : self.ComponentId;
+        }, this);
     };
 
     var CmComponentViewModel = function () {
