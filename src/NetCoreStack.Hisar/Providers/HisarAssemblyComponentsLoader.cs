@@ -215,19 +215,8 @@ namespace NetCoreStack.Hisar
 
             services.AddSingleton<ICacheItemResolver>(new DefaultCacheItemResolver(cacheItems));
 
-            // Validators
-            var validators = ComponentAssemblyLookup.Values.SelectMany(a => a.GetTypes()).
-                Where(x => typeof(IUsernamePasswordValidator).IsAssignableFrom(x)).ToList();
-
-            if (validators.Count > 1)
-            {
-                throw new InvalidOperationException($"{nameof(IUsernamePasswordValidator)} type registered more then once!");
-            }
-
-            if (validators.Any())
-            {
-                services.AddScoped(typeof(IUsernamePasswordValidator), validators[0]);
-            }
+            services.AddImplementations<IUsernamePasswordValidator>(ComponentAssemblyLookup);
+            services.AddImplementations<IUserRegistration>(ComponentAssemblyLookup);
         }
     }
 }

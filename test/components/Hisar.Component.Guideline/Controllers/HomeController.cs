@@ -29,10 +29,12 @@ namespace Hisar.Component.Guideline.Controllers
     public class HomeController : HisarControllerServerBase
     {
         private readonly IUsernamePasswordValidator _validator;
-        public HomeController(IUsernamePasswordValidator validator)
+        public HomeController(IUsernamePasswordValidator validator, IUserRegistration registration)
         {
             _validator = validator;
             _validator.Validate("foo", "bar");
+
+            registration.Register("foo", "bar", "<somepassword>");
         }
 
         public IActionResult Index()

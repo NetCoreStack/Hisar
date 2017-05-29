@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Helpers;
-using NetCoreStack.Mvc.Interfaces;
 using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
@@ -70,6 +69,7 @@ namespace NetCoreStack.Hisar
             services.TryAddScoped<IUrlGeneratorHelper, UrlGeneratorHelper>();
             services.TryAddScoped<IMenuItemsRenderer, DefaultMenuItemsRenderer>();
             services.TryAddScoped<IUsernamePasswordValidator, DefaultUsernamePasswordValidator>();
+            services.TryAddScoped<IUserRegistration, DefaultUserRegistration>();
 
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();
@@ -173,6 +173,23 @@ namespace NetCoreStack.Hisar
         internal static void AddAssemblyResolver(this IServiceCollection services, Type implementationType)
         {
             services.AddSingleton(typeof(IAssemblyProviderResolveCallback), implementationType);
+        }
+
+        internal static void AddImplementations<TImplement>(this IServiceCollection services, IDictionary<string, Assembly> componentAssemblyLookup)
+        {
+            var type = typeof(TImplement);
+            var implements = componentAssemblyLookup.Values.SelectMany(a => a.GetTypes()).
+                Where(x => type.IsAssignableFrom(x)).ToList();
+
+            if (implements.Count > 1)
+            {
+                throw new InvalidOperationException($"{type.FullName} type registered more then once!");
+            }
+
+            if (implements.Any())
+            {
+                services.AddScoped(typeof(TImplement), implements[0]);
+            }
         }
 
         public static void AddMenuRenderer<TRenderer>(this IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer
