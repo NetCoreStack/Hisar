@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using NetCoreStack.Contracts;
-using NetCoreStack.Data;
 using NetCoreStack.Data.Interfaces;
-using NetCoreStack.Data.Types;
 
 namespace NetCoreStack.Hisar.Server
 {

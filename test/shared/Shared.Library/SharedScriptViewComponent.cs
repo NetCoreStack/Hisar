@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetCoreStack.Hisar;
 using System.Threading.Tasks;
 
 namespace Shared.Library

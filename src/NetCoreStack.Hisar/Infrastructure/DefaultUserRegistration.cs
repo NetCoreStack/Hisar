@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NetCoreStack.Hisar
+﻿namespace NetCoreStack.Hisar
 {
     public class DefaultUserRegistration : IUserRegistration
     {

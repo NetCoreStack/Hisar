@@ -1,7 +1,5 @@
 ﻿using Hisar.Component.Guideline.Models;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using NetCoreStack.Data.Interfaces;
 using NetCoreStack.Mvc.Helpers;
 using System;

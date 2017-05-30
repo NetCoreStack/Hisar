@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NetCoreStack.Hisar;
-using System;
 using System.Reflection;
 
 namespace Hisar.Component.Carousel

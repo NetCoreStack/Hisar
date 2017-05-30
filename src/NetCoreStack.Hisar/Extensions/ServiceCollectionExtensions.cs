@@ -137,6 +137,8 @@ namespace NetCoreStack.Hisar
             else
             {
                 assemblyLoader = CreateAssemblyLoader<TStartup>(services, env, builder);
+                services.AddSingleton<IPropertyDefinitionFilter>(new PropertyDefinitionFilter(assemblyLoader));
+
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
