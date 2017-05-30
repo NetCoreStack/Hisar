@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using NetCoreStack.Contracts;
+﻿using NetCoreStack.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +18,19 @@ namespace NetCoreStack.Hisar
         private readonly IDictionary<string, object> Lookup = new Dictionary<string, object>();
 
         private readonly IModelKeyGenerator _keyGenerator;
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IEnumerable<ICacheValueProvider> _cacheValueProviders;
 
-        public InMemoryCacheProvider(IModelKeyGenerator keyGenerator, 
-            IServiceProvider serviceProvider)
+        public InMemoryCacheProvider(IModelKeyGenerator keyGenerator, IEnumerable<ICacheValueProvider> cacheValueProviders)
         {
             _keyGenerator = keyGenerator;
-            _serviceProvider = serviceProvider;
+            _cacheValueProviders = cacheValueProviders;
         }
         
         private TModel TryGetValue<TModel, TKey>(TKey id, CacheItem key) where TModel : IModelKey<TKey>
         {
-            var valueProviders = _serviceProvider.GetServices<ICacheValueProvider>();
-            if (valueProviders != null)
+            if (_cacheValueProviders != null)
             {
-                foreach (var provider in valueProviders)
+                foreach (var provider in _cacheValueProviders)
                 {
                     var instance = provider.TryGetValue<TModel>(id, key);
                     if (instance != null)

@@ -74,9 +74,6 @@ namespace NetCoreStack.Hisar
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();
 
-            // Per Request
-            services.TryAddScoped<ICacheValueProvider, DefaultCacheValueProvider>();
-
             var componentHelper = CreateComponentHelper<TStartup>(services);
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
 
