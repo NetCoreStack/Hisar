@@ -1,7 +1,9 @@
-﻿namespace NetCoreStack.Hisar
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace NetCoreStack.Hisar
 {
     public interface ICacheValueProvider
     {
-        object TryGetValue<TModel>(object id, CacheItem key);
+        object TryGetValue<TModel>(ActionContext context, object id, CacheItem key);
     }
 }

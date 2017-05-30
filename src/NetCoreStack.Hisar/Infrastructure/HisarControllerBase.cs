@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using NetCoreStack.Contracts;
 using NetCoreStack.Mvc;
 using System;
 using System.Collections.Generic;
@@ -34,18 +35,6 @@ namespace NetCoreStack.Hisar
             return Json(webResult);
         }
 
-        protected Action<TModel> TryGetComposer<TModel>()
-        {
-            return ControllerContext.TryGetComposerInvoker<TModel>();
-        }
-
-        [NonAction]
-        public virtual string ResolveViewName(string name)
-        {
-            var type = this.GetType();
-            return ControllerContext.ResolveViewName(type, name);
-        }
-
         public IServiceProvider Resolver
         {
             get
@@ -76,6 +65,28 @@ namespace NetCoreStack.Hisar
                 }
                 return _dataProtector;
             }
+        }
+
+        protected Action<TModel> TryGetComposer<TModel>()
+        {
+            return ControllerContext.TryGetComposerInvoker<TModel>();
+        }
+
+        protected TModel GetOrCreateCacheItem<TModel>(long id) where TModel : IModelKey<long>
+        {
+            return CacheProvider.GetOrCreate<TModel>(ControllerContext, id);
+        }
+
+        protected TModel GetOrCreateCacheItem<TModel>(string id) where TModel : IModelKey<string>
+        {
+            return CacheProvider.GetOrCreate<TModel>(ControllerContext, id);
+        }
+
+        [NonAction]
+        public virtual string ResolveViewName(string name)
+        {
+            var type = this.GetType();
+            return ControllerContext.ResolveViewName(type, name);
         }
     }
 }

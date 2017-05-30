@@ -1,6 +1,5 @@
-﻿using NetCoreStack.Contracts;
-using NetCoreStack.Mvc.Types;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using NetCoreStack.Contracts;
 
 namespace NetCoreStack.Hisar
 {
@@ -12,14 +11,8 @@ namespace NetCoreStack.Hisar
 
         void Remove<TModel>(long id) where TModel : IModelKey<long>;
 
-        IEnumerable<TModel> GetList<TModel>() where TModel : IModelKey<string>;
+        TModel GetOrCreate<TModel>(ActionContext context, long id) where TModel : IModelKey<long>;
 
-        TModel GetOrCreate<TModel>(long id) where TModel : IModelKey<long>;
-
-        TModel GetOrCreate<TModel>(string id) where TModel : IModelKey<string>;
-
-        TModel GetItem<TModel>(string id) where TModel : IModelKey<string>;
-
-        TModel GetItem<TModel>(long id) where TModel : IModelKey<long>;
+        TModel GetOrCreate<TModel>(ActionContext context, string id) where TModel : IModelKey<string>;
     }
 }

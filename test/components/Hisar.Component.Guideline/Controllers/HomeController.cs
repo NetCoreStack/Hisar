@@ -74,8 +74,9 @@ namespace Hisar.Component.Guideline.Controllers
         [HttpGet]
         public IActionResult GetCachedAlbum(string id)
         {
-            var cachedAlbum = CacheProvider.GetOrCreate<AlbumBson>(id);
-            cachedAlbum = CacheProvider.GetOrCreate<AlbumBson>(id);
+            var cachedAlbum = GetOrCreateCacheItem<AlbumBson>(id);
+            cachedAlbum = GetOrCreateCacheItem<AlbumBson>(id);
+
             return Json(cachedAlbum);
         }
 

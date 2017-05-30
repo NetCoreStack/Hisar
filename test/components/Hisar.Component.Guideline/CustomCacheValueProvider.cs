@@ -3,6 +3,7 @@ using NetCoreStack.Data.Interfaces;
 using NetCoreStack.Hisar;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Hisar.Component.Guideline
 {
@@ -14,7 +15,7 @@ namespace Hisar.Component.Guideline
             _unitOfWork = unitOfWork;
         }
 
-        public object TryGetValue<TModel>(object id, CacheItem key)
+        public object TryGetValue<TModel>(ActionContext context, object id, CacheItem key)
         {
             if (typeof(TModel).Name == nameof(AlbumBson))
             {

@@ -1,4 +1,6 @@
-﻿using NetCoreStack.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using NetCoreStack.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,21 +20,25 @@ namespace NetCoreStack.Hisar
         private readonly IDictionary<string, object> Lookup = new Dictionary<string, object>();
 
         private readonly IModelKeyGenerator _keyGenerator;
-        private readonly IEnumerable<ICacheValueProvider> _cacheValueProviders;
 
-        public InMemoryCacheProvider(IModelKeyGenerator keyGenerator, IEnumerable<ICacheValueProvider> cacheValueProviders)
+        public InMemoryCacheProvider(IModelKeyGenerator keyGenerator)
         {
             _keyGenerator = keyGenerator;
-            _cacheValueProviders = cacheValueProviders;
         }
         
-        private TModel TryGetValue<TModel, TKey>(TKey id, CacheItem key) where TModel : IModelKey<TKey>
+        private IEnumerable<ICacheValueProvider> GetValueProviders(ActionContext context)
         {
-            if (_cacheValueProviders != null)
+            return context.HttpContext.RequestServices.GetServices<ICacheValueProvider>();
+        }
+
+        private TModel TryGetValue<TModel, TKey>(ActionContext context, TKey id, CacheItem key) where TModel : IModelKey<TKey>
+        {
+            var cacheValueProviders = GetValueProviders(context);
+            if (cacheValueProviders != null)
             {
-                foreach (var provider in _cacheValueProviders)
+                foreach (var provider in cacheValueProviders)
                 {
-                    var instance = provider.TryGetValue<TModel>(id, key);
+                    var instance = provider.TryGetValue<TModel>(context, id, key);
                     if (instance != null)
                     {
                         if (instance is IModelKey<string>)
@@ -57,35 +63,7 @@ namespace NetCoreStack.Hisar
             return default(TModel);
         }
 
-        public IEnumerable<TModel> GetList<TModel>() where TModel : IModelKey<string>
-        {
-            var itemKey = _keyGenerator.CreateKey<TModel>();
-            var cacheItem = new CacheItem(itemKey);
-            List<CacheItem> lookupKeys = new List<CacheItem>();
-            lookupKeys = LookupOne.Keys.Where(x => x.Key.StartsWith(itemKey)).ToList();
-            var values = lookupKeys.Select(x => (TModel)LookupOne[x]).ToList();
-            return values;
-        }
-
-        public TModel GetItem<TModel>(string id) where TModel : IModelKey<string>
-        {
-            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
-            if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item))
-                return (TModel)item;
-
-            return default(TModel);
-        }
-
-        public TModel GetItem<TModel>(long id) where TModel : IModelKey<long>
-        {
-            var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
-            if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item))
-                return (TModel)item;
-
-            return default(TModel);
-        }
-
-        public TModel GetOrCreate<TModel>(long id) where TModel : IModelKey<long>
+        public TModel GetOrCreate<TModel>(ActionContext context, long id) where TModel : IModelKey<long>
         {
             var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
             if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item))
@@ -97,11 +75,11 @@ namespace NetCoreStack.Hisar
                 if (LookupTwo.TryGetValue(cacheItem, out IModelKey<long> item2))
                     return (TModel)item2;
 
-                return TryGetValue<TModel, long>(id, cacheItem);
+                return TryGetValue<TModel, long>(context, id, cacheItem);
             }
         }
 
-        public TModel GetOrCreate<TModel>(string id) where TModel : IModelKey<string>
+        public TModel GetOrCreate<TModel>(ActionContext context, string id) where TModel : IModelKey<string>
         {
             var cacheItem = _keyGenerator.CreateCacheItem<TModel>(id);
             if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item))
@@ -113,7 +91,7 @@ namespace NetCoreStack.Hisar
                     {
                         lock (_lockObject)
                         {
-                            return TryGetValue<TModel, string>(id, cacheItem);
+                            return TryGetValue<TModel, string>(context, id, cacheItem);
                         }
                     }
                 }
@@ -127,7 +105,7 @@ namespace NetCoreStack.Hisar
                 if (LookupOne.TryGetValue(cacheItem, out IModelKey<string> item2))
                     return (TModel)item2;
 
-                return TryGetValue<TModel, string>(id, cacheItem);
+                return TryGetValue<TModel, string>(context, id, cacheItem);
             }
         }
 
