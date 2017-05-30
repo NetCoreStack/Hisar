@@ -33,7 +33,7 @@ namespace NetCoreStack.Hisar
                 return request.SelectedIds;
             }
 
-            return null;
+            return new List<string>();
         }
     }
 }
