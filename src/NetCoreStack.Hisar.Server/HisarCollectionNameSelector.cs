@@ -1,4 +1,5 @@
 ﻿using NetCoreStack.Data;
+using NetCoreStack.Mvc.Types;
 using System;
 using System.Reflection;
 
@@ -25,6 +26,11 @@ namespace NetCoreStack.Hisar.Server
 
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Collection name could not be found!");
+
+            if (entityTypeInfo == typeof(SystemLog).GetTypeInfo())
+            {
+                return string.Format(CollectionNameFormat, "Hisar", name);
+            }
 
             return string.Format(CollectionNameFormat, componentId, name);
         }

@@ -187,5 +187,10 @@ namespace Hisar.Component.Guideline.Controllers
         {
             return View();
         }
+
+        public IActionResult ThrowException()
+        {
+            throw new NotImplementedException("Error occoured!");
+        }
     }
 }
