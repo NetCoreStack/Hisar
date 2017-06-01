@@ -3,6 +3,9 @@
 <hr />
 @await Component.InvokeAsync(ViewContext.ResolveName("MyTest"))
 <hr />
+<hr />
+@await Component.InvokeAsync(ViewContext.ResolveName("Sample"))
+<hr />
 @ViewBag.ExternalLibrary
 <hr />
 @(await Component.InvokeAsync<Shared.Library.SharedScriptViewComponent>())

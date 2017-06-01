@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static NetCoreStack.Hisar.ComponentScriptsTagHelper;
 
 namespace NetCoreStack.Hisar
 {
@@ -31,7 +31,7 @@ namespace NetCoreStack.Hisar
 
         public static async Task RenderComponentsScriptsAsync(this IHtmlHelper htmlHelper)
         {
-            if (htmlHelper.ViewContext.ViewData.TryGetValue(nameof(ComponentScriptsTagHelper), out object items))
+            if (htmlHelper.ViewContext.HttpContext.Items.TryGetValue(ScriptsDictionaryKey, out object items))
             {
                 if (items is List<string> scripts)
                 {

@@ -10,6 +10,8 @@ namespace NetCoreStack.Hisar
     [HtmlTargetElement("component-scripts")]
     public class ComponentScriptsTagHelper : TagHelper
     {
+        internal static readonly string ScriptsDictionaryKey = $"Hisar-{nameof(ComponentScriptsTagHelper)}";
+
         [ViewContext]
         public ViewContext ViewContext { get; set; }
 
@@ -36,7 +38,7 @@ namespace NetCoreStack.Hisar
             var tagHelperContent = await output.GetChildContentAsync();
             if (tagHelperContent != null)
             {
-                if (ViewContext.ViewData.TryGetValue(nameof(ComponentScriptsTagHelper), out object items))
+                if (ViewContext.HttpContext.Items.TryGetValue(ScriptsDictionaryKey, out object items))
                 {
                     if (items is List<string> scripts)
                     {
@@ -45,7 +47,7 @@ namespace NetCoreStack.Hisar
                 }
                 else
                 {
-                    ViewContext.ViewData[nameof(ComponentScriptsTagHelper)] = new List<string> { tagHelperContent.GetContent() };
+                    ViewContext.HttpContext.Items[ScriptsDictionaryKey] = new List<string> { tagHelperContent.GetContent() };
                 }
             }
         }
