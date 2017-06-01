@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NetCoreStack.Hisar
 {
@@ -24,6 +27,17 @@ namespace NetCoreStack.Hisar
             var renderer = GetMenuItemsRenderer(htmlHelper.ViewContext);
             var urlHelper = GetUrlHelper(htmlHelper.ViewContext);
             return renderer.Render(urlHelper);
+        }
+
+        public static async Task RenderComponentsScriptsAsync(this IHtmlHelper htmlHelper)
+        {
+            if (htmlHelper.ViewContext.ViewData.TryGetValue(nameof(ComponentScriptsTagHelper), out object items))
+            {
+                if (items is List<string> scripts)
+                {
+                    await htmlHelper.ViewContext.Writer.WriteAsync(string.Join(string.Empty, scripts));
+                }
+            }
         }
     }
 }
