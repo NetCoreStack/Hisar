@@ -14,9 +14,9 @@ namespace NetCoreStack.Hisar
             Keys = keys ?? throw new ArgumentNullException($"Cache keys could not be null, parameter: {nameof(keys)}");
         }
 
-        public ICommonCacheProvider GetCacheProvider(ActionContext context)
+        public IMemoryCacheProvider GetCacheProvider(ActionContext context)
         {
-            return context.HttpContext.RequestServices.GetService<ICommonCacheProvider>();
+            return context.HttpContext.RequestServices.GetService<IMemoryCacheProvider>();
         }
 
         public override void OnResultExecuted(ResultExecutedContext context)

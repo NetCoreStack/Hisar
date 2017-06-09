@@ -33,7 +33,6 @@ namespace Hisar.Component.Guideline.Controllers
         {
             _validator = validator;
             _validator.Validate("foo", "bar");
-
             registration.Register("foo", "bar", "<somepassword>");
         }
 
@@ -75,6 +74,22 @@ namespace Hisar.Component.Guideline.Controllers
         public IActionResult GetCachedAlbum(string id)
         {
             var cachedAlbum = GetOrCreateCacheItem<AlbumBson>(id);
+            cachedAlbum = GetOrCreateCacheItem<AlbumBson>(id);
+
+            return Json(cachedAlbum);
+        }
+
+        private async Task<AlbumBson> GetAlbumAsync(string id, CacheItem key)
+        {
+            await Task.CompletedTask;
+            key.AbsoluteExpiration = new DateTimeOffset(DateTime.Now.AddSeconds(20));
+            return UnitOfWork.Repository<AlbumBson>().FirstOrDefault(x => x.Id == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCachedAlbumAsync(string id)
+        {
+            var cachedAlbum = await GetOrCreateCacheItemAsync(id, GetAlbumAsync, new DateTimeOffset(DateTime.Now.AddSeconds(20)));
             cachedAlbum = GetOrCreateCacheItem<AlbumBson>(id);
 
             return Json(cachedAlbum);

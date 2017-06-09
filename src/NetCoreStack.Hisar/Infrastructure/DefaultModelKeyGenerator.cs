@@ -20,6 +20,11 @@ namespace NetCoreStack.Hisar
             return string.Format(ItemKeyFormat, componentId, name, id);
         }
 
+        public string CreateKey<TModel>(object id)
+        {
+            return Create<TModel>(id);
+        }
+
         public string CreateKey<TModel>(string id) where TModel : IModelKey<string>
         {
             return Create<TModel>(id);

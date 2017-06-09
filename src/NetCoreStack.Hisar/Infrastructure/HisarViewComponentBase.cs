@@ -16,13 +16,13 @@ namespace NetCoreStack.Hisar
             }
         }
 
-        private ICommonCacheProvider _cacheProvider;
-        protected ICommonCacheProvider CacheProvider
+        private IMemoryCacheProvider _cacheProvider;
+        protected IMemoryCacheProvider CacheProvider
         {
             get
             {
                 if (_cacheProvider == null)
-                    _cacheProvider = Resolver.GetService<ICommonCacheProvider>();
+                    _cacheProvider = Resolver.GetService<IMemoryCacheProvider>();
 
                 return _cacheProvider;
             }

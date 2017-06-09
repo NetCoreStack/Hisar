@@ -55,7 +55,7 @@ namespace NetCoreStack.Hisar
             services.AddSingleton<IModelKeyGenerator, DefaultModelKeyGenerator>();
 
             // Singletons
-            services.TryAddSingleton<ICommonCacheProvider, InMemoryCacheProvider>();
+            services.TryAddSingleton<IMemoryCacheProvider, InMemoryCacheProvider>();
             services.TryAddSingleton<IJsonSerializer, JsonSerializer>();
             services.TryAddSingleton<IDataProtectorProvider, DefaultDataProtectorProvider>();
             services.TryAddSingleton<IComponentTypeResolver, DefaultComponentTypeResolver>();
@@ -194,6 +194,17 @@ namespace NetCoreStack.Hisar
         public static void AddMenuRenderer<TRenderer>(this IServiceCollection services) where TRenderer : DefaultMenuItemsRenderer
         {
             services.AddScoped<IMenuItemsRenderer, TRenderer>();
+        }
+
+        public static void AddCacheValueProviders(this IServiceCollection services, Action<CacheValueProviderRegistrar> setup)
+        {
+            if (setup == null)
+            {
+                throw new ArgumentNullException(nameof(setup));
+            }
+
+            var registrar = new CacheValueProviderRegistrar(services);
+            setup.Invoke(registrar);
         }
     }
 

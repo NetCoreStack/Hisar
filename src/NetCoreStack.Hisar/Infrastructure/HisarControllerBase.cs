@@ -5,6 +5,7 @@ using NetCoreStack.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NetCoreStack.Hisar
 {
@@ -43,13 +44,13 @@ namespace NetCoreStack.Hisar
             }
         }
 
-        private ICommonCacheProvider _cacheProvider;
-        public ICommonCacheProvider CacheProvider
+        private IMemoryCacheProvider _cacheProvider;
+        public IMemoryCacheProvider CacheProvider
         {
             get
             {
                 if (_cacheProvider == null)
-                    _cacheProvider = Resolver.GetService<ICommonCacheProvider>();
+                    _cacheProvider = Resolver.GetService<IMemoryCacheProvider>();
                 return _cacheProvider;
             }
         }
@@ -80,6 +81,13 @@ namespace NetCoreStack.Hisar
         protected TModel GetOrCreateCacheItem<TModel>(string id) where TModel : IModelKey<string>
         {
             return CacheProvider.GetOrCreate<TModel>(ControllerContext, id);
+        }
+
+        protected async Task<TModel> GetOrCreateCacheItemAsync<TModel, TKey>(TKey id, 
+            Func<TKey, CacheItem, Task<TModel>> factory, 
+            DateTimeOffset? absoluteExpiration = null) where TModel : IModelKey<TKey>
+        {
+            return await CacheProvider.GetOrCreateAsync(id, factory, absoluteExpiration);
         }
 
         [NonAction]

@@ -43,14 +43,17 @@ namespace Hisar.Component.Guideline
                 options.CreateMap<GenreViewModel, AnotherComposer>();
             });
 
-            services.AddScoped<ICacheValueProvider, CustomCacheValueProvider>();
-
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
             services.AddAutoMapper();
 
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
 
             services.AddTransient<IHisarExceptionFilter, GuidelineExceptionFilter>();
+
+            services.AddCacheValueProviders(setup =>
+            {
+                setup.DefaultMap<AlbumBson, CustomCacheValueProvider>();
+            });
         }
         
         public void Configure(IApplicationBuilder app)
