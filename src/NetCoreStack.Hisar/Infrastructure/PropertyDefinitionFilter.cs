@@ -13,12 +13,12 @@ namespace NetCoreStack.Hisar
             _componentsLoader = componentsLoader;
         }
 
-        public void Invoke(ActionContext context, PropertyInfo propertyInfo, PropertyDefinition property)
+        public void Invoke(ActionContext context, PropertyInfo propertyInfo, PropertyDefinition property, bool forViewModel)
         {
             if (!string.IsNullOrEmpty(property.DataSourceUrl))
             {
                 var componentId = propertyInfo.DeclaringType.GetTypeInfo().Assembly.GetComponentId();
-                if(_componentsLoader.ComponentAssemblyLookup.TryGetValue(componentId, out Assembly assembly))
+                if (_componentsLoader.ComponentAssemblyLookup.TryGetValue(componentId, out Assembly assembly))
                 {
                     var path = property.DataSourceUrl;
                     if (path.StartsWith("/"))
