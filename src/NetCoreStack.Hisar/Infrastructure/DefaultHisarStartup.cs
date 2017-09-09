@@ -39,21 +39,6 @@ namespace NetCoreStack.Hisar
 
         public void Configure(IApplicationBuilder app)
         {
-            if (!_env.IsProduction())
-            {
-                _loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                _loggerFactory.AddDebug();
-            }
-
-            if (_env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-
             _componentStartup.Configure(app);
             app.UseHisar<TStartup>();
         }

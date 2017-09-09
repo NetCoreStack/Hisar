@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using NetCoreStack.Contracts;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Exceptions;
@@ -116,7 +115,7 @@ namespace NetCoreStack.Hisar
             }
             catch (Exception ex)
             {
-                var directory = Directory.CreateDirectory(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "fallback_logs"));
+                var directory = Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fallback_logs"));
                 var logFile = $"log-{DateTime.Now.Date.ToString("ddMMyyyy")}-{Guid.NewGuid()}.txt";
                 var fullPath = Path.Combine(directory.FullName, logFile);
                 File.AppendAllText(fullPath, contentBody);

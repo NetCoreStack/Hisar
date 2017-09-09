@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -74,7 +73,7 @@ namespace NetCoreStack.Hisar.Tests
             var projectName = startupAssembly.GetName().Name;
 
             // Get currently executing test project path
-            var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+            var applicationBasePath = AppDomain.CurrentDomain.BaseDirectory;
 
             // Find the folder which contains the solution file. We then use this information to find the target
             // project which we want to test.

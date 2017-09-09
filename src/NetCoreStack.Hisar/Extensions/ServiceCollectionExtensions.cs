@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Helpers;
-using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -217,12 +216,10 @@ namespace NetCoreStack.Hisar
             if (!executingAssembly.EnsureIsHosting()) // Running as standalone not part of any Hosting
             {
                 services.AddSingleton<CliUsageMarkerService>();
+                var connectorName = $"{nameof(componentHelper.ComponentId)}-Component";
 
-                services.AddProxyWebSockets(options => {
-                    options.ConnectorName = $"{nameof(componentHelper.ComponentId)}-Component";
-                    options.WebSocketHostAddress = "localhost:1444"; // Hisar WebCLI default socket
-                    options.RegisterInvocator<DataStreamingInvocator>(WebSocketCommands.All);
-                });
+                services.AddProxyWebSockets()
+                    .Register<DataStreamingInvocator>(connectorName, "localhost:1444");
             }
         }
     }

@@ -15,8 +15,9 @@ namespace NetCoreStack.Hisar
         private static IDictionary<string, List<string>> _targetFrameworkMap =
             new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
             {
-                ["netcoreapp"] = new List<string> { "netstandard1.6", "netstandard1.3", "netstandard1.1" },
-                ["netcoreapp1.1"] = new List<string> { "netcoreapp1.1" }
+                ["netcoreapp"] = new List<string> { "netstandard2.0", "netstandard1.6", "netstandard1.3", "netstandard1.1" },
+                ["netcoreapp1.1"] = new List<string> { "netcoreapp1.1" },
+                ["netcoreapp2.0"] = new List<string> { "netcoreapp2.0" }
             };
 
         private static string NugetDownloadPackageUriFormat = "https://www.nuget.org/api/v2/package/{0}/{1}";

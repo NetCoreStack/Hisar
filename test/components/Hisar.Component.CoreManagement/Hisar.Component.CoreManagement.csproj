@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <Description>Hisar Core Component Management</Description>
     <Copyright>NetCoreStack</Copyright>
     <PackageId>Hisar.Component.CoreManagement</PackageId>
     <AssemblyTitle>Core Management</AssemblyTitle>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <PackageProjectUrl>https://github.com/NetCoreStack/Hisar</PackageProjectUrl>
     <PackageIconUrl>http://cdn.netcorestack.com/img/netcorestack.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/NetCoreStack/Hisar</RepositoryUrl>
@@ -21,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
   </ItemGroup>
   
   <ItemGroup>

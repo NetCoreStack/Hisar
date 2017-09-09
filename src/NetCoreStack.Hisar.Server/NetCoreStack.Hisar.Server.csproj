@@ -1,18 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>NetCoreStack.Hisar.Server</AssemblyName>
-    <PackageId>NetCoreStack.Hisar.Server</PackageId>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageIconUrl>http://cdn.netcorestack.com/img/netcorestack.png</PackageIconUrl>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetCoreStack.Data" Version="1.0.0-preview-370" />
-    <PackageReference Include="NetCoreStack.Mvc" Version="1.0.0-preview-370" />
+    <PackageReference Include="NetCoreStack.Data" Version="2.0.0" />
+    <PackageReference Include="NetCoreStack.Mvc" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace Hisar.Component.CoreManagement
     {
         public static IReadOnlyDictionary<string, string> ComponentDependencies { get; } = new Dictionary<string, string>
         {
-            ["Microsoft.AspNetCore"] = "1.1.2",
+            ["Microsoft.AspNetCore.All"] = "2.0.0",
 
         };
     }
