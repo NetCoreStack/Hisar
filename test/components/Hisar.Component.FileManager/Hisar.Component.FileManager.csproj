@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.1.7" />
+    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="2.0.0" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
