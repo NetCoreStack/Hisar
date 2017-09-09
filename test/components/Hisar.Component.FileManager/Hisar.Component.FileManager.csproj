@@ -6,6 +6,7 @@
     <AssemblyTitle>File Manager</AssemblyTitle>
     <Product>File Manager</Product>
     <PackageIconUrl>http://cdn.netcorestack.com/img/netcorestack.png</PackageIconUrl>
+    <IsPackable>True</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
