@@ -16,7 +16,9 @@ namespace NetCoreStack.Hisar
         {
             List<TAttribute> attrs = new List<TAttribute>();
             foreach (Type type in assembly.GetTypes())
+            {
                 attrs.AddRange(type.GetTypeInfo().GetCustomAttributes<TAttribute>());
+            }                
             return attrs;
         }
     }

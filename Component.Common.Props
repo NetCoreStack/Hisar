@@ -1,0 +1,17 @@
+<Project>
+  <!--<PropertyGroup>
+    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\</SolutionDir>
+  </PropertyGroup>  
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd $(ProjectDir) &amp; dotnet hisar build &quot;$(ProjectDir)&quot;" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Landing.Hosting\ExternalComponents" />
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Admin.Hosting\ExternalComponents" />
+    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\components\Hisar.Component.CoreManagement\ExternalComponents" />
+    <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Landing.Hosting/ExternalComponents" />
+    <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Admin.Hosting/ExternalComponents" />
+  </Target>-->
+</Project>

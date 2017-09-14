@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.Extensions.FileProviders.Embedded;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Extensions.FileProviders;
+using System.Collections.Concurrent;
 
 namespace NetCoreStack.Hisar
 {
@@ -21,7 +22,7 @@ namespace NetCoreStack.Hisar
         private readonly Assembly _assembly;
         private readonly string _baseNamespace;
         private readonly DateTimeOffset _lastModified;
-
+        private readonly ConcurrentDictionary<string, EmbeddedResourceFileInfo> _fileLookupCache = new ConcurrentDictionary<string, EmbeddedResourceFileInfo>();
 
         /// <summary> 
         /// Initializes a new instance of the <see cref="EmbeddedFileProvider" /> class using the specified 
@@ -65,6 +66,11 @@ namespace NetCoreStack.Hisar
             var encodedPath = EncodeAsResourcesPath(subpath);
             var resourcePath = _baseNamespace + encodedPath;
 
+            if(_fileLookupCache.TryGetValue(resourcePath, out EmbeddedResourceFileInfo fileInfo))
+            {
+                return fileInfo;
+            }
+
             if (HasInvalidPathChars(resourcePath))
             {
                 return new NotFoundFileInfo(resourcePath);
@@ -75,8 +81,9 @@ namespace NetCoreStack.Hisar
                 return new NotFoundFileInfo(name);
             }
 
-            return new EmbeddedResourceFileInfo(_assembly, resourcePath, name, _lastModified);
-
+            fileInfo = new EmbeddedResourceFileInfo(_assembly, resourcePath, name, _lastModified);
+            _fileLookupCache.TryAdd(resourcePath, fileInfo);
+            return fileInfo;
         }
 
         public IDirectoryContents GetDirectoryContents(string subpath)

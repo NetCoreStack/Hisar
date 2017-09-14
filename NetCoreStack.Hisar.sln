@@ -1,13 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7FD6AB70-993F-484A-B2DD-785854EAB1F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1AD40737-36FE-499B-85D7-AE31D0615B02}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Component.Common.Props = Component.Common.Props
 		NuGet.config = NuGet.config
 		README.md = README.md
 	EndProjectSection
@@ -34,13 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Landing.Hosting", "test\Lan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Hosting", "test\Admin.Hosting\Admin.Hosting.csproj", "{4F58F7DE-D21E-4688-9D36-C026D9F75B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.CoreManagement", "test\components\Hisar.Component.CoreManagement\Hisar.Component.CoreManagement.csproj", "{15504075-7E8E-4E84-8F40-0655CAA539DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.CoreManagement", "test\components\Hisar.Component.CoreManagement\Hisar.Component.CoreManagement.csproj", "{15504075-7E8E-4E84-8F40-0655CAA539DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hisar.Component.FileManager", "test\components\Hisar.Component.FileManager\Hisar.Component.FileManager.csproj", "{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.FileManager", "test\components\Hisar.Component.FileManager\Hisar.Component.FileManager.csproj", "{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{78342CF0-FAFF-4FC8-A126-10B5610E441A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Library", "test\shared\Shared.Library\Shared.Library.csproj", "{F975485D-47C8-47B6-AC21-E0A494F5559F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hisar.Component.ContentManagement", "test\components\Hisar.Component.ContentManagement\Hisar.Component.ContentManagement.csproj", "{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +99,10 @@ Global
 		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F975485D-47C8-47B6-AC21-E0A494F5559F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,5 +122,9 @@ Global
 		{A0ECFFAA-5E38-40FA-BAB5-90707BBEE449} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
 		{78342CF0-FAFF-4FC8-A126-10B5610E441A} = {5CA075E2-B2E1-4D94-B0EF-4CB1BBB0D45A}
 		{F975485D-47C8-47B6-AC21-E0A494F5559F} = {78342CF0-FAFF-4FC8-A126-10B5610E441A}
+		{41B9F8F9-A41B-4B34-BE5B-9C80955B92B0} = {181B8C0C-9FAD-40C0-AE0A-257843CFF03C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6797C236-8739-450E-A68C-1807245629AF}
 	EndGlobalSection
 EndGlobal

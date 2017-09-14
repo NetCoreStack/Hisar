@@ -125,6 +125,7 @@ namespace NetCoreStack.Hisar
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new InMemoryCliFileProvider(defaultLayoutFileProvider));
+
                     var peRef = MetadataReference.CreateFromFile(assembly.Location);
                     options.AdditionalCompilationReferences.Add(peRef);
 

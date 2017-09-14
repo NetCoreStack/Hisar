@@ -1,0 +1,44 @@
+﻿<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="well">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Content List</h3>
+                    <a href="@Url.Action("New", "Home")" class="btn btn-success pull-right"><i class="fa fa-plus"></i> New Content</a>
+                </div>
+                <div class="box-body">
+
+                    @{
+                        var gridComponent = Html.Efe()
+                            .Grid<ContentObjectViewModel>()
+                            .Name("contentGrid")
+                            .DataSource(source => source.Ajax().Read("GetContentList", "Home"))
+                            .PageLength(PageLengths.Ten)
+                            .BindableColumns(columns =>
+                            {
+                                columns.Bind(x => x.Title);
+                                columns.TemplateColumn("Actions", "gridTemplate");
+                            });
+                        
+                        gridComponent.FilterPanel("contentFilter", "Filtrele");
+                        gridComponent.Render();
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var editUrl = "@Url.Action("Edit", "Home")";
+    var deleteUrl = "@Url.Action("Delete", "Home")";
+
+    efe.templates.gridTemplate = function(data, type, row, meta) {
+        var template = '<div class="text-center">' +
+            '<a href="' + editUrl +'/<%=id%>" class="btn btn-xs btn-primary btn-social"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit </a> &nbsp;' +
+            '<button class="btn btn-xs btn-danger btn-social gridRemoveItem" data-id="<%=id%>" data-url="' + deleteUrl +'"> <i class="fa fa-times" aria-hidden="true"></i>&nbsp;</button>' +
+            '</div>';
+
+        var tmpl = _.template(template);
+        return tmpl(row);
+    }
+</script>

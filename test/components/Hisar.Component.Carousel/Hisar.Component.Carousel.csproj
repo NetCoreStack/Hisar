@@ -8,20 +8,6 @@
     <PackageId>Hisar.Component.Carousel</PackageId>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\..\</SolutionDir>
-  </PropertyGroup>
-
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build $(ProjectDir)" />
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Landing.Hosting\ExternalComponents" />
-    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Admin.Hosting\ExternalComponents" />
-    <Exec Condition=" '$(OS)' != 'Windows_NT'" Command="cp $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test/Landing.Hosting/ExternalComponents" />
-  </Target>
-
   <ItemGroup>
     <EmbeddedResource Include="Views\**\*.cshtml" />
     <EmbeddedResource Include="wwwroot\**\*.*" />

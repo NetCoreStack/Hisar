@@ -29,6 +29,8 @@ namespace Admin.Hosting
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddSingleton<IAssemblyProviderResolveCallback, CustomAssemblyResolveCallback>();
             services.AddMvc();
+
+            var registryAssemblyPath = typeof(Microsoft.Win32.Registry).Assembly.Location;
         }
 
         public static void ConfigureRoutes(IRouteBuilder routes)

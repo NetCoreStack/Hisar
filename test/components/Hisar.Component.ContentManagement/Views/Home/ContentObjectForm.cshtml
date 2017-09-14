@@ -1,0 +1,82 @@
+﻿@model Hisar.Component.ContentManagement.ContentObjectViewModel
+
+@{
+    var configs = new ViewConfigurations
+    {
+        FormId = ComponentId + "_contentForm",
+        ContainerId = ComponentId + "_contentForm",
+        ApiUrlRoot = Url.Action("Save", "Home")
+    };
+}
+
+@section styles {
+    <style>
+        .cke_contents {
+            height: 700px;
+        }
+    </style>
+}
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-10 col-lg-9">
+            <form id="@configs.FormId" class="form-horizontal">
+                <div class="well">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@(Model.IsNew ? "New" : "Edit")</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" asp-for="Title"></label>
+                            <div class="col-sm-10">
+                                <input class="form-control" asp-for="Title" data-bind="value: title" type="text" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" asp-for="Description"></label>
+                            <div class="col-sm-10">
+                                <textarea asp-for="Description" rows="3" class="form-control pageCkEditor"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer text-right">
+                        <button class="btn btn-default" tabindex="-1" type="reset">Clear</button>
+                        <button class="btn btn-success" data-bind="click: create">@(Model.IsNew ? "Save" : "Edit")</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="@Url.ComponentContent("~/js/ckeditor/ckeditor.js")"></script>
+    <script>
+
+        $(document).ready(function () {
+            CKEDITOR.replaceAll('pageCkEditor');
+        });
+
+        var viewModel = @Html.ViewInitializer(configs, Model);
+
+        viewModel.beforeCreate = function () {
+            viewModel.description(CKEDITOR.instances['Description'].getData());
+        }
+
+        viewModel.afterSuccess = function (result) {
+            if (result.resultState) {
+                window.location.href = result.redirectUrl;
+            }
+        }
+
+        efe.subscribe(efe.events.propertyChanged, function (sender, context) {
+            if (context.name == "title") {
+                console.log("Title changed:", context.value);
+            }
+        });
+
+    </script>
+}

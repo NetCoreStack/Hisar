@@ -14,10 +14,6 @@
     <IsPackable>True</IsPackable>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <SolutionDir Condition="$(Solutiondir) == '' Or $(SolutionDir) == '*Undefined*'">$(MsBuildProjectDirectory)\..\..\..\</SolutionDir>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
   </ItemGroup>
@@ -30,10 +26,6 @@
   <ItemGroup>
     <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="2.0.0" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition=" '$(OS)' == 'Windows_NT'" Command="xcopy /y $(ProjectDir)$(OutDir)*.dll $(SolutionDir)test\Admin.Hosting\ExternalComponents" />
-  </Target>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build &quot;$(ProjectDir)&quot;" />
