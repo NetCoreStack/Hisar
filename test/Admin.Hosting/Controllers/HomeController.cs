@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shared.Library;
 
 namespace Admin.Hosting.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : DomainBaseController
     {
         public IActionResult Index()
         {
+            CreateSuccessNotificationResult("Welcome...");
             return View();
         }
 

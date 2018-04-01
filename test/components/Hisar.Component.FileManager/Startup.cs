@@ -26,7 +26,7 @@ namespace Hisar.Component.FileManager
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            services.Configure<FileManagerSettings>(Configuration.GetSection("FileManagerSettings"));
 
 #if !RELEASE
             services.AddCliSocket<Startup>();

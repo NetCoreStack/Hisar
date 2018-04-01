@@ -12,27 +12,22 @@ namespace NetCoreStack.Hisar
     {
         private readonly Assembly _componentAssembly = typeof(TStartup).GetTypeInfo().Assembly;
         private readonly HisarConventionBasedStartup _componentStartup;
-        private readonly IHostingEnvironment _env;
+        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILoggerFactory _loggerFactory;
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-        public DefaultHisarStartup(IServiceProvider sp, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public DefaultHisarStartup(IServiceProvider serviceProvider, 
+            IHostingEnvironment hostingEnvironment,
+            IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
-            _env = env;
-            _loggerFactory = loggerFactory;
-            _componentStartup = StartupTypeLoader.CreateHisarConventionBasedStartup(typeof(TStartup), sp, _env);
+            _hostingEnvironment = hostingEnvironment;
+            Configuration = Configuration;
+            _componentStartup = StartupTypeLoader.CreateHisarConventionBasedStartup(typeof(TStartup), serviceProvider, _hostingEnvironment);
         }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddHisar<TStartup>(Configuration, _env);
+            services.AddHisar<TStartup>(Configuration, _hostingEnvironment);
             _componentStartup.ConfigureServices(services);
             return services.BuildServiceProvider();
         }

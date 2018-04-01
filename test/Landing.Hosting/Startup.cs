@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using NetCoreStack.Data.Context;
 using System;
 using System.IO;
+using Microsoft.AspNetCore;
 
 namespace Landing.Hosting
 {
@@ -65,18 +66,12 @@ namespace Landing.Hosting
 
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddCommandLine(args).Build();
+            BuildWebHost(args).Run();
+        }
 
-            var host = new WebHostBuilder()
-                .UseConfiguration(configuration)
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
                 .UseStartup<DefaultHisarStartup<Startup>>()
                 .Build();
-
-            host.Run();
-        }
     }
 }

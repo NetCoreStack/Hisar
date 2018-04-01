@@ -59,7 +59,7 @@ When you start develop the component you can fallow these steps;
  - Add Hisar WebCli tool to the project manually
     ```xml
     <ItemGroup>
-        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="1.1.7" />
+        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="2.1.0" />
     </ItemGroup>
     ```
  - Add PreBuild event to generate component helper classes.
@@ -105,8 +105,26 @@ When you start develop the component you can fallow these steps;
 
         dotnet hisar --appdir <the-path-of-your-hosting-app-relative-or-absolute> 
 
+## Database
+### MongoDb Database 
+
+    docker volume create --name=mongodata
+
+    docker run -it -v mongodata:/data/db -p 27017:27017 -d mongo
+
 ## Tools
 [Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core Cli tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+
+## Components.json (Sample Nuget package reference)
+
+    {
+        "components": {
+            "Hisar.Component.CoreManagement": {
+                targetFramework": "netcoreapp1.1",
+                "version": "2.1.0"
+            }
+        }
+    }
 
 ## TODO
  - Hisar Package Repository

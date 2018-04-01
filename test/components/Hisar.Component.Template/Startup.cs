@@ -6,22 +6,17 @@ using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Hisar;
 using System.IO;
 using Shared.Library;
+using Microsoft.AspNetCore;
 
 namespace Hisar.Component.Template
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -55,18 +50,12 @@ namespace Hisar.Component.Template
 
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddCommandLine(args).Build();
-
-            var host = new WebHostBuilder()
-                .UseConfiguration(configuration)
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<DefaultHisarStartup<Startup>>()
-                .Build();
-
-            host.Run();
+            BuildWebHost(args).Run();
         }
+
+        public static IWebHost BuildWebHost(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>()
+                .Build();
     }
 }

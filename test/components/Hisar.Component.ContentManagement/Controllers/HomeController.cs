@@ -96,7 +96,7 @@ namespace Hisar.Component.ContentManagement.Controllers
                 return CreateWebResult(ResultState.Success);
             }
 
-            return CreateWebResult(ResultState.Fail);
+            return CreateWebResult(ResultState.Error);
         }
 
         public JsonResult GetContentList([FromQuery]CollectionRequest request)

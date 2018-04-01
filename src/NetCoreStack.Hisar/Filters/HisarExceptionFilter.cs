@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetCoreStack.Contracts;
 using NetCoreStack.Mvc;
-using NetCoreStack.Mvc.Exceptions;
 using NetCoreStack.Mvc.Extensions;
 using NetCoreStack.Mvc.Types;
 using System;
@@ -63,8 +62,6 @@ namespace NetCoreStack.Hisar
             else
                 exceptionContextModel.Message = context.Exception.Message;
 
-            // Workaround for https://github.com/aspnet/Home/issues/1820
-            context.HttpContext.Items.Add(nameof(BasicExceptionContext), exceptionContextModel);
             context.Result = result;
         }
 

@@ -19,11 +19,9 @@ namespace Hisar.Component.FileManager.Controllers
         private readonly string _webRootPath;
         private readonly string _webPath;
         private readonly List<string> _allowedExtensions;
-        private readonly AppSettings _appSettings;
 
-        public FileManagerController(IHostingEnvironment env, IOptions<AppSettings> appSettings)
+        public FileManagerController(IHostingEnvironment env)
         {
-            _appSettings = appSettings.Value;
             _webRootPath = Path.Combine(env.WebRootPath, "contents");
             _allowedExtensions = new List<string> { "jpg", "jpe", "jpeg", "gif", "png", "svg", "txt", "pdf", "odp", "ods", "odt", "rtf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "csv", "ogv", "avi", "mkv", "mp4", "webm", "m4v", "ogg", "mp3", "wav", "zip", "rar", "md" };
 

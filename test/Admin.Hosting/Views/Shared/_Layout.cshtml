@@ -12,12 +12,13 @@
     <!-- Bootstrap -->
     <link href="~/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
+    <link rel="stylesheet" href="//cdn.netcorestack.com/css/efe-all-2.0.15.min.css">
     <link href="~/css/custom.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://cdn.netcorestack.com/css/efe.all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     @RenderSection("styles", required: false)
-    <script src="http://cdn.netcorestack.com/js/bundle.min.js"></script>
-    <script src="http://cdn.netcorestack.com/js/efe.all.min.js"></script>
+    <script src="//cdn.netcorestack.com/js/bundle.min.js"></script>
+    <script src="//cdn.netcorestack.com/js/efe-all-2.0.15.min.js"></script>
+    @Html.CreateEfeContext()
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -188,5 +189,6 @@
     <!-- Custom Theme Scripts -->
     <script src="~/js/custom.js"></script>
     @RenderSection("scripts", false)
+    @Html.UseNotification()
 </body>
 </html>

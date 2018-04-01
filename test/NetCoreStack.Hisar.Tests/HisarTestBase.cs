@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder.Internal;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.ObjectPool;
@@ -31,10 +32,15 @@ namespace NetCoreStack.Hisar.Tests
             services.AddSingleton<IServiceProviderFactory<IServiceCollection>, DefaultServiceProviderFactory>();
             services.AddSingleton<ILoggerFactory>(loggerFactory);
 
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("appsettings.json");
+
+            var config = builder.Build();
+
             services.AddSingleton<DiagnosticSource>(new DiagnosticListener("Microsoft.AspNetCore.Mvc"));
             services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 
-            var startup = new DefaultHisarStartup<Startup>(services.BuildServiceProvider(), HostingEnvironment, loggerFactory);
+            var startup = new DefaultHisarStartup<Startup>(services.BuildServiceProvider(), HostingEnvironment, config);
             startup.ConfigureServices(services);
             ApplicationServices = services.BuildServiceProvider();
             var applicationBuilder = new ApplicationBuilder(ApplicationServices);

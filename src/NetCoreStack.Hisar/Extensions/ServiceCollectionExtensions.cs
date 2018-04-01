@@ -46,7 +46,7 @@ namespace NetCoreStack.Hisar
         }
 
         internal static void AddHisar<TStartup>(this IServiceCollection services, 
-            IConfigurationRoot configuration, 
+            IConfiguration configuration, 
             IHostingEnvironment env) where TStartup : class
         {
             services.AddNetCoreStackMvc();
