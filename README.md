@@ -115,12 +115,12 @@ When you start develop the component you can fallow these steps;
 ## Tools
 [Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core Cli tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
 
-## Components.json (Sample Nuget package reference)
+## Components.json (sample nuget package reference)
 
     {
         "components": {
             "Hisar.Component.CoreManagement": {
-                targetFramework": "netcoreapp1.1",
+                targetFramework": "netcoreapp2.0",
                 "version": "2.1.0"
             }
         }
