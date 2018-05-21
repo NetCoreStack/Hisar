@@ -1,6 +1,10 @@
 ## Hisar
 Cross-Platform Modular Component Development Infrastructure 
 
+[![NuGet](https://img.shields.io/nuget/v/NetCoreStack.Hisar.svg?longCache=true&style=flat-square)](https://www.nuget.org/packages/NetCoreStack.Hisar)
+[![NuGet](https://img.shields.io/nuget/dt/NetCoreStack.Hisar.svg?longCache=true&style=flat-square)](https://www.nuget.org/packages/NetCoreStack.Hisar)
+
+
 >[Latest release on Nuget](https://www.nuget.org/packages/NetCoreStack.Hisar/)
 
 
