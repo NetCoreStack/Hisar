@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackageId>Hisar.Component.FileManager</PackageId>
     <AssemblyTitle>File Manager</AssemblyTitle>
     <Product>File Manager</Product>
@@ -10,17 +10,17 @@
     <IsPackable>True</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <RazorCompileOnBuild>false</RazorCompileOnBuild>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar.Server\NetCoreStack.Hisar.Server.csproj" />
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="2.1.0" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

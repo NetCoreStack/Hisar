@@ -57,16 +57,18 @@ our custom startup wrapper to handle component and application acts. For more de
 
 ## Component Development
 When you start develop the component you can fallow these steps;
+ - Download the .NET Core SDK 2.1.0 or newer. Once installed, run this command:
+ 
+        dotnet tool install --global dotnet-hisar --version 2.1.1
+
  - Create a web application with Hisar.Component prefix. (Hisar.Component.YourComponentName)
  - Add NetCoreStack.Hisar package to the project.
+
+        dotnet add package NetCoreStack.Hisar
+
  - Update the line UseStartup\<Startup> to UseStartup\<DefaultHisarStartup\<Startup>> for WebHostBuilder.
- - Add Hisar WebCli tool to the project manually
-    ```xml
-    <ItemGroup>
-        <DotNetCliToolReference Include="NetCoreStack.Hisar.WebCli.Tools" Version="2.1.0" />
-    </ItemGroup>
-    ```
- - Add PreBuild event to generate component helper classes.
+
+ - Add PreBuild event to generate component helper classes with hisar global tool.
     ```xml
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build &quot;$(ProjectDir)&quot;" />
@@ -117,7 +119,7 @@ When you start develop the component you can fallow these steps;
     docker run -it -v mongodata:/data/db -p 27017:27017 -d mongo
 
 ## Tools
-[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. You don't need extra gulp or grunt tooling and scripting behaviors. .NET Core Cli tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. dotnet global tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
 
 ## Components.json (sample nuget package reference)
 

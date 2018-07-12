@@ -7,10 +7,10 @@ namespace Hisar.Component.Guideline
     {
         public static IReadOnlyDictionary<string, string> ComponentDependencies { get; } = new Dictionary<string, string>
         {
-            ["AutoMapper"] = "6.2.2",
-			["AutoMapper.Extensions.Microsoft.DependencyInjection"] = "3.2.0",
-			["Microsoft.AspNetCore.All"] = "2.0.6",
-			["NetCoreStack.WebSockets.ProxyClient"] = "2.3.1"
+            ["AutoMapper"] = "7.0.1",
+			["AutoMapper.Extensions.Microsoft.DependencyInjection"] = "4.0.1",
+			["Microsoft.AspNetCore.App"] = "2.1.1",
+			["NetCoreStack.WebSockets.ProxyClient"] = "2.4.0"
 
         };
     }

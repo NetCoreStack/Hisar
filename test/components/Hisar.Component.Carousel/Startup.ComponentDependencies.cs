@@ -7,7 +7,7 @@ namespace Hisar.Component.Carousel
     {
         public static IReadOnlyDictionary<string, string> ComponentDependencies { get; } = new Dictionary<string, string>
         {
-            ["Microsoft.AspNetCore.All"] = "2.0.6",
+            ["Microsoft.AspNetCore.App"] = "2.1.1",
 
         };
     }
