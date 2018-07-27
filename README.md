@@ -56,8 +56,8 @@ for the method mentioned above and
 our custom startup wrapper to handle component and application acts. For more details, you can check the test projects source code in this repository.
 
 ## Component Development
-When you start develop the component you can fallow these steps;
- - Download the .NET Core SDK 2.1.0 or newer. Once installed, run this command:
+To develop the component you can fallow these steps;
+ - Download the .NET Core SDK 2.1.1 or newer. Once installed, run this command:
  
         dotnet tool install --global dotnet-hisar --version 2.1.1
 
@@ -126,8 +126,8 @@ When you start develop the component you can fallow these steps;
     {
         "components": {
             "Hisar.Component.CoreManagement": {
-                targetFramework": "netcoreapp2.0",
-                "version": "2.1.0"
+                "targetFramework": "netcoreapp2.1",
+                "version": "2.1.1"
             }
         }
     }
