@@ -27,10 +27,6 @@
     <ProjectReference Include="..\..\..\src\NetCoreStack.Hisar\NetCoreStack.Hisar.csproj" />
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build &quot;$(ProjectDir)&quot;" />
-  </Target>
-
   <ItemGroup>
     <EmbeddedResource Include="Views\**\*.cshtml" />
     <EmbeddedResource Include="wwwroot\**\*.*" />

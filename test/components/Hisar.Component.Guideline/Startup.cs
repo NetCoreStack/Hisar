@@ -17,7 +17,7 @@ namespace Hisar.Component.Guideline
 {
     public class Startup
     {
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IHostingEnvironment env)
         {

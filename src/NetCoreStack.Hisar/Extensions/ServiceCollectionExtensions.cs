@@ -42,6 +42,12 @@ namespace NetCoreStack.Hisar
         internal static RunningComponentHelperOfT<TStartup> CreateComponentHelper<TStartup>(this IServiceCollection services)
         {
             var serviceDescriptor = services.FirstOrDefault(x => x.ServiceType == typeof(IComponentTypeResolver));
+            if (serviceDescriptor == null)
+            {
+                throw new InvalidOperationException("Please make sure to startup configuration as fallow. UseStartup<Startup> to " +
+                    "UseStartup<DefaultHisarStartup<Startup>>");
+            }
+
             return new RunningComponentHelperOfT<TStartup>(serviceDescriptor.CreateInstance<IComponentTypeResolver>());
         }
 

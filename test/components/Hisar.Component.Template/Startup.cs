@@ -1,38 +1,43 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NetCoreStack.Hisar;
-using System.IO;
 using Shared.Library;
-using Microsoft.AspNetCore;
 
 namespace Hisar.Component.Template
 {
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             Configuration = configuration;
+            HostingEnvironment = hostingEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-#if !RELEASE
-            services.AddCliSocket<Startup>();
-#endif
+            if (HostingEnvironment.IsDevelopment())
+            {
+                services.AddCliSocket<Startup>();
+            }
+
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
             services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app)
         {
-#if !RELEASE
-            app.UseCliProxy();
-#endif
+            if (HostingEnvironment.IsDevelopment())
+            {
+                app.UseCliProxy();
+            }
+            
             app.UseMvc(ConfigureRoutes);
         }
 
@@ -55,7 +60,7 @@ namespace Hisar.Component.Template
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+                .UseStartup<DefaultHisarStartup<Startup>>()
                 .Build();
     }
 }
