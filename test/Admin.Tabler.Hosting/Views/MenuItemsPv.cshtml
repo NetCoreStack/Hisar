@@ -1,0 +1,22 @@
+﻿@model IDictionary<ComponentPair, IEnumerable<IMenuItem>>
+
+
+@foreach (KeyValuePair<ComponentPair, IEnumerable<IMenuItem>> entry in Model)
+{
+    <li class="nav-item dropdown">
+        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-package"></i> @entry.Key.Title</a>
+
+        @if (entry.Value != null && entry.Value.Any())
+        {
+            <div class="dropdown-menu dropdown-menu-arrow">
+                @foreach (var menuItem in entry.Value.Where(k => k.ShowInMenu))
+                {
+                    <a href="@menuItem.Path" class="dropdown-item ">@menuItem.Text</a>
+                }
+            </div>
+        }
+
+    </li>
+}
+
+
