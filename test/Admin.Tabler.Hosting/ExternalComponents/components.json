@@ -1,0 +1,12 @@
+//{
+//  "components": {
+//    "Hisar.Component.CoreManagement": {
+//      "targetFramework": "netcoreapp2.0",
+//      "version": "2.0.0"
+//    },
+//    "Hisar.Component.FileManager": {
+//      "targetFramework": "netcoreapp2.0",
+//      "version": "2.0.0"
+//    }
+//  }
+//}

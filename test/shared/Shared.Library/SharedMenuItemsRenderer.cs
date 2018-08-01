@@ -30,9 +30,12 @@ namespace Shared.Library
                     string title = entry.Key.Title;
 
                     var parentTag = new TagBuilder("li");
+                    parentTag.Attributes.Add("class", "nav-item");
 
                     var anchorTag = new TagBuilder("a");
                     anchorTag.Attributes.Add("href", "#");
+                    anchorTag.Attributes.Add("data-toggle", "dropdown");
+                    anchorTag.Attributes.Add("class", "nav-link");
                     anchorTag.InnerHtml.Append(title);
 
                     var spanTag = new TagBuilder("span");
@@ -43,7 +46,7 @@ namespace Shared.Library
                     if (entry.Value != null && entry.Value.Any())
                     {
                         var childMenu = new TagBuilder("ul");
-                        childMenu.Attributes.Add("class", "nav child_menu");
+                        childMenu.Attributes.Add("class", "nav child_menu dropdown-menu");
                         foreach (var menu in entry.Value)
                         {
                             if (!menu.ShowInMenu)
