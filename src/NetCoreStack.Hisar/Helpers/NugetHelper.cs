@@ -17,7 +17,9 @@ namespace NetCoreStack.Hisar
             {
                 ["netcoreapp"] = new List<string> { "netstandard2.0", "netstandard1.6", "netstandard1.3", "netstandard1.1" },
                 ["netcoreapp1.1"] = new List<string> { "netcoreapp1.1" },
-                ["netcoreapp2.0"] = new List<string> { "netcoreapp2.0" }
+                ["netcoreapp2.0"] = new List<string> { "netcoreapp2.0" },
+                ["netcoreapp2.1"] = new List<string> { "netcoreapp2.1" },
+                ["netcoreapp2.2"] = new List<string> { "netcoreapp2.2" }
             };
 
         private static string NugetDownloadPackageUriFormat = "https://www.nuget.org/api/v2/package/{0}/{1}";

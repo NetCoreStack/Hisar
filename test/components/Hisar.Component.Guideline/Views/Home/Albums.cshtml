@@ -138,7 +138,9 @@
 
 <script>
 
-    var viewModel = @Html.ViewInitializer(configs, Model);
+    $(document).ready(function () { 
+         var viewModel = @Html.ViewInitializer(configs, Model);
+    });   
 
     efe.subscribe(efe.events.propertyChanged, function (sender, context) {
         console.log("Property changed: ", context);

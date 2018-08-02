@@ -57,8 +57,8 @@
         <script asp-src-include="~/js/**/*.js"></script>
 
         <script>
-            var viewModel = @Html.ViewInitializer(configs, Model);
             $(document).ready(function () {
+                var viewModel = @Html.ViewInitializer(configs, Model);
                 $("#ajaxSubmit").click(function (e) {
                     var name = $("#Name").val();
                     var data = JSON.stringify({ name: name, age: 1 });
