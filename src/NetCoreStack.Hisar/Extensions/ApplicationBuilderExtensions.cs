@@ -126,7 +126,9 @@ namespace NetCoreStack.Hisar
         public static void UseCliProxy(this IApplicationBuilder app)
         {
             if (app.ApplicationServices.GetService<CliUsageMarkerService>() != null)
+            {
                 app.UseProxyWebSockets();
+            }   
         }
     }
 }
