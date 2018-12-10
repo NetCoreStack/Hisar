@@ -7,9 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileProviders.Embedded;
 using Microsoft.Extensions.Primitives;
-using Microsoft.Extensions.FileProviders;
 
 namespace NetCoreStack.Hisar
 {
@@ -17,7 +17,7 @@ namespace NetCoreStack.Hisar
     /// Looks up files using embedded resources in the specified assembly.
     /// This file provider is case sensitive.
     /// </summary>
-    public class MockEmbeddedFileProvider : IFileProvider
+    public class SharedEmbeddedFileProvider : IFileProvider
     {
         private static readonly char[] _invalidFileNameChars = Path.GetInvalidFileNameChars()
             .Where(c => c != '/' && c != '\\').ToArray();
@@ -27,11 +27,11 @@ namespace NetCoreStack.Hisar
         private readonly DateTimeOffset _lastModified;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockEmbeddedFileProvider " /> class using the specified
-        /// assembly and empty base namespace.
+        /// Initializes a new instance of the <see cref="EmbeddedFileProvider" /> class using the specified
+        /// assembly with the base namespace defaulting to the assembly name.
         /// </summary>
         /// <param name="assembly">The assembly that contains the embedded resources.</param>
-        public MockEmbeddedFileProvider(Assembly assembly)
+        public SharedEmbeddedFileProvider(Assembly assembly)
             : this(assembly, assembly?.GetName()?.Name)
         {
         }
@@ -42,7 +42,7 @@ namespace NetCoreStack.Hisar
         /// </summary>
         /// <param name="assembly">The assembly that contains the embedded resources.</param>
         /// <param name="baseNamespace">The base namespace that contains the embedded resources.</param>
-        public MockEmbeddedFileProvider(Assembly assembly, string baseNamespace)
+        public SharedEmbeddedFileProvider(Assembly assembly, string baseNamespace)
         {
             if (assembly == null)
             {
@@ -53,6 +53,20 @@ namespace NetCoreStack.Hisar
             _assembly = assembly;
 
             _lastModified = DateTimeOffset.UtcNow;
+
+            if (!string.IsNullOrEmpty(_assembly.Location))
+            {
+                try
+                {
+                    _lastModified = File.GetLastWriteTimeUtc(_assembly.Location);
+                }
+                catch (PathTooLongException)
+                {
+                }
+                catch (UnauthorizedAccessException)
+                {
+                }
+            }
         }
 
         /// <summary>
@@ -124,14 +138,8 @@ namespace NetCoreStack.Hisar
                 return NotFoundDirectoryContents.Singleton;
             }
 
-            // Relative paths starting with a leading slash okay
-            if (subpath.StartsWith("/", StringComparison.Ordinal))
-            {
-                subpath = subpath.Substring(1);
-            }
-
-            // Non-hierarchal.
-            if (!subpath.Equals(string.Empty))
+            // EmbeddedFileProvider only supports a flat file structure at the base namespace.
+            if (subpath.Length != 0 && !string.Equals(subpath, "/", StringComparison.Ordinal))
             {
                 return NotFoundDirectoryContents.Singleton;
             }
@@ -143,7 +151,7 @@ namespace NetCoreStack.Hisar
             for (var i = 0; i < resources.Length; i++)
             {
                 var resourceName = resources[i];
-                if (resourceName.StartsWith(_baseNamespace))
+                if (resourceName.StartsWith(_baseNamespace, StringComparison.Ordinal))
                 {
                     entries.Add(new EmbeddedResourceFileInfo(
                         _assembly,

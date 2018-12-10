@@ -12,7 +12,7 @@ namespace NetCoreStack.Hisar
     {
         private static readonly HttpClient _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:1444/")
+            BaseAddress = WebCliProxyInformation.Instance.CreateBaseUri()
         };
 
         private readonly ConcurrentDictionary<string, ChangeTokenInfo> _fileTokenLookup = 

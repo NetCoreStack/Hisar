@@ -1,0 +1,40 @@
+﻿<script src="/reconnecting-hisar-websocket.js"></script>
+<script>
+    (function () {
+        var connectionId = "";
+        var scheme = document.location.protocol == "https:" ? "wss" : "ws";
+        var port = document.location.port ? (":" + document.location.port) : "";
+        var connectionUrl = scheme + "://" + document.location.hostname + port + "?connectorName=cliProxy"
+
+        var socket = new WebSocket(connectionUrl);
+        socket.onopen = function (event) {
+            console.log("Connection opened");
+        };
+        socket.onclose = function (event) {
+            console.log('Connection closed. Code: ' + event.code + '. Reason: ' + event.reason + '');
+        };
+        socket.onerror = function () {
+            switch (socket.readyState) {
+                case WebSocket.CLOSED:
+                    console.log("Connection closed");
+                    break;
+                default:
+                    console.log("Unknown WebSocket State: " + socket.readyState);
+                    break;
+            }
+        };
+        socket.onmessage = function (event) {
+            if (event.data) {
+                var context = JSON.parse(event.data);
+                if (context && context.CommandText === "Handshake") {
+                    connectionId = context.Value;
+                    connectionUrl = scheme + "://" + document.location.hostname + port + "?connectionId=" + connectionId + "&connectorName=cliproxy"
+                }
+
+                if (context.Header && context.Header.fileChanged) {
+                    window.location.reload(true);
+                }
+            }
+        };
+    })();
+</script>

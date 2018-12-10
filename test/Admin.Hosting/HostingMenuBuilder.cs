@@ -12,7 +12,7 @@ namespace Admin.Hosting
             {
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.Home,
+                    Icon = "home",
                     Order = 1,
                     Path = ResolvePath(urlHelper, "/"),
                     ShowInMenu = true,

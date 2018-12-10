@@ -12,7 +12,7 @@ namespace Hisar.Component.Guideline
             {
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.Home,
+                    Icon = "home",
                     Order = 1,
                     Path = ResolvePath(urlHelper, "~/"),
                     ShowInMenu = true,
@@ -20,7 +20,7 @@ namespace Hisar.Component.Guideline
                 },
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.Home,
+                    Icon = "inbox",
                     Order = 1,
                     Path = ResolvePath(urlHelper, "~/Home/Albums"),
                     ShowInMenu = true,

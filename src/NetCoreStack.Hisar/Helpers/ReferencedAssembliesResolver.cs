@@ -69,7 +69,6 @@ namespace NetCoreStack.Hisar
                 dependencies = (IDictionary<string, string>)propInfo.GetValue(null);
             }
 
-            var flag = assembly.GetReferencedAssemblies().Any(x => x.Name == "Shared.Library");
             var references = assembly.GetReferencedAssemblies();
             foreach (var reference in references)
             {

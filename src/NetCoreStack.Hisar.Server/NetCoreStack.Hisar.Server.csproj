@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetCoreStack.Data" Version="2.1.5" />
-    <PackageReference Include="NetCoreStack.Mvc" Version="2.1.5" />
+    <PackageReference Include="NetCoreStack.Data" Version="2.2.0" />
+    <PackageReference Include="NetCoreStack.Mvc" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,16 +14,16 @@ namespace Shared.Library
             var sharedAssembly = typeof(ServiceCollectionExtensions).GetTypeInfo().Assembly;
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.FileProviders.Add(new MockEmbeddedFileProvider(sharedAssembly));
+                options.FileProviders.Add(new SharedEmbeddedFileProvider(sharedAssembly));
             });
 
-            services.AddMvc().ConfigureApplicationPartManager(manager => 
+            services.AddMvc().ConfigureApplicationPartManager(manager =>
             {
                 var assemblyPart = new AssemblyPart(sharedAssembly);
                 if (!manager.ApplicationParts.Contains(assemblyPart))
                 {
                     manager.ApplicationParts.Add(assemblyPart);
-                }                
+                }
             });
         }
 

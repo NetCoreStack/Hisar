@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
 
@@ -13,7 +12,7 @@ namespace NetCoreStack.Hisar
         private readonly Assembly _componentAssembly = typeof(TStartup).GetTypeInfo().Assembly;
         private readonly HisarConventionBasedStartup _componentStartup;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private readonly ILoggerFactory _loggerFactory;
+
         public IConfiguration Configuration { get; }
 
         public DefaultHisarStartup(IServiceProvider serviceProvider, 

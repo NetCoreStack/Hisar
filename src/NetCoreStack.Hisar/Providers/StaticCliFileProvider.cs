@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Embedded;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,16 @@ namespace NetCoreStack.Hisar
 {
     public class StaticCliFileProvider : IFileProvider
     {
+        private static readonly string _hisarWebsocketFileName = "reconnecting-hisar-websocket.js";
+        private static readonly string _resourcePath = "NetCoreStack.Hisar.Resources.reconnecting-hisar-websocket.js";
+
+        private static readonly EmbeddedResourceFileInfo webSocketEmbedFileInfo = 
+            new EmbeddedResourceFileInfo(typeof(StaticCliFileProvider).Assembly, _resourcePath, _hisarWebsocketFileName, DateTimeOffset.UtcNow);
+
+
         private static readonly HttpClient _client = new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:1444/")
+            BaseAddress = WebCliProxyInformation.Instance.CreateBaseUri()
         };
 
         public StaticCliFileProvider()
@@ -38,6 +46,11 @@ namespace NetCoreStack.Hisar
             {
                 byte[] bytes = response.Content.ReadAsByteArrayAsync().Result;
                 return new InMemoryFileInfo(name, subpath, bytes, DateTime.UtcNow);
+            }
+
+            if (name == _hisarWebsocketFileName)
+            {
+                return webSocketEmbedFileInfo;
             }
 
             return new NotFoundFileInfo(name);

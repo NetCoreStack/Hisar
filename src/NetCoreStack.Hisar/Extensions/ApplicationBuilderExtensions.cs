@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace NetCoreStack.Hisar
         {
             ThrowIfServiceNotRegistered(app.ApplicationServices);
             app.UseStaticFiles();
-            
+
             var componentHelper = GetComponentHelper(app.ApplicationServices);
             bool isExternalComponent = componentHelper.IsExternalComponent;
             if (isExternalComponent)
@@ -27,7 +28,7 @@ namespace NetCoreStack.Hisar
                 app.UseStaticFiles(new StaticFileOptions()
                 {
                     FileProvider = new StaticCliFileProvider()
-                });
+                });                
             }
             else
             {
@@ -59,7 +60,7 @@ namespace NetCoreStack.Hisar
 
                     startup.ConfigureRoutes(componentRoutesBuilder);
                     componentsRoutesDictionary.Add(entry.Key, componentRoutesBuilder.Routes);
-                }                
+                }
 
                 app.UseMvc(routes =>
                 {
@@ -125,6 +126,11 @@ namespace NetCoreStack.Hisar
     {
         public static void UseCliProxy(this IApplicationBuilder app)
         {
+            if (WebCliProxyInformation.Instance.EnableLiveReload)
+            {
+                app.UseNativeWebSockets();
+            }
+
             if (app.ApplicationServices.GetService<CliUsageMarkerService>() != null)
             {
                 app.UseProxyWebSockets();

@@ -10,7 +10,7 @@ namespace Hisar.Component.Guideline
             ["Microsoft.AspNetCore.Razor.Design"] = "2.2.0",
 			["AutoMapper"] = "8.0.0",
 			["AutoMapper.Extensions.Microsoft.DependencyInjection"] = "6.0.0",
-			["NetCoreStack.WebSockets.ProxyClient"] = "2.5.1"
+			["NetCoreStack.WebSockets.ProxyClient"] = "2.5.2"
 
         };
     }

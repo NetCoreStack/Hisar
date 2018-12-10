@@ -13,10 +13,15 @@ namespace NetCoreStack.Hisar
     {
         private readonly IWebSocketConnector<DataStreamingInvocator> _connector;
         private readonly IDefaultProxyFileLocator _cliFileProvider;
-        public DataStreamingInvocator(IWebSocketConnector<DataStreamingInvocator> connector, IDefaultProxyFileLocator layoutFileProvider)
+        private readonly IWebCliProxyEventHandler _cliProxyEventHandler;
+
+        public DataStreamingInvocator(IWebSocketConnector<DataStreamingInvocator> connector, 
+            IDefaultProxyFileLocator layoutFileProvider,
+            IWebCliProxyEventHandler cliProxyEventHandler)
         {
             _connector = connector;
             _cliFileProvider = layoutFileProvider;
+            _cliProxyEventHandler = cliProxyEventHandler;
         }
 
         public async Task InvokeAsync(WebSocketMessageContext context)
@@ -44,6 +49,12 @@ namespace NetCoreStack.Hisar
                         var name = Path.GetFileName(fileFullName);
                         _cliFileProvider.Layout = new InMemoryFileInfo(name, fileFullName, memoryStream.ToArray(), DateTime.UtcNow);
                         _cliFileProvider.RaiseChange(fileFullName);
+
+                        await _cliProxyEventHandler.FileChanged(new FileChangedContext
+                        {
+                            FileFullName = fileFullName,
+                            Filename = name
+                        });
                     }
                 }
             }

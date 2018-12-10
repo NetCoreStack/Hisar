@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Hisar.Component.Guideline.Models;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -11,7 +12,6 @@ using NetCoreStack.Hisar;
 using NetCoreStack.Hisar.Server;
 using NetCoreStack.Mvc;
 using Shared.Library;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Hisar.Component.Guideline
@@ -20,21 +20,15 @@ namespace Hisar.Component.Guideline
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
 #if !RELEASE
-            services.AddCliSocket<Startup>();
+            services.AddWebCliSocket<Startup>(true);
 #endif
             services.AddSingleton<SampleService>();
 
@@ -55,6 +49,8 @@ namespace Hisar.Component.Guideline
             {
                 setup.DefaultMap<AlbumBson, CustomCacheValueProvider>();
             });
+
+            services.AddSharedFeatures();
         }
 
 
@@ -71,9 +67,6 @@ namespace Hisar.Component.Guideline
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug();
             }
             else
             {
@@ -82,23 +75,6 @@ namespace Hisar.Component.Guideline
 
             app.UseMvc(ConfigureRoutes);
         }
-
-        public static void Main(string[] args)
-        {
-            var configuration = new ConfigurationBuilder()
-                .AddCommandLine(args).Build();
-
-            var host = new WebHostBuilder()
-                .UseConfiguration(configuration)
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<DefaultHisarStartup<Startup>>()
-                .Build();
-
-            host.Run();
-        }
-
 
         public static void ConfigureRoutes(IRouteBuilder routes)
         {
@@ -112,5 +88,14 @@ namespace Hisar.Component.Guideline
                 template: "{controller=Home}/{action=Index}/{id?}");
         }
 
+
+        public static void Main(string[] args)
+        {
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<DefaultHisarStartup<Startup>>();
     }
 }

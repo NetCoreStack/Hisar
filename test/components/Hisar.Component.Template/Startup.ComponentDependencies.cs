@@ -8,7 +8,7 @@ namespace Hisar.Component.Template
         public static IReadOnlyDictionary<string, string> ComponentDependencies { get; } = new Dictionary<string, string>
         {
             ["Microsoft.AspNetCore.Razor.Design"] = "2.2.0",
-			["NetCoreStack.WebSockets.ProxyClient"] = "2.5.1"
+			["NetCoreStack.WebSockets.ProxyClient"] = "2.5.2"
 
         };
     }

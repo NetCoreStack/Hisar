@@ -8,7 +8,9 @@ namespace Shared.Library
         public async Task<IViewComponentResult> InvokeAsync()
         {
             await Task.CompletedTask;
-            return View();
+            var result = View();
+
+            return result;
         }
     }
 }

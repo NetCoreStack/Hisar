@@ -13,11 +13,11 @@ The purpose of this framework is that eliminate the **monolithic application cha
 
 > **MsBuild** , **NuGet** or **[dotnet pack](https://docs.microsoft.com/en-us/dotnet/articles/core/tools/dotnet-pack)** tools can be used for packaging. In this way, the component will be able to part of the main hosting application and available to upload **NuGet** or **MyGet** package repositories. 
 
-Despite the other framework you don't need to reference any component (module) to main application but if you want the component to act as part of the main application you can copy the output .dll to ExternalComponents folder of main application so the Hisar platform engine resolves all dependencies, controllers, views, contents and then registers the component with convention name.
+Despite the other framework you don't need to reference any component (module) to main application but if you want the component to act as part of the main application you can copy the output .dll to **ExternalComponents** folder of main application so the **Hisar** platform engine resolves all dependencies, controllers, views, contents and then registers the component with convention name.
 
 #### Controllers
 
-For example; you got a component which is name **Hisar.Component.Carousel**. For convention, Hisar engine resolves that namespace as a **Carousel** component when to act as a part of the main application. For this component, **Controllers** will work as an **Area** with http://\<domainname\>/carousel URL prefix in main application.
+For example; you got a component which is name **Hisar.Component.Carousel**. For convention, Hisar engine resolves that namespace as a **Carousel** component when to act as a part of the main application. For this component, the component **Controllers** will work as an **Area** with http://\<domainname\>/carousel URL prefix in main application (Landing Hosting or Admin Hosting apps).
 
 #### ViewComponents
 [View components]((https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components)) are similar to partial views, but they are much more powerful. Hisar ViewComponents work as follows;
@@ -57,9 +57,9 @@ our custom startup wrapper to handle component and application acts. For more de
 
 ## Component Development
 To develop the component you can fallow these steps;
- - Download the .NET Core SDK 2.1.1 or newer. Once installed, run this command:
+ - Download the .NET Core SDK 2.2.0 or newer. Once installed, run this command:
  
-        dotnet tool install --global dotnet-hisar --version 2.1.1
+        dotnet tool install --global dotnet-hisar --version 2.2.0
 
  - Create a web application with Hisar.Component prefix. (Hisar.Component.YourComponentName)
  - Add NetCoreStack.Hisar package to the project.
@@ -68,7 +68,7 @@ To develop the component you can fallow these steps;
 
  - Update the line UseStartup\<Startup> to UseStartup\<DefaultHisarStartup\<Startup>> for WebHostBuilder.
 
- - Add PreBuild event to generate component helper classes with hisar global tool.
+ - Add PreBuild event to generate component helper classes with Hisar global tool.
     ```xml
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
         <Exec Command="cd $(ProjectDir) &amp; dotnet hisar --build &quot;$(ProjectDir)&quot;" />
@@ -80,6 +80,8 @@ To develop the component you can fallow these steps;
     public void ConfigureServices(IServiceCollection services)
     {
         #if !RELEASE
+        /// <param name="webCliAddress">Default is localhost:1444 (WebCli Tools)</param> 
+        /// <param name="enableLiveReload">To enable livereload proxy</param>
         services.AddCliSocket<Startup>();
         #endif
         
@@ -107,7 +109,7 @@ To develop the component you can fallow these steps;
         </None>
     </ItemGroup>
     ```
- - If you have any templating directory for static serve files or hosting main web application, start the Web Cli tool on project root directory from command line. It will start the Web Cli application on **http://localhost:1444** to manage all main application contents or provide _Layout.cshtml if no appdir option specified. (One working Cli tool is enough for same templating usage)
+ - If you have any templating directory for static serve files or hosting main web application, start the Web Cli tool on project root directory from command line. It will start the Web Cli application on **http://localhost:1444** to manage all main application contents or provide **_Layout.cshtml** if no appdir option specified. (One working Web Cli tool is enough for same templating usage)
 
         dotnet hisar --appdir <the-path-of-your-hosting-app-relative-or-absolute> 
 
@@ -119,22 +121,22 @@ To develop the component you can fallow these steps;
     docker run -it -v mongodata:/data/db -p 27017:27017 -d mongo
 
 ## Tools
-[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. dotnet global tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
+[Hisar Web Cli](https://github.com/NetCoreStack/Tools) tool provides manage extensibility and templating of components. Dotnet global tools extensibility model has various tooling features. **Hisar Web Cli** is built on top of it.
 
 ## Components.json (sample nuget package reference)
 
     {
         "components": {
             "Hisar.Component.CoreManagement": {
-                "targetFramework": "netcoreapp2.1",
-                "version": "2.1.1"
+                "targetFramework": "netcoreapp2.2",
+                "version": "2.2.0"
             }
         }
     }
 
 ## TODO
  - Hisar Package Repository
- - Component Marketplace (Upload, search, download and enable the component)
+ - Component Marketplace (Upload, search, download and enable)
 
 ## Contributing to Repository
  - Fork and clone locally.

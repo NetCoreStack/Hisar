@@ -12,7 +12,7 @@ namespace Hisar.Component.CoreManagement
             {
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.Cubes,
+                    Icon = "cubes",
                     Order = 4,
                     Path = ResolvePath(urlHelper, "~/"),
                     ShowInMenu = true,

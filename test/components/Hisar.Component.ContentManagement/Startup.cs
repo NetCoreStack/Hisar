@@ -12,23 +12,17 @@ namespace Hisar.Component.ContentManagement
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IHostingEnvironment env, IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
 #if !RELEASE
-            services.AddCliSocket<Startup>();
+            services.AddWebCliSocket<Startup>();
 #endif
             services.AddHisarMongoDbContext<MongoDbContext>(Configuration);
 
@@ -50,10 +44,6 @@ namespace Hisar.Component.ContentManagement
 #if !RELEASE
             app.UseCliProxy();
 #endif
-
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

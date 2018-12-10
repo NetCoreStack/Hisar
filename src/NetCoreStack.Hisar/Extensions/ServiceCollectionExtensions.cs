@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NetCoreStack.Mvc;
 using NetCoreStack.Mvc.Helpers;
+using NetCoreStack.WebSockets;
 using NetCoreStack.WebSockets.ProxyClient;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -78,6 +79,7 @@ namespace NetCoreStack.Hisar
 
             // New instances
             services.TryAddTransient<IHisarExceptionFilter, DefaultHisarExceptionFilter>();
+            services.TryAddTransient<IWebCliProxyEventHandler, DefaultWebCliProxyEventHandler>();
 
             var componentHelper = CreateComponentHelper<TStartup>(services);
             var assembly = typeof(TStartup).GetTypeInfo().Assembly;
@@ -124,16 +126,15 @@ namespace NetCoreStack.Hisar
             if (isComponent)
             {
                 if (isCoreComponent)
+                {
                     assemblyLoader = CreateAssemblyLoader<TStartup>(services, env, builder);
+                }   
 
                 var defaultLayoutFileProvider = new DefaultProxyFileLocator();
                 services.TryAddSingleton<IDefaultProxyFileLocator>(_ => defaultLayoutFileProvider);
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new InMemoryCliFileProvider(defaultLayoutFileProvider));
-
-                    var peRef = MetadataReference.CreateFromFile(assembly.Location);
-                    options.AdditionalCompilationReferences.Add(peRef);
 
                     // component formats
                     options.AreaViewLocationFormats.Add("/Views/{1}/{0}.cshtml");
@@ -148,12 +149,6 @@ namespace NetCoreStack.Hisar
                 builder.AddRazorOptions(options =>
                 {
                     options.FileProviders.Add(new HisarEmbededFileProvider(assemblyLoader.ComponentAssemblyLookup));
-                    foreach (KeyValuePair<string, Assembly> entry in assemblyLoader.ComponentAssemblyLookup)
-                    {
-                        var nameSpace = entry.Value.GetName().Name;
-                        var peRef = MetadataReference.CreateFromFile(entry.Value.Location);
-                        options.AdditionalCompilationReferences.Add(peRef);
-                    }
                 });
             }
 
@@ -216,18 +211,46 @@ namespace NetCoreStack.Hisar
 
     public static class ServiceCollectionExtensionsProxy
     {
-        public static void AddCliSocket<TStartup>(this IServiceCollection services)
+        private static void AddCliSocketInternal<TStartup>(IServiceCollection services, string webCliAddress = "localhost:1444", bool enableLiveReload = false)
         {
             var executingAssembly = Assembly.GetEntryAssembly();
             var componentHelper = services.CreateComponentHelper<TStartup>();
+            WebCliProxyInformation.Instance.Address = webCliAddress;
+
             if (!executingAssembly.EnsureIsHosting()) // Running as standalone not part of any Hosting
             {
                 services.AddSingleton<CliUsageMarkerService>();
                 var connectorName = $"{nameof(componentHelper.ComponentId)}-Component";
 
+                if (enableLiveReload)
+                {
+                    WebCliProxyInformation.Instance.EnableLiveReload = true;
+                    services.AddNativeWebSockets<AgentCommandInvocator>();
+                }
+
                 services.AddProxyWebSockets()
-                    .Register<DataStreamingInvocator>(connectorName, "localhost:1444");
+                    .Register<DataStreamingInvocator>(connectorName, webCliAddress);
             }
+        }
+
+        public static void AddWebCliSocket<TStartup>(this IServiceCollection services)
+        {
+            AddCliSocketInternal<TStartup>(services);
+        }
+
+        public static void AddWebCliSocket<TStartup>(this IServiceCollection services, bool enableLiveReload)
+        {
+            AddCliSocketInternal<TStartup>(services, enableLiveReload: enableLiveReload);
+        }
+
+        public static void AddWebCliSocket<TStartup>(this IServiceCollection services, string webCliAddress)
+        {
+            AddCliSocketInternal<TStartup>(services, webCliAddress);
+        }
+
+        public static void AddWebCliSocket<TStartup>(this IServiceCollection services, string webCliAddress, bool enableLiveReload)
+        {
+            AddCliSocketInternal<TStartup>(services, webCliAddress, enableLiveReload);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using NetCoreStack.Hisar;
-using NetCoreStack.Hisar.Server;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
@@ -7,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NetCoreStack.Data.Context;
+using NetCoreStack.Hisar;
+using NetCoreStack.Hisar.Server;
 using System;
-using System.IO;
-using Microsoft.AspNetCore;
 
 namespace Landing.Hosting
 {
@@ -17,20 +16,13 @@ namespace Landing.Hosting
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IHostingEnvironment _env;
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
-        public Startup(IServiceProvider serviceProvider, IHostingEnvironment env)
+        public Startup(IServiceProvider serviceProvider, IHostingEnvironment env, IConfiguration configuration)
         {
             _serviceProvider = serviceProvider;
             _env = env;
-
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -42,9 +34,6 @@ namespace Landing.Hosting
         {
             if (!_env.IsProduction())
             {
-                loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-                loggerFactory.AddDebug();
-
                 app.UseDeveloperExceptionPage();
             }
             else

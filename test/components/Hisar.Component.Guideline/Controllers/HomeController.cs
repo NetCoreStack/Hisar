@@ -36,19 +36,12 @@ namespace Hisar.Component.Guideline.Controllers
             registration.Register("foo", "bar", "<somepassword>");
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await Task.CompletedTask;
+
             var externalLibrary = new ExternalLibrary();
             ViewBag.ExternalLibrary = externalLibrary.Name;
-
-            if (!Cached.Artists.Any())
-            {
-                Cached.Artists = UnitOfWork.Repository<ArtistBson>().Select(a => new IdTextPair { Id = a.Id, Text = a.Name }).ToList();
-                Cached.Genres = UnitOfWork.Repository<GenreBson>().Select(a => new IdTextPair { Id = a.Id, Text = a.Name }).ToList();
-            }
-
-            ViewBag.Artists = Cached.Artists;
-            ViewBag.Genres = Cached.Genres;
 
             return View();
         }

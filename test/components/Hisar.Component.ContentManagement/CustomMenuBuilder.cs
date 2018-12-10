@@ -12,7 +12,7 @@ namespace Hisar.Component.ContentManagement
             {
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.FileOutlined,
+                    Icon = "file",
                     Order = 1,
                     Path = ResolvePath(urlHelper, $"~/Home/New"),
                     ShowInMenu = true,
@@ -21,7 +21,7 @@ namespace Hisar.Component.ContentManagement
 
                 new DefaultMenuItem
                 {
-                    Icon = FontAwesomeIcon.FileTextOutlined,
+                    Icon = "file",
                     Order = 1,
                     Path = ResolvePath(urlHelper, $"~/Home/List"),
                     ShowInMenu = true,

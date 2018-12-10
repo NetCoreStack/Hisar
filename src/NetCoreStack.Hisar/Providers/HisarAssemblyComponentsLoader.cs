@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
@@ -69,9 +70,12 @@ namespace NetCoreStack.Hisar
                 AssemblyLoadContext.Default.Resolving -= null;
             }
 
-            var components = assembly.GetTypes().ToArray();
-            var controllers = components.Where(c => IsController(c.GetTypeInfo())).ToList();
-            builder.PartManager.ApplicationParts.Add(new TypesPart(components));
+            var manager = builder.PartManager;
+            var assemblyPart = new AssemblyPart(assembly);
+            if (!manager.ApplicationParts.Contains(assemblyPart))
+            {
+                manager.ApplicationParts.Add(assemblyPart);
+            }
         }
 
         private Assembly DefaultResolving(AssemblyLoadContext loadContext, AssemblyName assemblyName)
@@ -190,8 +194,6 @@ namespace NetCoreStack.Hisar
                         Path.GetExtension(fileName) == ".dll")
                     {
                         var fullPath = Path.GetFullPath(fileFullPath);
-
-                        // AssemblyLoadContext.Default.Resolving += ReferencedAssembliesResolver.Resolving;
                         var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
                         ReferencedAssembliesResolver.ResolveAssemblies(GetResolveCallback(), externalComponentsRefDirectory, assembly);
                         RegisterComponent(services, builder, assembly, cacheItems);
@@ -210,7 +212,8 @@ namespace NetCoreStack.Hisar
 
                             try
                             {
-                                AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                                var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(fullPath);
+                                builder.PartManager.ApplicationParts.Add(new AssemblyPart(assembly));
                             }
                             catch (Exception ex)
                             {

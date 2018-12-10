@@ -24,7 +24,7 @@ namespace Hisar.Component.Template
         {
             if (HostingEnvironment.IsDevelopment())
             {
-                services.AddCliSocket<Startup>();
+                services.AddWebCliSocket<Startup>();
             }
 
             services.AddMenuRenderer<SharedMenuItemsRenderer>();
