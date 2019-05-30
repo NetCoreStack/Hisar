@@ -82,7 +82,7 @@ To develop the component you can fallow these steps;
         #if !RELEASE
         /// <param name="webCliAddress">Default is localhost:1444 (WebCli Tools)</param> 
         /// <param name="enableLiveReload">To enable livereload proxy</param>
-        services.AddCliSocket<Startup>();
+        services.AddWebCliSocket<Startup>();
         #endif
         
         // ...
