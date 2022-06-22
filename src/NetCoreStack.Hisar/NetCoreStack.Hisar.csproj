@@ -29,7 +29,7 @@
     <PackageReference Include="NetCoreStack.Data.Contracts" Version="2.2.0" />
     <PackageReference Include="NetCoreStack.WebSockets" Version="2.5.2" />
     <PackageReference Include="NetCoreStack.WebSockets.ProxyClient" Version="2.5.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
